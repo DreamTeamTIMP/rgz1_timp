@@ -436,7 +436,7 @@
             // настройкаПанелиБыстрогоДоступаToolStripMenuItem
             // 
             настройкаПанелиБыстрогоДоступаToolStripMenuItem.Name = "настройкаПанелиБыстрогоДоступаToolStripMenuItem";
-            настройкаПанелиБыстрогоДоступаToolStripMenuItem.Size = new Size(278, 22);
+            настройкаПанелиБыстрогоДоступаToolStripMenuItem.Size = new Size(229, 22);
             настройкаПанелиБыстрогоДоступаToolStripMenuItem.Text = "Настройка панели быстрого доступа";
             // 
             // toolStripSeparator2

@@ -99,14 +99,20 @@ namespace rgz1_timp
                 }
             }
 
-            // 2. Рисуем иконку (если привязан ImageList)
-            if (treeView1.ImageList != null && e.Node.ImageIndex >= 0)
+            if (treeView1.ImageList != null)
             {
-                Image img = treeView1.ImageList.Images[e.Node.ImageIndex];
-                // Смещение иконки: e.Bounds.X уже учитывает вложенность
-                e.Graphics.DrawImage(img, new Rectangle(e.Bounds.X - 20, e.Bounds.Y + 4, 16, 16));
-            }
+                Image nodeImage = null;
+                if (!string.IsNullOrEmpty(e.Node.ImageKey))
+                    nodeImage = treeView1.ImageList.Images[e.Node.ImageKey];
+                else if (e.Node.ImageIndex >= 0)
+                    nodeImage = treeView1.ImageList.Images[e.Node.ImageIndex];
 
+                if (nodeImage != null)
+                {
+                    // Смещение иконки влево от текста (e.Bounds.X - 20)
+                    e.Graphics.DrawImage(nodeImage, new Rectangle(e.Bounds.X - 10, e.Bounds.Y + 4, 16, 16));
+                }
+            }
             // 3. Рисуем текст узла
             TextRenderer.DrawText(e.Graphics, e.Node.Text, this.Font,
                 new Point(e.Bounds.X, e.Bounds.Y + 3), textColor);

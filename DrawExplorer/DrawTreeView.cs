@@ -18,6 +18,22 @@ namespace rgz1_timp.DrawExplorer
             LoadDrives(treeView);
         }
 
+        [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
+        private static extern IntPtr ExtractIcon(IntPtr hInst, string lpszExeFileName, int nIconIndex);
+
+        public static ImageList GetSystemImageList()
+        {
+            ImageList imgList = new ImageList { ImageSize = new Size(16, 16), ColorDepth = ColorDepth.Depth32Bit };
+
+            // Индексы в shell32.dll: 3 - папка, 7 - диск, 17 - сеть, 1022 - звезда (быстрый доступ)
+            imgList.Images.Add("folder", Icon.FromHandle(ExtractIcon(IntPtr.Zero, "shell32.dll", 3)));
+            imgList.Images.Add("drive", Icon.FromHandle(ExtractIcon(IntPtr.Zero, "shell32.dll", 7)));
+            imgList.Images.Add("quick", Icon.FromHandle(ExtractIcon(IntPtr.Zero, "shell32.dll", 1022)));
+            imgList.Images.Add("pc", Icon.FromHandle(ExtractIcon(IntPtr.Zero, "imageres.dll", 140))); // Этот компьютер
+
+            return imgList;
+        }
+
         private static void LoadDrives(TreeView treeView)
         {
             treeView.Nodes.Clear();
@@ -26,7 +42,6 @@ namespace rgz1_timp.DrawExplorer
             quickAccess.Nodes.Add(new TreeNode("Рабочий стол") { Tag = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) });
             quickAccess.Nodes.Add(new TreeNode("Загрузки") { Tag = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads") });
             quickAccess.Nodes.Add(new TreeNode("Документы") { Tag = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) });
-
             // 2. Этот компьютер
             TreeNode thisPC = new TreeNode("Этот компьютер");
             thisPC.Tag = "THIS_PC";
@@ -36,15 +51,16 @@ namespace rgz1_timp.DrawExplorer
             {
                 TreeNode driveNode = new TreeNode(drive.Name);
                 driveNode.Tag = drive.RootDirectory.FullName;
+                driveNode.ImageKey = driveNode.SelectedImageKey = "drive";
                 driveNode.Nodes.Add(""); // Пустышка для возможности раскрытия
                 thisPC.Nodes.Add(driveNode);
             }
             
             treeView.Nodes.Add(quickAccess);
             treeView.Nodes.Add(thisPC);
-
-            quickAccess.Expand();
-            thisPC.Expand();
+            quickAccess.ImageKey = quickAccess.SelectedImageKey = "quick";
+            thisPC.ImageKey = thisPC.SelectedImageKey = "pc";
+            
         }
 
         internal static void AddNodes(TreeViewCancelEventArgs e)
@@ -64,11 +80,12 @@ namespace rgz1_timp.DrawExplorer
                         // Пропускаем скрытые папки для чистоты вида
                         if ((di.Attributes & FileAttributes.Hidden) != 0) continue;
 
-                        //Icon.ExtractAssociatedIcon(dir);
                         TreeNode subNode = new(di.Name)
                         {
                             Tag = di.FullName
                         };
+                        subNode.ImageKey = subNode.SelectedImageKey = "folder";
+
                         subNode.Nodes.Add("");
                         e.Node.Nodes.Add(subNode);
                     }
