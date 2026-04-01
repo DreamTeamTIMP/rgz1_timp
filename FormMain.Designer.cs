@@ -208,6 +208,7 @@
             // 
             // tabControl1
             // 
+            tabControl1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             tabControl1.Appearance = TabAppearance.FlatButtons;
             tabControl1.Controls.Add(tabPageHome);
             tabControl1.Controls.Add(tabPageShare);
@@ -234,8 +235,8 @@
             // 
             // flowLayoutPanel1
             // 
+            flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             flowLayoutPanel1.BackColor = Color.FromArgb(32, 32, 32);
-            flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(3, 3);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(797, 121);
@@ -246,7 +247,7 @@
             tabPageShare.Location = new Point(4, 5);
             tabPageShare.Name = "tabPageShare";
             tabPageShare.Padding = new Padding(3);
-            tabPageShare.Size = new Size(789, 121);
+            tabPageShare.Size = new Size(803, 127);
             tabPageShare.TabIndex = 1;
             tabPageShare.Text = "tabPage2";
             tabPageShare.UseVisualStyleBackColor = true;
@@ -255,7 +256,7 @@
             // 
             tabPageVid.Location = new Point(4, 5);
             tabPageVid.Name = "tabPageVid";
-            tabPageVid.Size = new Size(789, 121);
+            tabPageVid.Size = new Size(803, 127);
             tabPageVid.TabIndex = 2;
             tabPageVid.Text = "tabPage1";
             tabPageVid.UseVisualStyleBackColor = true;
@@ -376,52 +377,61 @@
             // 
             // toolStripButton4
             // 
-            toolStripButton4.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButton4.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripButton4.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold);
+            toolStripButton4.ForeColor = Color.Gray;
             toolStripButton4.Image = (Image)resources.GetObject("toolStripButton4.Image");
             toolStripButton4.ImageTransparentColor = Color.Magenta;
             toolStripButton4.Name = "toolStripButton4";
             toolStripButton4.Size = new Size(23, 22);
-            toolStripButton4.Text = "toolStripButton4";
+            toolStripButton4.Text = "";
             // 
             // toolStripButton5
             // 
-            toolStripButton5.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButton5.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripButton5.Font = new Font("Segoe MDL2 Assets", 10F);
+            toolStripButton5.ForeColor = Color.Gray;
             toolStripButton5.Image = (Image)resources.GetObject("toolStripButton5.Image");
             toolStripButton5.ImageTransparentColor = Color.Magenta;
             toolStripButton5.Name = "toolStripButton5";
-            toolStripButton5.Size = new Size(23, 22);
-            toolStripButton5.Text = "toolStripButton5";
+            toolStripButton5.Size = new Size(25, 22);
+            toolStripButton5.Text = "";
             // 
             // toolStripButton6
             // 
-            toolStripButton6.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButton6.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripButton6.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            toolStripButton6.ForeColor = Color.Gray;
             toolStripButton6.Image = (Image)resources.GetObject("toolStripButton6.Image");
             toolStripButton6.ImageTransparentColor = Color.Magenta;
             toolStripButton6.Name = "toolStripButton6";
             toolStripButton6.Size = new Size(23, 22);
-            toolStripButton6.Text = "toolStripButton6";
+            toolStripButton6.Text = "";
             // 
             // toolStripButton7
             // 
-            toolStripButton7.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButton7.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripButton7.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             toolStripButton7.Image = (Image)resources.GetObject("toolStripButton7.Image");
+            toolStripButton7.ImageAlign = ContentAlignment.BottomRight;
             toolStripButton7.ImageTransparentColor = Color.Magenta;
             toolStripButton7.Name = "toolStripButton7";
             toolStripButton7.Size = new Size(23, 22);
-            toolStripButton7.Text = "toolStripButton7";
+            toolStripButton7.Text = "";
             // 
             // toolStripDropDownButton1
             // 
-            toolStripDropDownButton1.BackColor = Color.White;
+            toolStripDropDownButton1.BackColor = Color.Black;
             toolStripDropDownButton1.DisplayStyle = ToolStripItemDisplayStyle.Text;
             toolStripDropDownButton1.DropDownItems.AddRange(new ToolStripItem[] { настройкаПанелиБыстрогоДоступаToolStripMenuItem });
+            toolStripDropDownButton1.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             toolStripDropDownButton1.ForeColor = Color.White;
             toolStripDropDownButton1.Image = (Image)resources.GetObject("toolStripDropDownButton1.Image");
             toolStripDropDownButton1.ImageTransparentColor = Color.Magenta;
             toolStripDropDownButton1.Name = "toolStripDropDownButton1";
             toolStripDropDownButton1.ShowDropDownArrow = false;
-            toolStripDropDownButton1.Size = new Size(18, 22);
-            toolStripDropDownButton1.Text = "d";
+            toolStripDropDownButton1.Size = new Size(21, 22);
+            toolStripDropDownButton1.Text = "";
             // 
             // настройкаПанелиБыстрогоДоступаToolStripMenuItem
             // 
@@ -480,7 +490,7 @@
             treeView1.FullRowSelect = true;
             treeView1.HotTracking = true;
             treeView1.ItemHeight = 18;
-            treeView1.LineColor = Color.FromArgb(83, 83, 83);
+            treeView1.LineColor = Color.White;
             treeView1.Location = new Point(0, 0);
             treeView1.Name = "treeView1";
             treeView1.ShowLines = false;
@@ -572,15 +582,19 @@
             // 
             // button3
             // 
+            button3.BackColor = Color.FromArgb(25, 25, 25);
+            button3.FlatAppearance.BorderSize = 0;
+            button3.FlatStyle = FlatStyle.Flat;
             button3.Location = new Point(105, 2);
             button3.Name = "button3";
             button3.Size = new Size(33, 23);
             button3.TabIndex = 5;
             button3.Text = "button3";
-            button3.UseVisualStyleBackColor = true;
+            button3.UseVisualStyleBackColor = false;
             // 
             // comboBox2
             // 
+            comboBox2.BackColor = Color.FromArgb(25, 25, 25);
             comboBox2.FormattingEnabled = true;
             comboBox2.Location = new Point(77, 2);
             comboBox2.Name = "comboBox2";
@@ -589,35 +603,49 @@
             // 
             // button2
             // 
+            button2.BackColor = Color.FromArgb(25, 25, 25);
+            button2.FlatAppearance.BorderSize = 0;
+            button2.FlatStyle = FlatStyle.Flat;
             button2.Location = new Point(39, 1);
             button2.Name = "button2";
             button2.Size = new Size(32, 23);
             button2.TabIndex = 3;
             button2.Text = "button2";
-            button2.UseVisualStyleBackColor = true;
+            button2.UseVisualStyleBackColor = false;
             // 
             // button1
             // 
+            button1.BackColor = Color.FromArgb(25, 25, 25);
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatStyle = FlatStyle.Flat;
             button1.Location = new Point(3, 1);
             button1.Name = "button1";
             button1.Size = new Size(30, 23);
             button1.TabIndex = 2;
             button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
+            button1.UseVisualStyleBackColor = false;
             // 
             // comboBox1
             // 
+            comboBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            comboBox1.BackColor = Color.FromArgb(25, 25, 25);
+            comboBox1.DrawMode = DrawMode.OwnerDrawFixed;
+            comboBox1.ForeColor = Color.White;
             comboBox1.FormattingEnabled = true;
             comboBox1.Location = new Point(166, -1);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(402, 23);
+            comboBox1.Size = new Size(402, 24);
             comboBox1.TabIndex = 1;
+            comboBox1.KeyDown += comboBox1_KeyDown;
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(668, 1);
+            textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            textBox1.BackColor = Color.FromArgb(25, 25, 25);
+            textBox1.BorderStyle = BorderStyle.FixedSingle;
+            textBox1.Location = new Point(608, 1);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(125, 23);
+            textBox1.Size = new Size(185, 23);
             textBox1.TabIndex = 0;
             // 
             // FormMain

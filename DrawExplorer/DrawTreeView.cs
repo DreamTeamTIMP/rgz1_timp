@@ -21,22 +21,35 @@ namespace rgz1_timp.DrawExplorer
         private static void LoadDrives(TreeView treeView)
         {
             treeView.Nodes.Clear();
-            foreach (DriveInfo drive in DriveInfo.GetDrives())
+            TreeNode quickAccess = new TreeNode("Быстрый доступ");
+            quickAccess.Tag = "QUICK_ACCESS"; // Метка для отрисовки
+            quickAccess.Nodes.Add(new TreeNode("Рабочий стол") { Tag = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) });
+            quickAccess.Nodes.Add(new TreeNode("Загрузки") { Tag = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads") });
+            quickAccess.Nodes.Add(new TreeNode("Документы") { Tag = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) });
+
+            // 2. Этот компьютер
+            TreeNode thisPC = new TreeNode("Этот компьютер");
+            thisPC.Tag = "THIS_PC";
+            
+            // Добавляем диски в "Этот компьютер"
+            foreach (DriveInfo drive in DriveInfo.GetDrives().Where(d => d.IsReady))
             {
-                if (drive.IsReady)
-                {
-                    TreeNode node = new(drive.Name)
-                    {
-                        Tag = drive.RootDirectory.FullName
-                    };
-                    node.Nodes.Add("");
-                    treeView.Nodes.Add(node);
-                }
+                TreeNode driveNode = new TreeNode(drive.Name);
+                driveNode.Tag = drive.RootDirectory.FullName;
+                driveNode.Nodes.Add(""); // Пустышка для возможности раскрытия
+                thisPC.Nodes.Add(driveNode);
             }
+            
+            treeView.Nodes.Add(quickAccess);
+            treeView.Nodes.Add(thisPC);
+
+            quickAccess.Expand();
+            thisPC.Expand();
         }
 
         internal static void AddNodes(TreeViewCancelEventArgs e)
         {
+            if (e.Node.Text == "") return;
             if (e.Node.Nodes.Count == 1 && e.Node.Nodes[0].Text == "")
             {
                 e.Node.Nodes.Clear();

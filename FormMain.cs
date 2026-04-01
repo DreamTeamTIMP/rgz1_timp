@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 namespace rgz1_timp
 {
     public partial class FormMain : Form
@@ -64,6 +65,7 @@ namespace rgz1_timp
                 string selectedPath = e.Node.Tag.ToString();
                 // Вызываем наш метод для ListView
                 DrawListView.LoadDirectory(listView1, selectedPath);
+                DrawAdressBar.UpdateAddressBar(comboBox1, selectedPath);
             }
         }
 
@@ -180,6 +182,7 @@ namespace rgz1_timp
                 {
                     // 1. Загружаем содержимое этой папки в ListView
                     DrawListView.LoadDirectory(listView1, path);
+                    DrawAdressBar.UpdateAddressBar(comboBox1, path);
 
                     // 2. (Опционально) Обновляем адресную строку, если она у вас есть
                     // txtAddress.Text = path;
@@ -224,6 +227,28 @@ namespace rgz1_timp
         private void buttonFile_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void comboBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string targetPath = comboBox1.Text;
+
+                if (Directory.Exists(targetPath))
+                {
+                    DirectoryInfo target = new DirectoryInfo(targetPath);
+
+                    DrawListView.LoadDirectory(listView1, targetPath);
+                    // Опционально: можно найти этот узел в дереве и выделить его
+                }
+                else
+                {
+                    MessageBox.Show("Путь не найден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                e.SuppressKeyPress = true; // Убираем системный "дзинь" при нажатии Enter
+            }
         }
     }
 }
