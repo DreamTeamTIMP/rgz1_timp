@@ -256,5 +256,10 @@ namespace rgz1_timp
                 e.SuppressKeyPress = true; // Убираем системный "дзинь" при нажатии Enter
             }
         }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
