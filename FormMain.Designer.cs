@@ -28,25 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            splitContainer1 = new SplitContainer();
+            splitContainerMain = new SplitContainer();
             panelRibbon = new Panel();
             panelRibbonButtons = new Panel();
             buttonVid = new Button();
             buttonShare = new Button();
             buttonMain = new Button();
             buttonFile = new Button();
-            tabControl1 = new TabControl();
+            tabControlShare = new TabControl();
             tabPageHome = new TabPage();
-            flowLayoutPanel1 = new FlowLayoutPanel();
             tabPageShare = new TabPage();
             tabPageVid = new TabPage();
             panelHeader = new Panel();
             buttonMinimize = new Button();
             buttonMaximize = new Button();
             buttonClose = new Button();
-            toolStrip1 = new ToolStrip();
-            toolStripButton1 = new ToolStripButton();
+            toolStripMain = new ToolStrip();
+            toolStripButtonIcon = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
             toolStripButtonCreateFolder = new ToolStripButton();
             toolStripButtonDelete = new ToolStripButton();
@@ -55,86 +55,98 @@
             toolStripButton6 = new ToolStripButton();
             toolStripButton7 = new ToolStripButton();
             toolStripDropDownButton1 = new ToolStripDropDownButton();
-            настройкаПанелиБыстрогоДоступаToolStripMenuItem = new ToolStripMenuItem();
+            ToolStripMenuss = new ToolStripMenuItem();
             toolStripSeparator2 = new ToolStripSeparator();
             toolStripLabel1 = new ToolStripLabel();
             panel4 = new Panel();
-            splitContainer2 = new SplitContainer();
-            treeView1 = new TreeView();
-            listView1 = new ListView();
+            splitContainerForFiles = new SplitContainer();
+            treeViewFiles = new TreeView();
+            listViewFIles = new ListView();
             columnHeaderName = new ColumnHeader();
             columnHeaderEditDate = new ColumnHeader();
             columnHeaderType = new ColumnHeader();
             columnHeaderSize = new ColumnHeader();
-            panel2 = new Panel();
-            statusStrip1 = new StatusStrip();
-            toolStripStatusLabel1 = new ToolStripStatusLabel();
             panel1 = new Panel();
+            panel3 = new Panel();
+            buttonAdressBar = new Button();
+            labelUpdateDrivers = new Label();
+            comboBoxAdressBar = new ComboBox();
+            comboBoxLastWas = new ComboBox();
+            labelFind = new Label();
             button3 = new Button();
-            comboBox2 = new ComboBox();
-            button2 = new Button();
-            button1 = new Button();
-            comboBox1 = new ComboBox();
-            textBox1 = new TextBox();
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
-            splitContainer1.Panel1.SuspendLayout();
-            splitContainer1.Panel2.SuspendLayout();
-            splitContainer1.SuspendLayout();
+            buttonForward = new Button();
+            buttonBack = new Button();
+            textBoxFind = new TextBox();
+            buttonDropDown = new Button();
+            panel2 = new Panel();
+            buttonSmallElements = new Button();
+            buttonBigElements = new Button();
+            panel5 = new Panel();
+            statusStripMain = new StatusStrip();
+            contextMenuStripListView = new ContextMenuStrip(components);
+            createToolStripMenuItem = new ToolStripMenuItem();
+            createFolderToolStripMenuItem = new ToolStripMenuItem();
+            InsertToolStripMenuItem = new ToolStripMenuItem();
+            contextMenuStripMain = new ContextMenuStrip(components);
+            ToolStripMenuItemOpen = new ToolStripMenuItem();
+            ToolStripMenuItemCopy = new ToolStripMenuItem();
+            ToolStripMenuItemRename = new ToolStripMenuItem();
+            ToolStripMenuItemDelete = new ToolStripMenuItem();
+            ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
+            splitContainerMain.Panel1.SuspendLayout();
+            splitContainerMain.Panel2.SuspendLayout();
+            splitContainerMain.SuspendLayout();
             panelRibbon.SuspendLayout();
             panelRibbonButtons.SuspendLayout();
-            tabControl1.SuspendLayout();
-            tabPageHome.SuspendLayout();
+            tabControlShare.SuspendLayout();
             panelHeader.SuspendLayout();
-            toolStrip1.SuspendLayout();
+            toolStripMain.SuspendLayout();
             panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)splitContainer2).BeginInit();
-            splitContainer2.Panel1.SuspendLayout();
-            splitContainer2.Panel2.SuspendLayout();
-            splitContainer2.SuspendLayout();
-            panel2.SuspendLayout();
-            statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainerForFiles).BeginInit();
+            splitContainerForFiles.Panel1.SuspendLayout();
+            splitContainerForFiles.Panel2.SuspendLayout();
+            splitContainerForFiles.SuspendLayout();
             panel1.SuspendLayout();
+            panel3.SuspendLayout();
+            panel2.SuspendLayout();
+            panel5.SuspendLayout();
+            contextMenuStripListView.SuspendLayout();
+            contextMenuStripMain.SuspendLayout();
             SuspendLayout();
             // 
-            // splitContainer1
+            // splitContainerMain
             // 
-            splitContainer1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            splitContainer1.BackColor = Color.FromArgb(32, 32, 32);
-            splitContainer1.FixedPanel = FixedPanel.Panel1;
-            splitContainer1.IsSplitterFixed = true;
-            splitContainer1.Location = new Point(1, 1);
-            splitContainer1.Margin = new Padding(3, 4, 3, 4);
-            splitContainer1.Name = "splitContainer1";
-            splitContainer1.Orientation = Orientation.Horizontal;
+            splitContainerMain.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            splitContainerMain.BackColor = Color.FromArgb(32, 32, 32);
+            splitContainerMain.FixedPanel = FixedPanel.Panel1;
+            splitContainerMain.IsSplitterFixed = true;
+            splitContainerMain.Location = new Point(1, 1);
+            splitContainerMain.Name = "splitContainerMain";
+            splitContainerMain.Orientation = Orientation.Horizontal;
             // 
-            // splitContainer1.Panel1
+            // splitContainerMain.Panel1
             // 
-            splitContainer1.Panel1.BackColor = SystemColors.Desktop;
-            splitContainer1.Panel1.Controls.Add(panelRibbon);
-            splitContainer1.Panel1.Controls.Add(panelHeader);
+            splitContainerMain.Panel1.BackColor = SystemColors.Desktop;
+            splitContainerMain.Panel1.Controls.Add(panelRibbon);
+            splitContainerMain.Panel1.Controls.Add(panelHeader);
             // 
-            // splitContainer1.Panel2
+            // splitContainerMain.Panel2
             // 
-            splitContainer1.Panel2.Controls.Add(panel4);
-            splitContainer1.Panel2.Controls.Add(panel2);
-            splitContainer1.Panel2.Controls.Add(panel1);
-            splitContainer1.Size = new Size(911, 407);
-            splitContainer1.SplitterDistance = 201;
-            splitContainer1.SplitterWidth = 5;
-            splitContainer1.TabIndex = 0;
+            splitContainerMain.Panel2.Controls.Add(panel4);
+            splitContainerMain.Panel2.Controls.Add(panel1);
+            splitContainerMain.Panel2.Controls.Add(panel2);
+            splitContainerMain.Size = new Size(797, 305);
+            splitContainerMain.SplitterDistance = 151;
+            splitContainerMain.TabIndex = 0;
             // 
             // panelRibbon
             // 
             panelRibbon.Controls.Add(panelRibbonButtons);
-            panelRibbon.Controls.Add(tabControl1);
+            panelRibbon.Controls.Add(tabControlShare);
             panelRibbon.Dock = DockStyle.Fill;
-            panelRibbon.Location = new Point(0, 28);
-            panelRibbon.Margin = new Padding(3, 4, 3, 4);
+            panelRibbon.Location = new Point(0, 21);
             panelRibbon.Name = "panelRibbon";
-            panelRibbon.Size = new Size(911, 173);
+            panelRibbon.Size = new Size(797, 130);
             panelRibbon.TabIndex = 11;
             // 
             // panelRibbonButtons
@@ -145,9 +157,8 @@
             panelRibbonButtons.Controls.Add(buttonFile);
             panelRibbonButtons.Dock = DockStyle.Top;
             panelRibbonButtons.Location = new Point(0, 0);
-            panelRibbonButtons.Margin = new Padding(3, 4, 3, 4);
             panelRibbonButtons.Name = "panelRibbonButtons";
-            panelRibbonButtons.Size = new Size(911, 29);
+            panelRibbonButtons.Size = new Size(797, 22);
             panelRibbonButtons.TabIndex = 0;
             // 
             // buttonVid
@@ -158,10 +169,9 @@
             buttonVid.FlatStyle = FlatStyle.Flat;
             buttonVid.Font = new Font("Segoe UI", 8.25F);
             buttonVid.ForeColor = Color.White;
-            buttonVid.Location = new Point(242, 0);
-            buttonVid.Margin = new Padding(3, 4, 3, 4);
+            buttonVid.Location = new Point(212, 0);
             buttonVid.Name = "buttonVid";
-            buttonVid.Size = new Size(61, 29);
+            buttonVid.Size = new Size(53, 22);
             buttonVid.TabIndex = 3;
             buttonVid.Text = "Вид";
             buttonVid.UseVisualStyleBackColor = false;
@@ -175,10 +185,9 @@
             buttonShare.FlatStyle = FlatStyle.Flat;
             buttonShare.Font = new Font("Segoe UI", 8.25F);
             buttonShare.ForeColor = Color.White;
-            buttonShare.Location = new Point(145, 0);
-            buttonShare.Margin = new Padding(3, 4, 3, 4);
+            buttonShare.Location = new Point(127, 0);
             buttonShare.Name = "buttonShare";
-            buttonShare.Size = new Size(97, 29);
+            buttonShare.Size = new Size(85, 22);
             buttonShare.TabIndex = 2;
             buttonShare.Text = "Поделиться";
             buttonShare.UseVisualStyleBackColor = false;
@@ -186,16 +195,15 @@
             // 
             // buttonMain
             // 
-            buttonMain.BackColor = Color.Black;
+            buttonMain.BackColor = Color.FromArgb(32, 32, 32);
             buttonMain.Dock = DockStyle.Left;
             buttonMain.FlatAppearance.BorderSize = 0;
             buttonMain.FlatStyle = FlatStyle.Flat;
             buttonMain.Font = new Font("Segoe UI", 8.25F);
             buttonMain.ForeColor = Color.White;
-            buttonMain.Location = new Point(59, 0);
-            buttonMain.Margin = new Padding(3, 4, 3, 4);
+            buttonMain.Location = new Point(52, 0);
             buttonMain.Name = "buttonMain";
-            buttonMain.Size = new Size(86, 29);
+            buttonMain.Size = new Size(75, 22);
             buttonMain.TabIndex = 1;
             buttonMain.Text = "Главная";
             buttonMain.UseVisualStyleBackColor = false;
@@ -209,104 +217,87 @@
             buttonFile.FlatStyle = FlatStyle.Flat;
             buttonFile.Font = new Font("Segoe UI", 8.25F);
             buttonFile.Location = new Point(0, 0);
-            buttonFile.Margin = new Padding(3, 4, 3, 4);
             buttonFile.Name = "buttonFile";
-            buttonFile.Size = new Size(59, 29);
+            buttonFile.Size = new Size(52, 22);
             buttonFile.TabIndex = 0;
             buttonFile.Text = "Файл";
             buttonFile.UseVisualStyleBackColor = false;
             buttonFile.Click += buttonFile_Click;
             // 
-            // tabControl1
+            // tabControlShare
             // 
-            tabControl1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            tabControl1.Appearance = TabAppearance.FlatButtons;
-            tabControl1.Controls.Add(tabPageHome);
-            tabControl1.Controls.Add(tabPageShare);
-            tabControl1.Controls.Add(tabPageVid);
-            tabControl1.ItemSize = new Size(0, 1);
-            tabControl1.Location = new Point(-8, 0);
-            tabControl1.Margin = new Padding(3, 4, 3, 4);
-            tabControl1.Name = "tabControl1";
-            tabControl1.Padding = new Point(0, 0);
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(927, 181);
-            tabControl1.SizeMode = TabSizeMode.Fixed;
-            tabControl1.TabIndex = 1;
+            tabControlShare.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tabControlShare.Appearance = TabAppearance.FlatButtons;
+            tabControlShare.Controls.Add(tabPageHome);
+            tabControlShare.Controls.Add(tabPageShare);
+            tabControlShare.Controls.Add(tabPageVid);
+            tabControlShare.ItemSize = new Size(0, 1);
+            tabControlShare.Location = new Point(-7, 16);
+            tabControlShare.Name = "tabControlShare";
+            tabControlShare.Padding = new Point(0, 0);
+            tabControlShare.SelectedIndex = 0;
+            tabControlShare.Size = new Size(811, 122);
+            tabControlShare.SizeMode = TabSizeMode.Fixed;
+            tabControlShare.TabIndex = 1;
             // 
             // tabPageHome
             // 
-            tabPageHome.Controls.Add(flowLayoutPanel1);
+            tabPageHome.AutoScroll = true;
+            tabPageHome.BackColor = Color.FromArgb(32, 32, 32);
             tabPageHome.Location = new Point(4, 5);
-            tabPageHome.Margin = new Padding(3, 4, 3, 4);
             tabPageHome.Name = "tabPageHome";
-            tabPageHome.Padding = new Padding(3, 4, 3, 4);
-            tabPageHome.Size = new Size(919, 172);
+            tabPageHome.Padding = new Padding(3);
+            tabPageHome.Size = new Size(803, 113);
             tabPageHome.TabIndex = 0;
             tabPageHome.Text = "tabPage1";
-            tabPageHome.UseVisualStyleBackColor = true;
-            // 
-            // flowLayoutPanel1
-            // 
-            flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            flowLayoutPanel1.BackColor = Color.FromArgb(32, 32, 32);
-            flowLayoutPanel1.Location = new Point(3, 4);
-            flowLayoutPanel1.Margin = new Padding(3, 4, 3, 4);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(911, 161);
-            flowLayoutPanel1.TabIndex = 0;
             // 
             // tabPageShare
             // 
+            tabPageShare.AutoScroll = true;
+            tabPageShare.BackColor = Color.FromArgb(32, 32, 32);
             tabPageShare.Location = new Point(4, 5);
-            tabPageShare.Margin = new Padding(3, 4, 3, 4);
             tabPageShare.Name = "tabPageShare";
-            tabPageShare.Padding = new Padding(3, 4, 3, 4);
-            tabPageShare.Size = new Size(919, 172);
+            tabPageShare.Padding = new Padding(3);
+            tabPageShare.Size = new Size(803, 113);
             tabPageShare.TabIndex = 1;
             tabPageShare.Text = "tabPage2";
-            tabPageShare.UseVisualStyleBackColor = true;
             // 
             // tabPageVid
             // 
+            tabPageVid.AutoScroll = true;
+            tabPageVid.BackColor = Color.FromArgb(32, 32, 32);
             tabPageVid.Location = new Point(4, 5);
-            tabPageVid.Margin = new Padding(3, 4, 3, 4);
             tabPageVid.Name = "tabPageVid";
-            tabPageVid.Size = new Size(919, 172);
+            tabPageVid.Padding = new Padding(3);
+            tabPageVid.Size = new Size(803, 113);
             tabPageVid.TabIndex = 2;
             tabPageVid.Text = "tabPage1";
-            tabPageVid.UseVisualStyleBackColor = true;
             // 
             // panelHeader
             // 
             panelHeader.Controls.Add(buttonMinimize);
             panelHeader.Controls.Add(buttonMaximize);
             panelHeader.Controls.Add(buttonClose);
-            panelHeader.Controls.Add(toolStrip1);
+            panelHeader.Controls.Add(toolStripMain);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
-            panelHeader.Margin = new Padding(3, 4, 3, 4);
             panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(911, 28);
+            panelHeader.Size = new Size(797, 21);
             panelHeader.TabIndex = 10;
-            panelHeader.MouseDown += panelHeader_MouseDown;
-            panelHeader.MouseMove += panelHeader_MouseMove;
-            panelHeader.MouseUp += panelHeader_MouseUp;
             // 
             // buttonMinimize
             // 
             buttonMinimize.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             buttonMinimize.FlatAppearance.BorderSize = 0;
             buttonMinimize.FlatStyle = FlatStyle.Popup;
-            buttonMinimize.ForeColor = SystemColors.ControlLightLight;
-            buttonMinimize.Location = new Point(787, -1);
-            buttonMinimize.Margin = new Padding(3, 4, 3, 4);
+            buttonMinimize.ForeColor = Color.White;
+            buttonMinimize.Location = new Point(689, -1);
             buttonMinimize.Name = "buttonMinimize";
-            buttonMinimize.Size = new Size(41, 32);
+            buttonMinimize.Size = new Size(36, 24);
             buttonMinimize.TabIndex = 12;
-            buttonMinimize.Text = "--";
+            buttonMinimize.Text = "—";
             buttonMinimize.UseVisualStyleBackColor = true;
-            buttonMinimize.Click += buttonMinimize_Click;
+            buttonMinimize.Click += ButtonMinimize_Click;
             // 
             // buttonMaximize
             // 
@@ -314,15 +305,14 @@
             buttonMaximize.FlatAppearance.BorderSize = 0;
             buttonMaximize.FlatStyle = FlatStyle.Popup;
             buttonMaximize.Font = new Font("Segoe MDL2 Assets", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonMaximize.ForeColor = SystemColors.ControlLightLight;
-            buttonMaximize.Location = new Point(829, -1);
-            buttonMaximize.Margin = new Padding(3, 4, 3, 4);
+            buttonMaximize.ForeColor = Color.White;
+            buttonMaximize.Location = new Point(725, -1);
             buttonMaximize.Name = "buttonMaximize";
-            buttonMaximize.Size = new Size(41, 32);
+            buttonMaximize.Size = new Size(36, 24);
             buttonMaximize.TabIndex = 11;
             buttonMaximize.Text = "";
             buttonMaximize.UseVisualStyleBackColor = true;
-            buttonMaximize.Click += buttonMaximize_Click;
+            buttonMaximize.Click += ButtonMaximize_Click;
             // 
             // buttonClose
             // 
@@ -331,46 +321,46 @@
             buttonClose.FlatAppearance.BorderSize = 0;
             buttonClose.FlatStyle = FlatStyle.Flat;
             buttonClose.Font = new Font("Segoe MDL2 Assets", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonClose.ForeColor = SystemColors.ButtonHighlight;
-            buttonClose.Location = new Point(870, -1);
-            buttonClose.Margin = new Padding(3, 4, 3, 4);
+            buttonClose.ForeColor = Color.White;
+            buttonClose.Location = new Point(761, -1);
             buttonClose.Name = "buttonClose";
-            buttonClose.Size = new Size(41, 32);
+            buttonClose.Size = new Size(36, 24);
             buttonClose.TabIndex = 10;
             buttonClose.Text = "";
             buttonClose.UseVisualStyleBackColor = false;
-            buttonClose.Click += buttonClose_Click;
+            buttonClose.Click += ButtonClose_Click;
             // 
-            // toolStrip1
+            // toolStripMain
             // 
-            toolStrip1.BackColor = Color.Black;
-            toolStrip1.GripMargin = new Padding(0);
-            toolStrip1.GripStyle = ToolStripGripStyle.Hidden;
-            toolStrip1.ImageScalingSize = new Size(20, 20);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton1, toolStripSeparator1, toolStripButtonCreateFolder, toolStripButtonDelete, toolStripButton4, toolStripButton5, toolStripButton6, toolStripButton7, toolStripDropDownButton1, toolStripSeparator2, toolStripLabel1 });
-            toolStrip1.Location = new Point(0, 0);
-            toolStrip1.Name = "toolStrip1";
-            toolStrip1.Padding = new Padding(0);
-            toolStrip1.RenderMode = ToolStripRenderMode.Professional;
-            toolStrip1.Size = new Size(911, 27);
-            toolStrip1.TabIndex = 9;
-            toolStrip1.Text = "toolStrip1";
-            toolStrip1.MouseDown += toolStrip1_MouseDown;
+            toolStripMain.BackColor = Color.Black;
+            toolStripMain.GripMargin = new Padding(0);
+            toolStripMain.GripStyle = ToolStripGripStyle.Hidden;
+            toolStripMain.ImageScalingSize = new Size(20, 20);
+            toolStripMain.Items.AddRange(new ToolStripItem[] { toolStripButtonIcon, toolStripSeparator1, toolStripButtonCreateFolder, toolStripButtonDelete, toolStripButton4, toolStripButton5, toolStripButton6, toolStripButton7, toolStripDropDownButton1, toolStripSeparator2, toolStripLabel1 });
+            toolStripMain.Location = new Point(0, 0);
+            toolStripMain.Name = "toolStripMain";
+            toolStripMain.Padding = new Padding(0);
+            toolStripMain.RenderMode = ToolStripRenderMode.Professional;
+            toolStripMain.Size = new Size(797, 25);
+            toolStripMain.TabIndex = 9;
+            toolStripMain.Text = "toolStrip1";
             // 
-            // toolStripButton1
+            // toolStripButtonIcon
             // 
-            toolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton1.Image = (Image)resources.GetObject("toolStripButton1.Image");
-            toolStripButton1.ImageTransparentColor = Color.Magenta;
-            toolStripButton1.Name = "toolStripButton1";
-            toolStripButton1.Size = new Size(29, 24);
-            toolStripButton1.Text = "toolStripButton1";
+            toolStripButtonIcon.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripButtonIcon.Font = new Font("Segoe MDL2 Assets", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            toolStripButtonIcon.ForeColor = Color.Khaki;
+            toolStripButtonIcon.Image = (Image)resources.GetObject("toolStripButtonIcon.Image");
+            toolStripButtonIcon.ImageTransparentColor = Color.Magenta;
+            toolStripButtonIcon.Name = "toolStripButtonIcon";
+            toolStripButtonIcon.Size = new Size(24, 22);
+            toolStripButtonIcon.Text = "";
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.ForeColor = Color.FromArgb(60, 60, 60, 60);
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(6, 27);
+            toolStripSeparator1.Size = new Size(6, 25);
             // 
             // toolStripButtonCreateFolder
             // 
@@ -380,7 +370,7 @@
             toolStripButtonCreateFolder.Image = (Image)resources.GetObject("toolStripButtonCreateFolder.Image");
             toolStripButtonCreateFolder.ImageTransparentColor = Color.Magenta;
             toolStripButtonCreateFolder.Name = "toolStripButtonCreateFolder";
-            toolStripButtonCreateFolder.Size = new Size(29, 24);
+            toolStripButtonCreateFolder.Size = new Size(24, 22);
             toolStripButtonCreateFolder.Text = "";
             toolStripButtonCreateFolder.ToolTipText = "Создать папку\r\nСоздание папки";
             // 
@@ -392,7 +382,7 @@
             toolStripButtonDelete.Image = (Image)resources.GetObject("toolStripButtonDelete.Image");
             toolStripButtonDelete.ImageTransparentColor = Color.Magenta;
             toolStripButtonDelete.Name = "toolStripButtonDelete";
-            toolStripButtonDelete.Size = new Size(29, 24);
+            toolStripButtonDelete.Size = new Size(24, 22);
             toolStripButtonDelete.Text = "";
             toolStripButtonDelete.ToolTipText = "Удалить";
             // 
@@ -404,7 +394,7 @@
             toolStripButton4.Image = (Image)resources.GetObject("toolStripButton4.Image");
             toolStripButton4.ImageTransparentColor = Color.Magenta;
             toolStripButton4.Name = "toolStripButton4";
-            toolStripButton4.Size = new Size(29, 24);
+            toolStripButton4.Size = new Size(23, 22);
             toolStripButton4.Text = "";
             // 
             // toolStripButton5
@@ -415,7 +405,7 @@
             toolStripButton5.Image = (Image)resources.GetObject("toolStripButton5.Image");
             toolStripButton5.ImageTransparentColor = Color.Magenta;
             toolStripButton5.Name = "toolStripButton5";
-            toolStripButton5.Size = new Size(29, 24);
+            toolStripButton5.Size = new Size(25, 22);
             toolStripButton5.Text = "";
             // 
             // toolStripButton6
@@ -426,7 +416,7 @@
             toolStripButton6.Image = (Image)resources.GetObject("toolStripButton6.Image");
             toolStripButton6.ImageTransparentColor = Color.Magenta;
             toolStripButton6.Name = "toolStripButton6";
-            toolStripButton6.Size = new Size(29, 24);
+            toolStripButton6.Size = new Size(23, 22);
             toolStripButton6.Text = "";
             // 
             // toolStripButton7
@@ -437,110 +427,105 @@
             toolStripButton7.ImageAlign = ContentAlignment.BottomRight;
             toolStripButton7.ImageTransparentColor = Color.Magenta;
             toolStripButton7.Name = "toolStripButton7";
-            toolStripButton7.Size = new Size(29, 24);
+            toolStripButton7.Size = new Size(23, 22);
             toolStripButton7.Text = "";
             // 
             // toolStripDropDownButton1
             // 
             toolStripDropDownButton1.BackColor = Color.Black;
             toolStripDropDownButton1.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripDropDownButton1.DropDownItems.AddRange(new ToolStripItem[] { настройкаПанелиБыстрогоДоступаToolStripMenuItem });
+            toolStripDropDownButton1.DropDownItems.AddRange(new ToolStripItem[] { ToolStripMenuss });
             toolStripDropDownButton1.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             toolStripDropDownButton1.ForeColor = Color.White;
             toolStripDropDownButton1.Image = (Image)resources.GetObject("toolStripDropDownButton1.Image");
             toolStripDropDownButton1.ImageTransparentColor = Color.Magenta;
             toolStripDropDownButton1.Name = "toolStripDropDownButton1";
             toolStripDropDownButton1.ShowDropDownArrow = false;
-            toolStripDropDownButton1.Size = new Size(26, 24);
+            toolStripDropDownButton1.Size = new Size(21, 22);
             toolStripDropDownButton1.Text = "";
             // 
-            // настройкаПанелиБыстрогоДоступаToolStripMenuItem
+            // ToolStripMenuss
             // 
-            настройкаПанелиБыстрогоДоступаToolStripMenuItem.Name = "настройкаПанелиБыстрогоДоступаToolStripMenuItem";
-            настройкаПанелиБыстрогоДоступаToolStripMenuItem.Size = new Size(279, 26);
-            настройкаПанелиБыстрогоДоступаToolStripMenuItem.Text = "Настройка панели быстрого доступа";
+            ToolStripMenuss.Name = "ToolStripMenuss";
+            ToolStripMenuss.Size = new Size(229, 22);
+            ToolStripMenuss.Text = "Настройка панели быстрого доступа";
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.BackColor = Color.Black;
             toolStripSeparator2.ForeColor = Color.FromArgb(60, 60, 60, 60);
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(6, 27);
+            toolStripSeparator2.Size = new Size(6, 25);
             // 
             // toolStripLabel1
             // 
             toolStripLabel1.ForeColor = Color.White;
             toolStripLabel1.Name = "toolStripLabel1";
-            toolStripLabel1.Size = new Size(88, 24);
+            toolStripLabel1.Size = new Size(69, 22);
             toolStripLabel1.Text = "Проводник";
             // 
             // panel4
             // 
-            panel4.Controls.Add(splitContainer2);
+            panel4.Controls.Add(splitContainerForFiles);
             panel4.Dock = DockStyle.Fill;
-            panel4.Location = new Point(0, 36);
-            panel4.Margin = new Padding(3, 4, 3, 4);
+            panel4.Location = new Point(0, 27);
             panel4.Name = "panel4";
-            panel4.Size = new Size(911, 134);
+            panel4.Size = new Size(797, 100);
             panel4.TabIndex = 1;
             // 
-            // splitContainer2
+            // splitContainerForFiles
             // 
-            splitContainer2.Dock = DockStyle.Fill;
-            splitContainer2.FixedPanel = FixedPanel.Panel1;
-            splitContainer2.Location = new Point(0, 0);
-            splitContainer2.Margin = new Padding(3, 4, 3, 4);
-            splitContainer2.Name = "splitContainer2";
+            splitContainerForFiles.Dock = DockStyle.Fill;
+            splitContainerForFiles.FixedPanel = FixedPanel.Panel1;
+            splitContainerForFiles.Location = new Point(0, 0);
+            splitContainerForFiles.Name = "splitContainerForFiles";
             // 
-            // splitContainer2.Panel1
+            // splitContainerForFiles.Panel1
             // 
-            splitContainer2.Panel1.Controls.Add(treeView1);
+            splitContainerForFiles.Panel1.Controls.Add(treeViewFiles);
             // 
-            // splitContainer2.Panel2
+            // splitContainerForFiles.Panel2
             // 
-            splitContainer2.Panel2.Controls.Add(listView1);
-            splitContainer2.Size = new Size(911, 134);
-            splitContainer2.SplitterDistance = 214;
-            splitContainer2.SplitterWidth = 5;
-            splitContainer2.TabIndex = 0;
+            splitContainerForFiles.Panel2.Controls.Add(listViewFIles);
+            splitContainerForFiles.Size = new Size(797, 100);
+            splitContainerForFiles.SplitterDistance = 187;
+            splitContainerForFiles.TabIndex = 0;
             // 
-            // treeView1
+            // treeViewFiles
             // 
-            treeView1.BackColor = Color.FromArgb(25, 25, 25);
-            treeView1.BorderStyle = BorderStyle.None;
-            treeView1.Dock = DockStyle.Fill;
-            treeView1.DrawMode = TreeViewDrawMode.OwnerDrawText;
-            treeView1.ForeColor = Color.White;
-            treeView1.FullRowSelect = true;
-            treeView1.HotTracking = true;
-            treeView1.ItemHeight = 18;
-            treeView1.LineColor = Color.White;
-            treeView1.Location = new Point(0, 0);
-            treeView1.Margin = new Padding(3, 4, 3, 4);
-            treeView1.Name = "treeView1";
-            treeView1.ShowLines = false;
-            treeView1.Size = new Size(214, 134);
-            treeView1.TabIndex = 0;
-            treeView1.BeforeExpand += treeView1_BeforeExpand;
-            treeView1.DrawNode += treeView1_DrawNode;
-            treeView1.AfterSelect += treeView1_AfterSelect;
+            treeViewFiles.BackColor = Color.FromArgb(25, 25, 25);
+            treeViewFiles.BorderStyle = BorderStyle.None;
+            treeViewFiles.Dock = DockStyle.Fill;
+            treeViewFiles.ForeColor = Color.White;
+            treeViewFiles.FullRowSelect = true;
+            treeViewFiles.HotTracking = true;
+            treeViewFiles.ItemHeight = 25;
+            treeViewFiles.LineColor = Color.White;
+            treeViewFiles.Location = new Point(0, 0);
+            treeViewFiles.Name = "treeViewFiles";
+            treeViewFiles.ShowLines = false;
+            treeViewFiles.Size = new Size(187, 100);
+            treeViewFiles.TabIndex = 0;
+            treeViewFiles.BeforeExpand += treeView1_BeforeExpand;
+            treeViewFiles.AfterSelect += TreeView1_AfterSelect;
             // 
-            // listView1
+            // listViewFIles
             // 
-            listView1.BackColor = Color.FromArgb(32, 32, 32);
-            listView1.BorderStyle = BorderStyle.None;
-            listView1.Columns.AddRange(new ColumnHeader[] { columnHeaderName, columnHeaderEditDate, columnHeaderType, columnHeaderSize });
-            listView1.Dock = DockStyle.Fill;
-            listView1.ForeColor = Color.White;
-            listView1.FullRowSelect = true;
-            listView1.Location = new Point(0, 0);
-            listView1.Margin = new Padding(3, 4, 3, 4);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(692, 134);
-            listView1.TabIndex = 0;
-            listView1.UseCompatibleStateImageBehavior = false;
-            listView1.View = View.Details;
-            listView1.MouseDoubleClick += listView1_MouseDoubleClick;
+            listViewFIles.BackColor = Color.FromArgb(32, 32, 32);
+            listViewFIles.BorderStyle = BorderStyle.None;
+            listViewFIles.Columns.AddRange(new ColumnHeader[] { columnHeaderName, columnHeaderEditDate, columnHeaderType, columnHeaderSize });
+            listViewFIles.Dock = DockStyle.Fill;
+            listViewFIles.ForeColor = Color.White;
+            listViewFIles.FullRowSelect = true;
+            listViewFIles.Location = new Point(0, 0);
+            listViewFIles.Name = "listViewFIles";
+            listViewFIles.Size = new Size(606, 100);
+            listViewFIles.TabIndex = 0;
+            listViewFIles.UseCompatibleStateImageBehavior = false;
+            listViewFIles.View = View.Details;
+            listViewFIles.ItemSelectionChanged += listView1_ItemSelectionChanged;
+            listViewFIles.MouseDoubleClick += listView1_MouseDoubleClick;
+            listViewFIles.MouseUp += listView1_MouseUp;
             // 
             // columnHeaderName
             // 
@@ -562,56 +547,96 @@
             columnHeaderSize.Text = "Размер";
             columnHeaderSize.Width = 100;
             // 
-            // panel2
-            // 
-            panel2.BackColor = Color.FromArgb(51, 51, 51);
-            panel2.Controls.Add(statusStrip1);
-            panel2.Dock = DockStyle.Bottom;
-            panel2.Location = new Point(0, 170);
-            panel2.Margin = new Padding(3, 4, 3, 4);
-            panel2.Name = "panel2";
-            panel2.Padding = new Padding(3, 0, 3, 4);
-            panel2.Size = new Size(911, 31);
-            panel2.TabIndex = 2;
-            // 
-            // statusStrip1
-            // 
-            statusStrip1.BackColor = Color.FromArgb(51, 51, 51);
-            statusStrip1.Dock = DockStyle.Left;
-            statusStrip1.ImageScalingSize = new Size(20, 20);
-            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
-            statusStrip1.Location = new Point(3, 0);
-            statusStrip1.Name = "statusStrip1";
-            statusStrip1.Padding = new Padding(1, 4, 1, 29);
-            statusStrip1.Size = new Size(153, 27);
-            statusStrip1.SizingGrip = false;
-            statusStrip1.TabIndex = 0;
-            statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            toolStripStatusLabel1.Size = new Size(151, 20);
-            toolStripStatusLabel1.Text = "toolStripStatusLabel1";
-            // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(25, 25, 25);
-            panel1.Controls.Add(label3);
-            panel1.Controls.Add(label2);
-            panel1.Controls.Add(label1);
+            panel1.Controls.Add(panel3);
+            panel1.Controls.Add(labelFind);
             panel1.Controls.Add(button3);
-            panel1.Controls.Add(comboBox2);
-            panel1.Controls.Add(button2);
-            panel1.Controls.Add(button1);
-            panel1.Controls.Add(comboBox1);
-            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(buttonForward);
+            panel1.Controls.Add(buttonBack);
+            panel1.Controls.Add(textBoxFind);
+            panel1.Controls.Add(buttonDropDown);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(911, 36);
+            panel1.Size = new Size(797, 27);
             panel1.TabIndex = 1;
+            // 
+            // panel3
+            // 
+            panel3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel3.BorderStyle = BorderStyle.FixedSingle;
+            panel3.Controls.Add(buttonAdressBar);
+            panel3.Controls.Add(labelUpdateDrivers);
+            panel3.Controls.Add(comboBoxAdressBar);
+            panel3.Controls.Add(comboBoxLastWas);
+            panel3.Location = new Point(153, 4);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(421, 17);
+            panel3.TabIndex = 1;
+            // 
+            // buttonAdressBar
+            // 
+            buttonAdressBar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonAdressBar.FlatAppearance.BorderSize = 0;
+            buttonAdressBar.FlatStyle = FlatStyle.Flat;
+            buttonAdressBar.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            buttonAdressBar.ForeColor = Color.White;
+            buttonAdressBar.Location = new Point(371, -2);
+            buttonAdressBar.Name = "buttonAdressBar";
+            buttonAdressBar.Size = new Size(26, 23);
+            buttonAdressBar.TabIndex = 9;
+            buttonAdressBar.Text = "";
+            buttonAdressBar.UseVisualStyleBackColor = true;
+            buttonAdressBar.Click += buttonAdressBar_Click;
+            // 
+            // labelUpdateDrivers
+            // 
+            labelUpdateDrivers.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            labelUpdateDrivers.AutoSize = true;
+            labelUpdateDrivers.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelUpdateDrivers.Location = new Point(397, 3);
+            labelUpdateDrivers.Name = "labelUpdateDrivers";
+            labelUpdateDrivers.Size = new Size(18, 12);
+            labelUpdateDrivers.TabIndex = 7;
+            labelUpdateDrivers.Text = "";
+            // 
+            // comboBoxAdressBar
+            // 
+            comboBoxAdressBar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            comboBoxAdressBar.BackColor = Color.FromArgb(25, 25, 25);
+            comboBoxAdressBar.ForeColor = Color.White;
+            comboBoxAdressBar.FormattingEnabled = true;
+            comboBoxAdressBar.ItemHeight = 15;
+            comboBoxAdressBar.Location = new Point(-3, -3);
+            comboBoxAdressBar.Name = "comboBoxAdressBar";
+            comboBoxAdressBar.Size = new Size(394, 23);
+            comboBoxAdressBar.TabIndex = 1;
+            comboBoxAdressBar.KeyDown += comboBox1_KeyDown;
+            // 
+            // comboBoxLastWas
+            // 
+            comboBoxLastWas.BackColor = Color.FromArgb(25, 25, 25);
+            comboBoxLastWas.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxLastWas.ForeColor = Color.White;
+            comboBoxLastWas.FormattingEnabled = true;
+            comboBoxLastWas.Location = new Point(-143, -3);
+            comboBoxLastWas.Name = "comboBoxLastWas";
+            comboBoxLastWas.Size = new Size(136, 23);
+            comboBoxLastWas.TabIndex = 4;
+            // 
+            // labelFind
+            // 
+            labelFind.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            labelFind.AutoSize = true;
+            labelFind.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelFind.ForeColor = SystemColors.ActiveBorder;
+            labelFind.Location = new Point(769, 7);
+            labelFind.Name = "labelFind";
+            labelFind.Size = new Size(18, 12);
+            labelFind.TabIndex = 6;
+            labelFind.Text = "";
             // 
             // button3
             // 
@@ -619,169 +644,260 @@
             button3.FlatAppearance.BorderSize = 0;
             button3.FlatStyle = FlatStyle.Flat;
             button3.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button3.Location = new Point(120, 3);
-            button3.Margin = new Padding(3, 4, 3, 4);
+            button3.Location = new Point(105, 2);
             button3.Name = "button3";
-            button3.Size = new Size(38, 31);
+            button3.Size = new Size(33, 23);
             button3.TabIndex = 5;
             button3.Text = "";
             button3.UseVisualStyleBackColor = false;
+            button3.Click += button3_Click;
             // 
-            // comboBox2
+            // buttonForward
             // 
-            comboBox2.BackColor = Color.FromArgb(25, 25, 25);
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(88, 3);
-            comboBox2.Margin = new Padding(3, 4, 3, 4);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(25, 28);
-            comboBox2.TabIndex = 4;
+            buttonForward.BackColor = Color.FromArgb(25, 25, 25);
+            buttonForward.FlatAppearance.BorderSize = 0;
+            buttonForward.FlatStyle = FlatStyle.Flat;
+            buttonForward.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            buttonForward.Location = new Point(39, 1);
+            buttonForward.Name = "buttonForward";
+            buttonForward.Size = new Size(32, 23);
+            buttonForward.TabIndex = 3;
+            buttonForward.Text = "";
+            buttonForward.UseVisualStyleBackColor = false;
+            buttonForward.Click += buttonForward_Click;
             // 
-            // button2
+            // buttonBack
             // 
-            button2.BackColor = Color.FromArgb(25, 25, 25);
-            button2.FlatAppearance.BorderSize = 0;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.Location = new Point(45, 1);
-            button2.Margin = new Padding(3, 4, 3, 4);
-            button2.Name = "button2";
-            button2.Size = new Size(37, 31);
-            button2.TabIndex = 3;
-            button2.Text = "";
-            button2.UseVisualStyleBackColor = false;
+            buttonBack.BackColor = Color.FromArgb(25, 25, 25);
+            buttonBack.FlatAppearance.BorderSize = 0;
+            buttonBack.FlatStyle = FlatStyle.Flat;
+            buttonBack.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            buttonBack.Location = new Point(3, 1);
+            buttonBack.Name = "buttonBack";
+            buttonBack.Size = new Size(30, 23);
+            buttonBack.TabIndex = 2;
+            buttonBack.Text = "";
+            buttonBack.UseVisualStyleBackColor = false;
+            buttonBack.Click += buttonBack_Click;
             // 
-            // button1
+            // textBoxFind
             // 
-            button1.BackColor = Color.FromArgb(25, 25, 25);
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(3, 1);
-            button1.Margin = new Padding(3, 4, 3, 4);
-            button1.Name = "button1";
-            button1.Size = new Size(34, 31);
-            button1.TabIndex = 2;
-            button1.Text = "";
-            button1.UseVisualStyleBackColor = false;
+            textBoxFind.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            textBoxFind.BackColor = Color.FromArgb(25, 25, 25);
+            textBoxFind.BorderStyle = BorderStyle.FixedSingle;
+            textBoxFind.ForeColor = Color.White;
+            textBoxFind.Location = new Point(607, 2);
+            textBoxFind.Name = "textBoxFind";
+            textBoxFind.Size = new Size(185, 23);
+            textBoxFind.TabIndex = 0;
+            textBoxFind.KeyDown += textBox1_KeyDown;
             // 
-            // comboBox1
+            // buttonDropDown
             // 
-            comboBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            comboBox1.BackColor = Color.FromArgb(25, 25, 25);
-            comboBox1.DrawMode = DrawMode.OwnerDrawFixed;
-            comboBox1.ForeColor = Color.White;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.ItemHeight = 24;
-            comboBox1.Location = new Point(191, -1);
-            comboBox1.Margin = new Padding(3, 4, 3, 4);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(458, 30);
-            comboBox1.TabIndex = 1;
-            comboBox1.KeyDown += comboBox1_KeyDown;
+            buttonDropDown.FlatAppearance.BorderSize = 0;
+            buttonDropDown.FlatStyle = FlatStyle.Flat;
+            buttonDropDown.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            buttonDropDown.ForeColor = Color.White;
+            buttonDropDown.Location = new Point(77, 2);
+            buttonDropDown.Name = "buttonDropDown";
+            buttonDropDown.Size = new Size(26, 23);
+            buttonDropDown.TabIndex = 10;
+            buttonDropDown.Text = "";
+            buttonDropDown.UseVisualStyleBackColor = true;
+            buttonDropDown.Click += buttonDropDown_Click;
             // 
-            // textBox1
+            // panel2
             // 
-            textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            textBox1.BackColor = Color.FromArgb(25, 25, 25);
-            textBox1.BorderStyle = BorderStyle.FixedSingle;
-            textBox1.Location = new Point(695, 1);
-            textBox1.Margin = new Padding(3, 4, 3, 4);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(211, 27);
-            textBox1.TabIndex = 0;
+            panel2.BackColor = Color.FromArgb(51, 51, 51);
+            panel2.Controls.Add(buttonSmallElements);
+            panel2.Controls.Add(buttonBigElements);
+            panel2.Controls.Add(panel5);
+            panel2.Dock = DockStyle.Bottom;
+            panel2.Location = new Point(0, 127);
+            panel2.Name = "panel2";
+            panel2.Padding = new Padding(3, 0, 3, 3);
+            panel2.Size = new Size(797, 23);
+            panel2.TabIndex = 2;
             // 
-            // label1
+            // buttonSmallElements
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = SystemColors.ActiveBorder;
-            label1.Location = new Point(878, 7);
-            label1.Name = "label1";
-            label1.Size = new Size(23, 15);
-            label1.TabIndex = 6;
-            label1.Text = "";
+            buttonSmallElements.BackColor = Color.FromArgb(51, 51, 51);
+            buttonSmallElements.Dock = DockStyle.Right;
+            buttonSmallElements.FlatAppearance.BorderSize = 0;
+            buttonSmallElements.FlatStyle = FlatStyle.Flat;
+            buttonSmallElements.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            buttonSmallElements.ForeColor = Color.White;
+            buttonSmallElements.Location = new Point(754, 0);
+            buttonSmallElements.Name = "buttonSmallElements";
+            buttonSmallElements.Size = new Size(20, 20);
+            buttonSmallElements.TabIndex = 2;
+            buttonSmallElements.Text = "";
+            buttonSmallElements.UseVisualStyleBackColor = false;
+            buttonSmallElements.Click += buttonSmallElements_Click;
             // 
-            // label2
+            // buttonBigElements
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(600, 7);
-            label2.Name = "label2";
-            label2.Size = new Size(23, 15);
-            label2.TabIndex = 7;
-            label2.Text = "";
-            label2.Click += label2_Click;
+            buttonBigElements.Dock = DockStyle.Right;
+            buttonBigElements.FlatAppearance.BorderSize = 0;
+            buttonBigElements.FlatStyle = FlatStyle.Flat;
+            buttonBigElements.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            buttonBigElements.ForeColor = Color.White;
+            buttonBigElements.Location = new Point(774, 0);
+            buttonBigElements.Name = "buttonBigElements";
+            buttonBigElements.Size = new Size(20, 20);
+            buttonBigElements.TabIndex = 1;
+            buttonBigElements.Text = "";
+            buttonBigElements.UseVisualStyleBackColor = true;
+            buttonBigElements.Click += buttonBigElements_Click;
             // 
-            // label3
+            // panel5
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(571, 7);
-            label3.Name = "label3";
-            label3.Size = new Size(23, 15);
-            label3.TabIndex = 8;
-            label3.Text = "";
+            panel5.Controls.Add(statusStripMain);
+            panel5.Dock = DockStyle.Left;
+            panel5.Location = new Point(3, 0);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(722, 20);
+            panel5.TabIndex = 0;
+            // 
+            // statusStripMain
+            // 
+            statusStripMain.BackColor = Color.FromArgb(51, 51, 51, 51);
+            statusStripMain.Location = new Point(0, -2);
+            statusStripMain.Name = "statusStripMain";
+            statusStripMain.Size = new Size(722, 22);
+            statusStripMain.SizingGrip = false;
+            statusStripMain.TabIndex = 0;
+            statusStripMain.Text = "statusStrip1";
+            // 
+            // contextMenuStripListView
+            // 
+            contextMenuStripListView.BackColor = Color.FromArgb(32, 32, 32);
+            contextMenuStripListView.Items.AddRange(new ToolStripItem[] { createToolStripMenuItem, InsertToolStripMenuItem });
+            contextMenuStripListView.Name = "contextMenuStrip1";
+            contextMenuStripListView.RenderMode = ToolStripRenderMode.System;
+            contextMenuStripListView.Size = new Size(123, 48);
+            // 
+            // createToolStripMenuItem
+            // 
+            createToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { createFolderToolStripMenuItem });
+            createToolStripMenuItem.ForeColor = Color.White;
+            createToolStripMenuItem.Name = "createToolStripMenuItem";
+            createToolStripMenuItem.Size = new Size(122, 22);
+            createToolStripMenuItem.Text = "Создать";
+            // 
+            // createFolderToolStripMenuItem
+            // 
+            createFolderToolStripMenuItem.Name = "createFolderToolStripMenuItem";
+            createFolderToolStripMenuItem.Size = new Size(180, 22);
+            createFolderToolStripMenuItem.Text = "Папку";
+            createFolderToolStripMenuItem.Click += createFolderToolStripMenuItem_Click;
+            // 
+            // InsertToolStripMenuItem
+            // 
+            InsertToolStripMenuItem.Name = "InsertToolStripMenuItem";
+            InsertToolStripMenuItem.Size = new Size(122, 22);
+            InsertToolStripMenuItem.Text = "Вставить";
+            InsertToolStripMenuItem.Click += ButtonPaste_Click;
+            // 
+            // contextMenuStripMain
+            // 
+            contextMenuStripMain.BackColor = Color.FromArgb(32, 32, 32);
+            contextMenuStripMain.Items.AddRange(new ToolStripItem[] { ToolStripMenuItemOpen, ToolStripMenuItemCopy, ToolStripMenuItemRename, ToolStripMenuItemDelete });
+            contextMenuStripMain.Name = "contextMenuStrip1";
+            contextMenuStripMain.RenderMode = ToolStripRenderMode.System;
+            contextMenuStripMain.Size = new Size(162, 92);
+            // 
+            // ToolStripMenuItemOpen
+            // 
+            ToolStripMenuItemOpen.ForeColor = Color.White;
+            ToolStripMenuItemOpen.Name = "ToolStripMenuItemOpen";
+            ToolStripMenuItemOpen.Size = new Size(161, 22);
+            ToolStripMenuItemOpen.Text = "Открыть";
+            ToolStripMenuItemOpen.Click += ToolStripMenuItemOpen_Click;
+            // 
+            // ToolStripMenuItemCopy
+            // 
+            ToolStripMenuItemCopy.ForeColor = Color.White;
+            ToolStripMenuItemCopy.Name = "ToolStripMenuItemCopy";
+            ToolStripMenuItemCopy.Size = new Size(161, 22);
+            ToolStripMenuItemCopy.Text = "Копировать";
+            ToolStripMenuItemCopy.Click += ButtonCopy_Click;
+            // 
+            // ToolStripMenuItemRename
+            // 
+            ToolStripMenuItemRename.ForeColor = Color.White;
+            ToolStripMenuItemRename.Name = "ToolStripMenuItemRename";
+            ToolStripMenuItemRename.Size = new Size(161, 22);
+            ToolStripMenuItemRename.Text = "Переименовать";
+            ToolStripMenuItemRename.Click += ButtonRename_Click;
+            // 
+            // ToolStripMenuItemDelete
+            // 
+            ToolStripMenuItemDelete.ForeColor = Color.White;
+            ToolStripMenuItemDelete.Name = "ToolStripMenuItemDelete";
+            ToolStripMenuItemDelete.Size = new Size(161, 22);
+            ToolStripMenuItemDelete.Text = "Удалить";
+            ToolStripMenuItemDelete.Click += ButtonDelete_Click;
             // 
             // FormMain
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(51, 51, 51);
-            ClientSize = new Size(914, 409);
-            Controls.Add(splitContainer1);
+            ClientSize = new Size(800, 307);
+            Controls.Add(splitContainerMain);
             ForeColor = Color.Beige;
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(3, 4, 3, 4);
+            MinimumSize = new Size(400, 300);
             Name = "FormMain";
             Text = "FormMain";
-            splitContainer1.Panel1.ResumeLayout(false);
-            splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
-            splitContainer1.ResumeLayout(false);
+            splitContainerMain.Panel1.ResumeLayout(false);
+            splitContainerMain.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainerMain).EndInit();
+            splitContainerMain.ResumeLayout(false);
             panelRibbon.ResumeLayout(false);
             panelRibbonButtons.ResumeLayout(false);
-            tabControl1.ResumeLayout(false);
-            tabPageHome.ResumeLayout(false);
+            tabControlShare.ResumeLayout(false);
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
-            toolStrip1.ResumeLayout(false);
-            toolStrip1.PerformLayout();
+            toolStripMain.ResumeLayout(false);
+            toolStripMain.PerformLayout();
             panel4.ResumeLayout(false);
-            splitContainer2.Panel1.ResumeLayout(false);
-            splitContainer2.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
-            splitContainer2.ResumeLayout(false);
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            statusStrip1.ResumeLayout(false);
-            statusStrip1.PerformLayout();
+            splitContainerForFiles.Panel1.ResumeLayout(false);
+            splitContainerForFiles.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainerForFiles).EndInit();
+            splitContainerForFiles.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
+            contextMenuStripListView.ResumeLayout(false);
+            contextMenuStripMain.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private SplitContainer splitContainer1;
-        private SplitContainer splitContainer2;
-        private TreeView treeView1;
-        private ListView listView1;
+        private SplitContainer splitContainerMain;
+        private SplitContainer splitContainerForFiles;
+        private TreeView treeViewFiles;
+        private ListView listViewFIles;
         private Panel panel2;
-        private StatusStrip statusStrip1;
         private Panel panel1;
         private Panel panel4;
-        private ToolStripStatusLabel toolStripStatusLabel1;
         private Panel panelHeader;
         private Button buttonMinimize;
         private Button buttonMaximize;
         private Button buttonClose;
-        private ToolStrip toolStrip1;
-        private ToolStripButton toolStripButton1;
+        private ToolStrip toolStripMain;
+        private ToolStripButton toolStripButtonIcon;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripButton toolStripButtonCreateFolder;
         private ToolStripDropDownButton toolStripDropDownButton1;
-        private ToolStripMenuItem настройкаПанелиБыстрогоДоступаToolStripMenuItem;
+        private ToolStripMenuItem ToolStripMenuss;
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripLabel toolStripLabel1;
         private ToolStripButton toolStripButtonDelete;
@@ -799,19 +915,33 @@
         private Button buttonFile;
         private Button buttonShare;
         private Button buttonVid;
-        private TextBox textBox1;
-        private ComboBox comboBox1;
+        private TextBox textBoxFind;
+        private ComboBox comboBoxAdressBar;
         private Button button3;
-        private ComboBox comboBox2;
-        private Button button2;
-        private Button button1;
-        private TabControl tabControl1;
+        private ComboBox comboBoxLastWas;
+        private Button buttonForward;
+        private Button buttonBack;
+        private TabControl tabControlShare;
         private TabPage tabPageHome;
         private TabPage tabPageShare;
-        private FlowLayoutPanel flowLayoutPanel1;
         private TabPage tabPageVid;
-        private Label label1;
-        private Label label3;
-        private Label label2;
+        private Label labelFind;
+        private Label labelUpdateDrivers;
+        private Panel panel3;
+        private Button buttonAdressBar;
+        private Button buttonDropDown;
+        private ContextMenuStrip contextMenuStripListView;
+        private ToolStripMenuItem createToolStripMenuItem;
+        private ToolStripMenuItem createFolderToolStripMenuItem;
+        private ContextMenuStrip contextMenuStripMain;
+        private ToolStripMenuItem ToolStripMenuItemOpen;
+        private ToolStripMenuItem ToolStripMenuItemCopy;
+        private ToolStripMenuItem ToolStripMenuItemRename;
+        private ToolStripMenuItem ToolStripMenuItemDelete;
+        private ToolStripMenuItem InsertToolStripMenuItem;
+        private Button buttonSmallElements;
+        private Button buttonBigElements;
+        private Panel panel5;
+        private StatusStrip statusStripMain;
     }
 }

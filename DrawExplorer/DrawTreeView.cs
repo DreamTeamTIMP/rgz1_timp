@@ -1,51 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using rgz1_timp.ImportedDll;
 
 namespace rgz1_timp.DrawExplorer
 {
     internal static class DrawTreeView
     {
-        [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
-        private static extern int SetWindowTheme(IntPtr hWnd, string pszSubAppName, string pszSubIdList);
-
+        
         public static void DrawSystemTreeView(TreeView treeView)
         {
-            SetWindowTheme(treeView.Handle, "explorer", null);
+            _ = Dll.SetWindowTheme(treeView.Handle, "explorer", null);
+            treeView.ImageList = DrawIcons.SmallIcons;
             LoadDrives(treeView);
         }
-
-        [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
-        private static extern IntPtr ExtractIcon(IntPtr hInst, string lpszExeFileName, int nIconIndex);
-
-        public static ImageList GetSystemImageList()
+        public static void DrawMyComputer(TreeView treeView)
         {
-            ImageList imgList = new ImageList { ImageSize = new Size(16, 16), ColorDepth = ColorDepth.Depth32Bit };
 
-            // Индексы в shell32.dll: 3 - папка, 7 - диск, 17 - сеть, 1022 - звезда (быстрый доступ)
-            imgList.Images.Add("folder", Icon.FromHandle(ExtractIcon(IntPtr.Zero, "shell32.dll", 3)));
-            imgList.Images.Add("drive", Icon.FromHandle(ExtractIcon(IntPtr.Zero, "shell32.dll", 7)));
-            imgList.Images.Add("quick", Icon.FromHandle(ExtractIcon(IntPtr.Zero, "shell32.dll", 1022)));
-            imgList.Images.Add("pc", Icon.FromHandle(ExtractIcon(IntPtr.Zero, "imageres.dll", 140))); // Этот компьютер
-
-            return imgList;
         }
-
         private static void LoadDrives(TreeView treeView)
         {
             treeView.Nodes.Clear();
             TreeNode quickAccess = new TreeNode("Быстрый доступ");
-            quickAccess.Tag = "QUICK_ACCESS"; // Метка для отрисовки
+            quickAccess.Tag = "Быстрый доступ"; // Метка для отрисовки
             quickAccess.Nodes.Add(new TreeNode("Рабочий стол") { Tag = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) });
             quickAccess.Nodes.Add(new TreeNode("Загрузки") { Tag = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads") });
             quickAccess.Nodes.Add(new TreeNode("Документы") { Tag = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) });
             // 2. Этот компьютер
-            TreeNode thisPC = new TreeNode("Этот компьютер");
-            thisPC.Tag = "THIS_PC";
-            
+            TreeNode thisPC = new TreeNode("Этот компьютер") ;
+            thisPC.Tag = "Этот компьютер";
             // Добавляем диски в "Этот компьютер"
             foreach (DriveInfo drive in DriveInfo.GetDrives().Where(d => d.IsReady))
             {
@@ -55,7 +35,7 @@ namespace rgz1_timp.DrawExplorer
                 driveNode.Nodes.Add(""); // Пустышка для возможности раскрытия
                 thisPC.Nodes.Add(driveNode);
             }
-            
+
             treeView.Nodes.Add(quickAccess);
             treeView.Nodes.Add(thisPC);
             quickAccess.ImageKey = quickAccess.SelectedImageKey = "quick";
@@ -65,11 +45,13 @@ namespace rgz1_timp.DrawExplorer
 
         internal static void AddNodes(TreeViewCancelEventArgs e)
         {
-            if (e.Node.Text == "") return;
+            if (e.Node is null) return;
+            if (e.Node.Text == "") return;         
             if (e.Node.Nodes.Count == 1 && e.Node.Nodes[0].Text == "")
             {
                 e.Node.Nodes.Clear();
-                string path = e.Node.Tag.ToString();
+                string path = e.Node.Tag.ToString() ?? string.Empty;
+                if (string.IsNullOrEmpty(path)) return;
                 try
                 {
                     foreach (string dir in Directory.GetDirectories(path))

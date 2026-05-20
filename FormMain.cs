@@ -1,151 +1,450 @@
-﻿using rgz1_timp.DrawExplorer;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.VisualBasic;
+using Microsoft.VisualBasic.FileIO;
+using rgz1_timp.Command;
+using rgz1_timp.DrawExplorer;
+using rgz1_timp.ImportedDll;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
+
 namespace rgz1_timp
 {
     public partial class FormMain : Form
     {
-        private bool dragging = false;
-        private Point startPoint = Point.Empty;
+        //  ПОЛЯ 
+        private static bool drawDetails = true;
 
-        [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
+        private readonly CurrentPathModel currentPathModel = new();
+        private string? _copiedPath;
+        private bool _isCut; // true - вырезать, false - копировать
 
-        [DllImport("user32.dll")]
-        public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-
-        private const int WM_NCLBUTTONDOWN = 0xA1;
-        private const int HT_CAPTION = 0x2;
-
+        //  КОНСТРУКТОР 
         public FormMain()
         {
             InitializeComponent();
-            DrawTreeView.DrawSystemTreeView(treeView1);
-            DrawListView.DrawSystemListView(listView1);
-            DrawRibbon.SetupRibbon(tabControl1);
+
+            currentPathModel.PathChanged += OnPathChanged;
+            currentPathModel.NavigationStateChanged += UpdateNavigationButtons;
+
+            DrawTreeView.DrawSystemTreeView(treeViewFiles);
+            DrawListView.DrawSystemListView(listViewFIles);
+            DrawRibbon.SetupRibbon(tabControlShare, this);
+            DrawDropDownList.DrawSystemDropDownList(comboBoxLastWas, treeViewFiles);
         }
 
-        private void buttonClose_Click(object sender, EventArgs e) => Close();
-
-        private void buttonMaximize_Click(object sender, EventArgs e)
+        //  ОБРАБОТЧИКИ СОБЫТИЙ МОДЕЛИ 
+        private void OnPathChanged(string? path)
         {
-            if (WindowState == FormWindowState.Normal)
-                WindowState = FormWindowState.Maximized;
+            if (string.IsNullOrEmpty(path)) return;
+            DrawListView.LoadDirectory(listViewFIles, path, drawDetails);
+            DrawAdressBar.UpdateAddressBar(comboBoxAdressBar, path);
+            DrawStatusStrip.UpdateStatusStrip(statusStripMain, listViewFIles);
+        }
+
+        private void UpdateNavigationButtons()
+        {
+            buttonBack.Enabled = currentPathModel.CanGoBack;
+            buttonForward.Enabled = currentPathModel.CanGoForward;
+        }
+
+        //  ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ 
+        private string? GetSelectedItemPath()
+        {
+            return listViewFIles.SelectedItems.Count > 0
+                ? listViewFIles.SelectedItems[0].Tag?.ToString()
+                : null;
+        }
+
+        private string GetCurrentDirectory()
+        {
+            return comboBoxAdressBar.Text;
+        }
+
+        private string GetUniqueFolderName(string parentPath)
+        {
+            string baseName = "Новая папка";
+            string folderName = baseName;
+            int counter = 1;
+
+            while (Directory.Exists(Path.Combine(parentPath, folderName)))
+            {
+                counter++;
+                folderName = $"{baseName} ({counter})";
+            }
+            return folderName;
+        }
+
+        private bool IsCyclicOperation(string sourcePath, string destinationDir)
+        {
+            if (!Directory.Exists(sourcePath)) return false;
+
+            string sourceFull = Path.GetFullPath(sourcePath).TrimEnd(Path.DirectorySeparatorChar);
+            string destFull = Path.GetFullPath(destinationDir).TrimEnd(Path.DirectorySeparatorChar);
+
+            return destFull == sourceFull || destFull.StartsWith(sourceFull + Path.DirectorySeparatorChar);
+        }
+
+        private void OpenFile()
+        {
+            string? path = GetSelectedItemPath();
+            if (string.IsNullOrEmpty(path)) return;
+
+            if (Directory.Exists(path))
+            {
+                currentPathModel.Path = path;
+            }
+            else if (File.Exists(path))
+            {
+                try
+                {
+                    Process.Start(new ProcessStartInfo { FileName = path, UseShellExecute = true });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Не удалось открыть файл: {ex.Message}");
+                }
+            }
+        }
+
+        private void RefreshUiAfterCommand()
+        {
+            currentPathModel.Refresh();
+        }
+
+        //  ОПЕРАЦИИ С ФАЙЛАМИ/ПАПКАМИ 
+        public void CreateNewFolder()
+        {
+            string currentDir = currentPathModel.Path!;
+            if (string.IsNullOrEmpty(currentDir) || !Directory.Exists(currentDir)) return;
+
+            string newFolderName = GetUniqueFolderName(currentDir);
+            var command = new NewFolderCommand(currentDir, newFolderName);
+            CommandInvoker.ExecuteCommand(command);
+            RefreshUiAfterCommand();
+        }
+
+        public void CreateNewFile()
+        {
+            string currentDir = GetCurrentDirectory();
+            if (!Directory.Exists(currentDir)) return;
+
+            string baseName = "Новый текстовый документ.txt";
+            string fileName = baseName;
+            int counter = 1;
+
+            while (File.Exists(Path.Combine(currentDir, fileName)))
+            {
+                fileName = $"Новый текстовый документ ({counter}).txt";
+                counter++;
+            }
+
+            var command = new CreateFileCommand(currentDir, fileName);
+            CommandInvoker.ExecuteCommand(command);
+            RefreshUiAfterCommand();
+        }
+
+        //  БУФЕР ОБМЕНА 
+        public void CopySelectedItem()
+        {
+            string? path = GetSelectedItemPath();
+            if (path != null)
+            {
+                _copiedPath = path;
+                _isCut = false;
+            }
+        }
+
+        public void CutSelectedItem()
+        {
+            string? path = GetSelectedItemPath();
+            if (path != null)
+            {
+                _copiedPath = path;
+                _isCut = true;
+            }
+        }
+
+        public void PasteItem()
+        {
+            if (string.IsNullOrEmpty(_copiedPath)) return;
+            string destDir = GetCurrentDirectory();
+            if (!Directory.Exists(destDir)) return;
+
+            if (IsCyclicOperation(_copiedPath, destDir))
+            {
+                MessageBox.Show("Нельзя вставить папку в саму себя или в её подпапку.",
+                                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string destPath = Path.Combine(destDir, Path.GetFileName(_copiedPath));
+            ICommand command = _isCut
+                ? new MoveCommand(_copiedPath, destPath)
+                : new CopyCommand(_copiedPath, destPath);
+
+            try
+            {
+                CommandInvoker.ExecuteCommand(command);
+                if (_isCut)
+                {
+                    _copiedPath = null;
+                    _isCut = false;
+                }
+                RefreshUiAfterCommand();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при вставке: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        internal void SimpleAccess()
+        {
+            // todo
+        }
+
+        public void MoveToDialog()
+        {
+            // Можно реализовать выбор папки через FolderBrowserDialog
+            string? path = GetSelectedItemPath();
+            if (path == null) return;
+            using (var fbd = new FolderBrowserDialog())
+            {
+                if (fbd.ShowDialog() == DialogResult.OK)
+                {
+                    string destDir = fbd.SelectedPath;
+                    if (Directory.Exists(path) && IsCyclicOperation(path, destDir))
+                    {
+                        MessageBox.Show("Нельзя переместить папку в саму себя.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    string destPath = Path.Combine(destDir, Path.GetFileName(path));
+                    var cmd = new MoveCommand(path, destPath);
+                    CommandInvoker.ExecuteCommand(cmd);
+                    RefreshUiAfterCommand();
+                }
+            }
+        }
+
+        public void CopyToDialog()
+        {
+            string? path = GetSelectedItemPath();
+            if (path == null) return;
+            using (var fbd = new FolderBrowserDialog())
+            {
+                if (fbd.ShowDialog() == DialogResult.OK)
+                {
+                    string destDir = fbd.SelectedPath;
+                    if (Directory.Exists(path) && IsCyclicOperation(path, destDir))
+                    {
+                        MessageBox.Show("Нельзя скопировать папку в саму себя.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    string destPath = Path.Combine(destDir, Path.GetFileName(path));
+                    var cmd = new CopyCommand(path, destPath);
+                    CommandInvoker.ExecuteCommand(cmd);
+                    RefreshUiAfterCommand();
+                }
+            }
+        }
+
+        public void DeleteSelectedItem()
+        {
+            string? path = GetSelectedItemPath();
+            if (path == null) return;
+            var cmd = new DeleteCommand(path);
+            CommandInvoker.ExecuteCommand(cmd);
+            RefreshUiAfterCommand();
+        }
+
+        public void RenameSelectedItem()
+        {
+            string? oldPath = GetSelectedItemPath();
+            if (oldPath == null) return;
+            string newName = Microsoft.VisualBasic.Interaction.InputBox("Новое имя:", "Переименование", Path.GetFileName(oldPath));
+            if (string.IsNullOrEmpty(newName) || newName == Path.GetFileName(oldPath)) return;
+            var cmd = new RenameCommand(oldPath, newName);
+            CommandInvoker.ExecuteCommand(cmd);
+            RefreshUiAfterCommand();
+        }
+
+        internal void PinToQuickAccess()
+        {
+            // todo
+        }
+
+        public void CopyPath()
+        {
+            string? path = GetSelectedItemPath();
+            if (path != null) Clipboard.SetText(path);
+        }
+
+        public void PasteShortcut()
+        {
+            // todo
+        }
+
+
+        //  ОБРАБОТЧИКИ КНОПОК ЛЕНТЫ И ФОРМЫ 
+        private void ButtonClose_Click(object sender, EventArgs e) => Close();
+        private void ButtonMaximize_Click(object sender, EventArgs e)
+        {
+            WindowState = WindowState == FormWindowState.Normal
+                ? FormWindowState.Maximized
+                : FormWindowState.Normal;
+        }
+        private void ButtonMinimize_Click(object sender, EventArgs e) => WindowState = FormWindowState.Minimized;
+
+        private void buttonBack_Click(object sender, EventArgs e) => currentPathModel.GoBack();
+        private void buttonForward_Click(object sender, EventArgs e) => currentPathModel.GoForward();
+        private void button3_Click(object sender, EventArgs e) => currentPathModel.Path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+        private void buttonMain_Click(object sender, EventArgs e)
+        {
+            tabControlShare.SelectedIndex = 0;
+            buttonVid.BackColor = Color.Black;
+            buttonShare.BackColor = Color.Black;
+            buttonMain.BackColor = Color.FromArgb(32, 32, 32);
+        }
+
+        private void buttonShare_Click(object sender, EventArgs e)
+        {
+            tabControlShare.SelectedIndex = 1;
+            buttonShare.BackColor = Color.FromArgb(32, 32, 32);
+            buttonMain.BackColor = Color.Black;
+            buttonVid.BackColor = Color.Black;
+        }
+
+        private void buttonVid_Click(object sender, EventArgs e)
+        {
+            tabControlShare.SelectedIndex = 2;
+            buttonShare.BackColor = Color.Black;
+            buttonMain.BackColor = Color.Black;
+            buttonVid.BackColor = Color.FromArgb(32, 32, 32);
+        }
+
+        private void buttonSmallElements_Click(object sender, EventArgs e)
+        {
+            drawDetails = true;
+            if (comboBoxAdressBar.Items.Count > 0)
+                currentPathModel.Path = comboBoxAdressBar.Text;
+        }
+
+        private void buttonBigElements_Click(object sender, EventArgs e)
+        {
+            drawDetails = false;
+            if (comboBoxAdressBar.Items.Count > 0)
+                currentPathModel.Path = comboBoxAdressBar.Text;
+        }
+
+        private void ButtonCopy_Click(object sender, EventArgs e) => CopySelectedItem();
+        private void ButtonCut_Click(object sender, EventArgs e) => CutSelectedItem();
+        private void ButtonPaste_Click(object sender, EventArgs e) => PasteItem();
+
+        private void ButtonDelete_Click(object sender, EventArgs e)
+        {
+            string? path = GetSelectedItemPath();
+            if (path != null)
+            {
+                CommandInvoker.ExecuteCommand(new DeleteCommand(path));
+                RefreshUiAfterCommand();
+            }
+        }
+
+        private void ButtonRename_Click(object sender, EventArgs e)
+        {
+            string? oldPath = GetSelectedItemPath();
+            if (oldPath == null) return;
+
+            string newName = Interaction.InputBox("Новое имя:", "Переименование", Path.GetFileName(oldPath));
+            if (string.IsNullOrEmpty(newName) || newName == Path.GetFileName(oldPath)) return;
+
+            CommandInvoker.ExecuteCommand(new RenameCommand(oldPath, newName));
+            RefreshUiAfterCommand();
+        }
+
+        //  ОБРАБОТЧИКИ КОНТЕКСТНОГО МЕНЮ 
+        private void ToolStripMenuItemOpen_Click(object sender, EventArgs e) => OpenFile();
+
+        private void createFolderToolStripMenuItem_Click(object sender, EventArgs e) => CreateNewFolder();
+
+        //  ПРОЧИЕ ОБРАБОТЧИКИ 
+        private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node?.Tag is not string tag) return;
+
+            if (tag == "Этот компьютер")
+            {
+
+            }
+            else if (tag == "Быстрый доступ")
+            {
+
+            }
+            else if (Directory.Exists(tag))
+            {
+                currentPathModel.Path = tag;
+            }
+        }
+
+        private void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e) => DrawTreeView.AddNodes(e);
+
+        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e) => OpenFile();
+
+        private void listView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            DrawStatusStrip.UpdateStatusStrip(statusStripMain, listViewFIles);
+        }
+
+        private void listView1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right) return;
+
+            var hitTest = listViewFIles.HitTest(e.Location);
+            if (hitTest.Item != null)
+            {
+                hitTest.Item.Selected = true;
+                contextMenuStripMain.Show(listViewFIles, e.Location);
+            }
             else
-                WindowState = FormWindowState.Normal;
-        }
-
-        private void buttonMinimize_Click(object sender, EventArgs e) => WindowState = FormWindowState.Minimized;
-
-        private void splitContainer3_Panel1_MouseDown(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void splitContainer3_Panel1_MouseMove(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void splitContainer3_Panel1_MouseUp(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            if (e.Node.Tag != null)
             {
-                string selectedPath = e.Node.Tag.ToString();
-                // Вызываем наш метод для ListView
-                DrawListView.LoadDirectory(listView1, selectedPath);
-                DrawAdressBar.UpdateAddressBar(comboBox1, selectedPath);
+                contextMenuStripListView.Show(listViewFIles, e.Location);
             }
         }
 
-        private void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+        private void comboBox1_KeyDown(object sender, KeyEventArgs e)
         {
-            DrawTreeView.AddNodes(e);
-        }
-
-        private void treeView1_DrawNode(object sender, DrawTreeNodeEventArgs e)
-        {
-            Color backColor = Color.Transparent;
-            Color textColor = Color.White;
-
-            if ((e.State & TreeNodeStates.Selected) != 0)
+            if (e.KeyCode == Keys.Enter)
             {
-                // Цвет выделения (светло-синий как в Explorer)
-                backColor = Color.FromArgb(98, 98, 98);
-            }
-            else if ((e.State & TreeNodeStates.Hot) != 0)
-            {
-                // Цвет при наведении
-                backColor = Color.FromArgb(119, 119, 119);
-            }
+                string targetPath = comboBoxAdressBar.Text;
+                if (Directory.Exists(targetPath))
+                    currentPathModel.Path = targetPath;
+                else
+                    MessageBox.Show("Путь не найден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-            if (backColor != Color.Transparent)
-            {
-                using (SolidBrush brush = new SolidBrush(backColor))
-                {
-                    // Рисуем фон на всю ширину строки
-                    e.Graphics.FillRectangle(brush, new Rectangle(0, e.Bounds.Y, this.Width, e.Bounds.Height));
-                }
-            }
-
-            if (treeView1.ImageList != null)
-            {
-                Image nodeImage = null;
-                if (!string.IsNullOrEmpty(e.Node.ImageKey))
-                    nodeImage = treeView1.ImageList.Images[e.Node.ImageKey];
-                else if (e.Node.ImageIndex >= 0)
-                    nodeImage = treeView1.ImageList.Images[e.Node.ImageIndex];
-
-                if (nodeImage != null)
-                {
-                    // Смещение иконки влево от текста (e.Bounds.X - 20)
-                    e.Graphics.DrawImage(nodeImage, new Rectangle(e.Bounds.X - 10, e.Bounds.Y + 4, 16, 16));
-                }
-            }
-            // 3. Рисуем текст узла
-            TextRenderer.DrawText(e.Graphics, e.Node.Text, this.Font,
-                new Point(e.Bounds.X, e.Bounds.Y + 3), textColor);
-        }
-
-        private void panelHeader_MouseDown(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void panelHeader_MouseMove(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void panelHeader_MouseUp(object sender, MouseEventArgs e)
-        {
-
-
-        }
-        private void toolStrip1_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                // "Отпускаем" мышь от контрола
-                ReleaseCapture();
-                // Посылаем сообщение форме, что нажата "шапка" (заголовок) окна
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                e.SuppressKeyPress = true;
             }
         }
+
+        private void buttonAdressBar_Click(object sender, EventArgs e) => comboBoxAdressBar.DroppedDown = true;
+        private void buttonDropDown_Click(object sender, EventArgs e) => comboBoxLastWas.DroppedDown = true;
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                MessageBox.Show("В разработке");
+                textBoxFind.Text = "";
+            }
+        }
+
+        private void buttonFile_Click(object sender, EventArgs e) { } // пока пусто
+
+        //  ПЕРЕОПРЕДЕЛЁННЫЕ МЕТОДЫ 
         protected override void WndProc(ref Message m)
         {
             const int WM_NCHITTEST = 0x84;
-            const int HTCLIENT = 0x01;
             const int HTLEFT = 10;
             const int HTRIGHT = 11;
             const int HTTOP = 12;
@@ -159,107 +458,35 @@ namespace rgz1_timp
 
             if (m.Msg == WM_NCHITTEST)
             {
-                Point pos = this.PointToClient(new Point(m.LParam.ToInt32() & 0xffff, m.LParam.ToInt32() >> 16));
-                int resizeArea = 10; // Размер области захвата краев в пикселях
+                Point pos = PointToClient(new Point(m.LParam.ToInt32() & 0xffff, m.LParam.ToInt32() >> 16));
+                int resizeArea = 10;
 
-                // Проверка углов и границ
                 if (pos.X <= resizeArea && pos.Y <= resizeArea) m.Result = (IntPtr)HTTOPLEFT;
-                else if (pos.X >= this.ClientSize.Width - resizeArea && pos.Y <= resizeArea) m.Result = (IntPtr)HTTOPRIGHT;
-                else if (pos.X <= resizeArea && pos.Y >= this.ClientSize.Height - resizeArea) m.Result = (IntPtr)HTBOTTOMLEFT;
-                else if (pos.X >= this.ClientSize.Width - resizeArea && pos.Y >= this.ClientSize.Height - resizeArea) m.Result = (IntPtr)HTBOTTOMRIGHT;
+                else if (pos.X >= ClientSize.Width - resizeArea && pos.Y <= resizeArea) m.Result = (IntPtr)HTTOPRIGHT;
+                else if (pos.X <= resizeArea && pos.Y >= ClientSize.Height - resizeArea) m.Result = (IntPtr)HTBOTTOMLEFT;
+                else if (pos.X >= ClientSize.Width - resizeArea && pos.Y >= ClientSize.Height - resizeArea) m.Result = (IntPtr)HTBOTTOMRIGHT;
                 else if (pos.X <= resizeArea) m.Result = (IntPtr)HTLEFT;
-                else if (pos.X >= this.ClientSize.Width - resizeArea) m.Result = (IntPtr)HTRIGHT;
+                else if (pos.X >= ClientSize.Width - resizeArea) m.Result = (IntPtr)HTRIGHT;
                 else if (pos.Y <= resizeArea) m.Result = (IntPtr)HTTOP;
-                else if (pos.Y >= this.ClientSize.Height - resizeArea) m.Result = (IntPtr)HTBOTTOM;
+                else if (pos.Y >= ClientSize.Height - resizeArea) m.Result = (IntPtr)HTBOTTOM;
             }
         }
 
-        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            // Получаем элемент, на который кликнули
-            ListViewItem selectedItem = listView1.SelectedItems.Count > 0 ? listView1.SelectedItems[0] : null;
-
-            if (selectedItem != null && selectedItem.Tag != null)
+            if (keyData == (Keys.Control | Keys.Z))
             {
-                string path = selectedItem.Tag.ToString();
-
-                // Проверяем, является ли путь папкой
-                if (Directory.Exists(path))
-                {
-                    // 1. Загружаем содержимое этой папки в ListView
-                    DrawListView.LoadDirectory(listView1, path);
-                    DrawAdressBar.UpdateAddressBar(comboBox1, path);
-
-                    // 2. (Опционально) Обновляем адресную строку, если она у вас есть
-                    // txtAddress.Text = path;
-
-                    // 3. (Сложно, но нужно) Синхронизируем TreeView, если хотите, 
-                    // чтобы ветка слева тоже раскрылась.
-                }
-                else if (File.Exists(path))
-                {
-                    // Если это файл, открываем его стандартной программой Windows
-                    try
-                    {
-                        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-                        {
-                            FileName = path,
-                            UseShellExecute = true // Важно для .NET Core / .NET 5+
-                        });
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Не удалось открыть файл: " + ex.Message);
-                    }
-                }
+                CommandInvoker.Undo();
+                RefreshUiAfterCommand();
+                return true;
             }
-        }
-
-        private void buttonMain_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonShare_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonVid_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonFile_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBox1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
+            if (keyData == (Keys.Control | Keys.Y))
             {
-                string targetPath = comboBox1.Text;
-
-                if (Directory.Exists(targetPath))
-                {
-                    DirectoryInfo target = new DirectoryInfo(targetPath);
-
-                    DrawListView.LoadDirectory(listView1, targetPath);
-                    // Опционально: можно найти этот узел в дереве и выделить его
-                }
-                else
-                {
-                    MessageBox.Show("Путь не найден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                e.SuppressKeyPress = true; // Убираем системный "дзинь" при нажатии Enter
+                CommandInvoker.Redo();
+                RefreshUiAfterCommand();
+                return true;
             }
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

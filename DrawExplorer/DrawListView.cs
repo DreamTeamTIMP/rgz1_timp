@@ -1,77 +1,73 @@
-﻿using rgz1_timp.DrawExplorer;
-using System.Runtime.InteropServices;
+﻿using rgz1_timp.ImportedDll;
 
 namespace rgz1_timp.DrawExplorer
 {
+
     internal static class DrawListView
     {
-        [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
-        private static extern int SetWindowTheme(IntPtr hWnd, string pszSubAppName, string pszSubIdList);
-
+        public static bool drawType = false; // false - маленькие, true - большие
+        private static ListView list;
         public static void DrawSystemListView(ListView listView)
         {
-            SetWindowTheme(listView.Handle, "explorer", null);
+            list = listView;
+            _ = Dll.SetWindowTheme(listView.Handle, "explorer", null);
+            // Привязываем оба списка (для разных режимов отображения)
+            listView.SmallImageList = DrawIcons.SmallIcons;
+            listView.LargeImageList = DrawIcons.LargeIcons;
         }
 
-        public static void LoadDirectory(ListView listView, string path)
+        public static void LoadDirectory(ListView listView, string path, bool drawDetails)
         {
-            // Включаем визуальный стиль Windows 10 (синее выделение и т.д.)
-            SetWindowTheme(listView.Handle, "explorer", null);
-
             if (string.IsNullOrEmpty(path) || !Directory.Exists(path)) return;
 
+            
             listView.Items.Clear();
-            listView.BeginUpdate(); // Отключаем перерисовку для скорости
+            listView.BeginUpdate();
 
             try
             {
                 DirectoryInfo di = new DirectoryInfo(path);
 
-                // 1. Сначала загружаем папки
                 foreach (var dir in di.GetDirectories())
                 {
-                    // Пропускаем скрытые папки для чистоты вида
                     if ((dir.Attributes & FileAttributes.Hidden) != 0) continue;
 
                     ListViewItem item = new ListViewItem(dir.Name);
-                   // item.ImageKey = "folder"; // Имя иконки в вашем ImageList
+                    // Получаем ключ иконки (для папки)
+                    item.ImageKey = DrawIcons.GetIconKey(dir.FullName, true);
+
                     item.SubItems.Add(dir.LastWriteTime.ToString("dd.MM.yyyy HH:mm"));
                     item.SubItems.Add("Папка с файлами");
                     item.SubItems.Add("");
-                    item.Tag = dir.FullName; // Сохраняем полный путь
-
+                    item.Tag = dir.FullName;
                     listView.Items.Add(item);
                 }
 
-                // 2. Затем загружаем файлы
                 foreach (var file in di.GetFiles())
                 {
                     if ((file.Attributes & FileAttributes.Hidden) != 0) continue;
 
                     ListViewItem item = new ListViewItem(file.Name);
-
-                    // Установка иконки по расширению (если вы добавили их в ImageList)
-                    //item.ImageKey = "file";
+                    // Получаем ключ иконки (по расширению файла)
+                    item.ImageKey = DrawIcons.GetIconKey(file.FullName, false);
 
                     item.SubItems.Add(file.LastWriteTime.ToString("dd.MM.yyyy HH:mm"));
                     item.SubItems.Add(file.Extension.ToUpper() + " File");
                     item.SubItems.Add(FormatFileSize(file.Length));
                     item.Tag = file.FullName;
-
                     listView.Items.Add(item);
+
                 }
             }
-            catch (UnauthorizedAccessException)
-            {
-                // Ошибка доступа — можно добавить уведомление
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка: {ex.Message}");
-            }
+            catch { /* Обработка ошибок */ }
 
+            if (drawDetails)
+                listView.View = View.Details;
+            else
+                listView.View = View.LargeIcon;
             listView.EndUpdate();
         }
+        
 
         /// <summary>
         /// Красивое форматирование размера файла как в Windows

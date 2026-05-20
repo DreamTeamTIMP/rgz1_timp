@@ -1,123 +1,264 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace rgz1_timp.DrawExplorer
+﻿namespace rgz1_timp.DrawExplorer
 {
     internal static class DrawRibbon
     {
-
-        public static void SetupRibbon(TabControl tabControl)
+        
+        public static void SetupRibbon(TabControl tabControl, FormMain form)
         {
-            CreateHomePage(tabControl.TabPages[0]);
+            CreateHomePage(tabControl.TabPages[0], form);
+            CreateSharePage(tabControl.TabPages[1]);
+            CreateViewPage(tabControl.TabPages[2]);
         }
 
-        private static void CreateHomePage(TabPage page)
+        private static void CreateViewPage(TabPage page)
         {
-            FlowLayoutPanel ribbonGroupBuff = CreateRibbonGroup(page, "Буфер обмена");
-            AddRibbonButton(ribbonGroupBuff, "Закрепить на панели быстрого дотступа", "\uE10F;", true); // Большая кнопка
-            AddRibbonButton(ribbonGroupBuff, "Копировать", "paste_icon", true);
-            AddRibbonButton(ribbonGroupBuff, "Вставить", "paste_icon", true);
-            AddRibbonButton(ribbonGroupBuff, "Вырезать", "cut_icon", false); // Маленькая кнопка
-            AddRibbonButton(ribbonGroupBuff, "Скопировать как путь", "cut_icon", false);
-            AddRibbonButton(ribbonGroupBuff, "Вставить ярлык", "cut_icon", false);
+            //  Группа "Области" (Panes) 
+            Panel ribbonGroupPanes = CreateRibbonGroup(page, "Области");
+            FlowLayoutPanel smallButtonsPanes = CreatePanelForButtons(ribbonGroupPanes, false);
 
-            FlowLayoutPanel ribbonGroupSort = CreateRibbonGroup(page, "Упорядочить");
-            AddRibbonButton(ribbonGroupSort, "Переместить в", "paste_icon", true); // Большая кнопка
-            AddRibbonButton(ribbonGroupSort, "Копировать в", "paste_icon", true);
-            AddRibbonButton(ribbonGroupSort, "Удалить", "paste_icon", true);
-            AddRibbonButton(ribbonGroupSort, "Переименовать", "paste_icon", true);
+            FlowLayoutPanel bigButtonsPanes = CreatePanelForButtons(ribbonGroupPanes, true);
 
+            AddRibbonButton(bigButtonsPanes, "Область навигации", "\uE8D5", true);   // Navigation Pane
+            AddRibbonButton(smallButtonsPanes, "Область просмотра", "\uE8A4", false); // Preview Pane
+            AddRibbonButton(smallButtonsPanes, "Область сведений", "\uE946", false);  // Details Pane
+            ResizeRibbonGroup(ribbonGroupPanes);
 
-            FlowLayoutPanel ribbonGroupCreate = CreateRibbonGroup(page, "Создать");
-            AddRibbonButton(ribbonGroupCreate, "Переместить в", "paste_icon", true); // Большая кнопка
-            AddRibbonButton(ribbonGroupCreate, "Копировать в", "paste_icon", true);
-            AddRibbonButton(ribbonGroupCreate, "Удалить", "paste_icon", true);
-            AddRibbonButton(ribbonGroupCreate, "Переименовать", "paste_icon", true);
+            //  Группа "Структура" (Layout) 
+            Panel ribbonGroupLayout = CreateRibbonGroup(page, "Структура");
+            FlowLayoutPanel smallButtonsLayoutGrid = CreatePanelForButtons(ribbonGroupLayout, false);
+            FlowLayoutPanel smallButtonsLayoutTypes = CreatePanelForButtons(ribbonGroupLayout, false);
+            FlowLayoutPanel smallButtonsLayoutSome = CreatePanelForButtons(ribbonGroupLayout, false);
+
+            AddRibbonButton(smallButtonsLayoutGrid, "Огромные значки", "\uE80A", false); // Grid View (Large)
+            AddRibbonButton(smallButtonsLayoutGrid, "Крупные значки", "\uE80A", false);
+            AddRibbonButton(smallButtonsLayoutGrid, "Обычные значки", "\uE80A", false);
+
+            AddRibbonButton(smallButtonsLayoutTypes, "Мелкие значки", "\uE80A", false);
+            AddRibbonButton(smallButtonsLayoutTypes, "Список", "\uE8B0", false);         // List
+            AddRibbonButton(smallButtonsLayoutTypes, "Таблица", "\uE8EF", false);        // Details/Table
+            
+            AddRibbonButton(smallButtonsLayoutSome, "Плитка", "\uE895", false);         // Tiles
+            AddRibbonButton(smallButtonsLayoutSome, "Содержимое", "\uE8D2", false);     // Content
+            ResizeRibbonGroup(ribbonGroupLayout);
+
+            //  Группа "Текущее представление" (Current View) 
+            Panel ribbonGroupCurrent = CreateRibbonGroup(page, "Текущее представление");
+
+            FlowLayoutPanel smallButtonsCurrent = CreatePanelForButtons(ribbonGroupCurrent, false);
+            FlowLayoutPanel bigButtonsCurrent = CreatePanelForButtons(ribbonGroupCurrent, true);
+            
+            AddRibbonButton(bigButtonsCurrent, "Сортировать", "\uE8CB", true);      // Sort
+            AddRibbonButton(smallButtonsCurrent, "Группировать", "\uF012", false);   // Group
+            AddRibbonButton(smallButtonsCurrent, "Добавить столбцы", "\uE8A6", false); // Add columns
+            AddRibbonButton(smallButtonsCurrent, "Размер всех столбцов", "\uE8B3", false); // Size all columns
+            ResizeRibbonGroup(ribbonGroupCurrent);
+
+            //  Группа "Показать или скрыть" (Show/Hide) 
+            Panel ribbonGroupShowHide = CreateRibbonGroup(page, "Показать или скрыть");
+            FlowLayoutPanel smallButtonsShow = CreatePanelForButtons(ribbonGroupShowHide, false);
+            FlowLayoutPanel bigButtonsShow = CreatePanelForButtons(ribbonGroupShowHide, true);
+
+            AddRibbonButton(smallButtonsShow, "Флажки элементов", "\uE739", false);      // Checkbox
+            AddRibbonButton(smallButtonsShow, "Расширения имен", "\uE8A5", false);      // File extension info
+            AddRibbonButton(smallButtonsShow, "Скрытые элементы", "\uE7B3", false);     // Hidden items (Ghost/Eye)
+            AddRibbonButton(bigButtonsShow, "Скрыть выбранные", "\uED1A", true);        // Hide selected
+            ResizeRibbonGroup(ribbonGroupShowHide);
+
+            //  Группа "Параметры" 
+            Panel ribbonGroupOptions = CreateRibbonGroup(page, "Параметры");
+            FlowLayoutPanel bigButtonsOptions = CreatePanelForButtons(ribbonGroupOptions, true);
+
+            AddRibbonButton(bigButtonsOptions, "Параметры", "\uE713", true);            // Settings/Options
+            ResizeRibbonGroup(ribbonGroupOptions);
         }
 
-        public static void AddRibbonButton(Control parent, string text, string glyph, bool isLarge)
+        private static void CreateSharePage(TabPage page)
         {
-            Button btn = new Button
+            //  Группа "Поделиться" 
+            Panel ribbonGroupShare = CreateRibbonGroup(page, "Поделиться");
+            FlowLayoutPanel bigButtonsShare = CreatePanelForButtons(ribbonGroupShare, true);
+
+            // Для иконки "Сделать недоступными" (Замок)
+            AddRibbonButton(bigButtonsShare, "Сделать недоступными", "\uE72E", true); // Lock
+            ResizeRibbonGroup(ribbonGroupShare);
+
+            //  Группа "Безопасность" (Дополнительно) 
+            Panel ribbonGroupSecurity = CreateRibbonGroup(page, "Безопасность");
+            FlowLayoutPanel bigButtonsSecurity = CreatePanelForButtons(ribbonGroupSecurity, true);
+
+            AddRibbonButton(bigButtonsSecurity, "Доп. параметры безопасности", "\uE8D7", true); // Permissions / Shield
+            ResizeRibbonGroup(ribbonGroupSecurity);
+            //  Группа "Отправить" 
+            
+            Panel ribbonGroupSend = CreateRibbonGroup(page, "Отправить");
+            FlowLayoutPanel smallButtonsSend = CreatePanelForButtons(ribbonGroupSend, false);
+
+            FlowLayoutPanel bigButtonsSend = CreatePanelForButtons(ribbonGroupSend, true);
+            
+            
+            AddRibbonButton(smallButtonsSend, "Запись на компакт-диск", "\uE958", false); // CD Rom
+            AddRibbonButton(smallButtonsSend, "Печать", "\uE749", false);                 // Print
+            AddRibbonButton(smallButtonsSend, "Факс", "\uE7C8", false);                  // Fax
+
+            AddRibbonButton(bigButtonsSend, "Отправить", "\uE72D", true);         // Share / Отправить
+            AddRibbonButton(bigButtonsSend, "Электронная почта", "\uE715", true); // Mail / Почта
+            AddRibbonButton(bigButtonsSend, "Сжать", "\uF012", true);             // Zip / Сжать (ZipFolder)
+
+            ResizeRibbonGroup(ribbonGroupSend);
+
+        }
+        private static void CreateHomePage(TabPage page, FormMain form)
+        {
+            // Группа "Создать"
+            Panel ribbonGroupCreate = CreateRibbonGroup(page, "Создать");
+            FlowLayoutPanel smallButtonsPanelCreate = CreatePanelForButtons(ribbonGroupCreate, false);
+            AddRibbonButton(smallButtonsPanelCreate, "Создать элемент", "\uE72D", false);
+            AddRibbonButton(smallButtonsPanelCreate, "Простой доступ", "\uE7C3", false, (s, e) => form.SimpleAccess()); // пока заглушка
+            FlowLayoutPanel bigButtonsPanelCreate = CreatePanelForButtons(ribbonGroupCreate, true);
+            AddRibbonButton(bigButtonsPanelCreate, "Новая папка", "", true, (s, e) => form.CreateNewFolder());
+            ResizeRibbonGroup(ribbonGroupCreate);
+
+            // Группа "Упорядочить"
+            Panel ribbonGroupSort = CreateRibbonGroup(page, "Упорядочить");
+            FlowLayoutPanel bigButtonsPanelSort = CreatePanelForButtons(ribbonGroupSort, true);
+            AddRibbonButton(bigButtonsPanelSort, "Переместить в", "\uE8DE", true, (s, e) => form.MoveToDialog());
+            AddRibbonButton(bigButtonsPanelSort, "Копировать в", "\uE8C8", true, (s, e) => form.CopyToDialog());
+            AddRibbonButton(bigButtonsPanelSort, "Удалить", "\uE74D", true, (s, e) => form.DeleteSelectedItem());
+            AddRibbonButton(bigButtonsPanelSort, "Переименовать", "\uE8AC", true, (s, e) => form.RenameSelectedItem());
+            ResizeRibbonGroup(ribbonGroupSort);
+
+            // Группа "Буфер обмена"
+            Panel ribbonGroupBuff = CreateRibbonGroup(page, "Буфер обмена");
+            FlowLayoutPanel smallButtonsPanel = CreatePanelForButtons(ribbonGroupBuff, false);
+            FlowLayoutPanel bigButtonsPanel = CreatePanelForButtons(ribbonGroupBuff, true);
+
+            AddRibbonButton(bigButtonsPanel, "Закрепить на панели быстрого доступа", "\uE840", true, (s, e) => form.PinToQuickAccess());
+            AddRibbonButton(bigButtonsPanel, "Копировать", "\uE8C8", true, (s, e) => form.CopySelectedItem());
+            AddRibbonButton(bigButtonsPanel, "Вставить", "\uE77F", true, (s, e) => form.PasteItem());
+            AddRibbonButton(smallButtonsPanel, "Вырезать", "\uE8C6", false, (s, e) => form.CutSelectedItem());
+            AddRibbonButton(smallButtonsPanel, "Скопировать путь", "\uE8C1", false, (s, e) => form.CopyPath());
+            AddRibbonButton(smallButtonsPanel, "Вставить ярлык", "\uEED1", false, (s, e) => form.PasteShortcut());
+            ResizeRibbonGroup(ribbonGroupBuff);
+        }
+        private static void ResizeRibbonGroup(Panel ribbonGroup)
+        {
+            // После добавления всех кнопок в ribbonGroupBuff
+            int totalWidth = 0;
+            foreach (Control ctl in ribbonGroup.Controls)
+                if (ctl is FlowLayoutPanel flp)
+                    totalWidth += flp.Width;
+            ribbonGroup.Width = totalWidth + 10;
+
+        }
+        private static FlowLayoutPanel CreatePanelForButtons(Control parent, bool toSmallText)
+        {
+            FlowLayoutPanel container = new()
             {
-                Text = isLarge ? glyph + "\n" + text : glyph + "  " + text,
+                Dock = DockStyle.Left,
+                AutoSize = true,
+                AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                FlowDirection = toSmallText ? FlowDirection.TopDown : FlowDirection.LeftToRight
+            };
+            parent.Controls.Add(container);
+            return container;
+        }
+
+        public static void AddRibbonButton(Control parent, string text, string glyph, bool isLarge, EventHandler? clickHandler = null)
+        {
+            System.Windows.Forms.Button btn = new System.Windows.Forms.Button
+            {
                 FlatStyle = FlatStyle.Flat,
-                BackColor = Color.White,
+                BackColor = Color.FromArgb(32, 32, 32),
                 Margin = new Padding(2),
-                TextAlign = isLarge ? ContentAlignment.MiddleCenter : ContentAlignment.MiddleLeft,
-                TextImageRelation = TextImageRelation.Overlay // Мы используем только текст (шрифт)
+                Size = isLarge ? new Size(70, 80) : new Size(130, 22),
+                UseVisualStyleBackColor = false
             };
 
-            // Настройка шрифта для иконки (Segoe MDL2 Assets) и текста (Segoe UI)
-            // В WinForms сложно задать два шрифта одной кнопке, поэтому мы делаем "финт":
-            // Устанавливаем MDL2 как основной, а текст будет выглядеть сносно, 
-            // Либо используем Label поверх кнопки (для идеального сходства).
+            if (text.Length > 20)
+                btn.Size = isLarge ? new Size(100, 80) : new Size(170,22) ;
 
-            btn.Font = new Font("Segoe MDL2 Assets", isLarge ? 20 : 12);
-            btn.Size = isLarge ? new Size(75, 90) : new Size(120, 28);
-
-            // Убираем рамки и настраиваем цвета наведения
             btn.FlatAppearance.BorderSize = 0;
-            btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(229, 243, 255); // Светло-голубой
+            btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(229, 243, 255);
             btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(204, 232, 255);
 
-            // Если кнопка большая, нам нужно, чтобы текст под иконкой был обычным шрифтом.
-            // Для этого лучше использовать Paint или вложенный Label:
             if (isLarge)
             {
-                btn.Paint += (s, e) => {
+                btn.Text = ""; // Не используем стандартный текст
+                btn.Paint += (s, e) =>
+                {
                     e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-                    using (Font textFont = new Font("Segoe UI", 8f))
+
+                    // Рисуем иконку (глиф) шрифтом Segoe MDL2 Assets
+                    using (Font iconFont = new Font("Segoe MDL2 Assets", 20))
                     {
-                        SizeF textSize = e.Graphics.MeasureString(text, textFont);
-                        e.Graphics.DrawString(text, textFont, Brushes.Black,
-                            (btn.Width - textSize.Width) / 2, btn.Height - 25);
+                        SizeF iconSize = e.Graphics.MeasureString(glyph, iconFont);
+                        float iconX = (btn.Width - iconSize.Width) / 2;
+                        float iconY = 8; // отступ сверху
+                        e.Graphics.DrawString(glyph, iconFont, Brushes.White, iconX, iconY);
+                    }
+
+                    // Рисуем текст под иконкой с переносом
+                    using (Font textFont = new Font("Segoe UI", 7.5f))
+                    {
+                        Rectangle textRect = new Rectangle(4, 40, btn.Width - 8, 50);
+                        StringFormat sf = new StringFormat
+                        {
+                            Alignment = StringAlignment.Center,
+                            LineAlignment = StringAlignment.Near,
+                            Trimming = StringTrimming.Word
+                        };
+                        e.Graphics.DrawString(text, textFont, Brushes.White, textRect, sf);
+                        sf.Dispose();
                     }
                 };
-                btn.Text = glyph; // В самом Text оставляем только иконку
             }
-
+            else
+            {
+                btn.Text = glyph + "  " + text;
+                btn.Font = new Font("Segoe MDL2 Assets", 10);
+                btn.TextAlign = ContentAlignment.MiddleLeft;
+            }
+            if (clickHandler != null)
+                btn.Click += clickHandler;
+            parent.Controls.Add(btn);
             parent.Controls.Add(btn);
         }
-        public static FlowLayoutPanel CreateRibbonGroup(TabPage parent, string title)
+
+        public static Panel CreateRibbonGroup(TabPage parent, string title)
         {
             Panel groupWrapper = new Panel
             {
                 Dock = DockStyle.Left,
-                Width = 120,
-                Padding = new Padding(0, 0, 1, 0), // Место для разделителя
-                BackColor = Color.FromArgb(32,32,32)
+                AutoSize = false,          // отключаем авторазмер
+                Width = 100,               // начальная ширина, будет увеличена содержимым
+                Height = 130,              // фиксированная высота, чтобы Label был виден
+                Padding = new Padding(0, 0, 2, 0),
+                BackColor = Color.FromArgb(32, 32, 32)
             };
 
-            // Рисуем вертикальную линию-разделитель справа
-            groupWrapper.Paint += (s, e) => {
+            // Рисуем разделитель справа
+            groupWrapper.Paint += (s, e) =>
+            {
                 e.Graphics.DrawLine(new Pen(Color.FromArgb(220, 220, 220)),
                     groupWrapper.Width - 1, 10, groupWrapper.Width - 1, groupWrapper.Height - 25);
-            };
-
-            FlowLayoutPanel container = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.LeftToRight
             };
 
             Label lblTitle = new Label
             {
                 Text = title,
-                Dock = DockStyle.Bottom,
-                TextAlign = ContentAlignment.MiddleCenter,
-                Height = 20,
+                TextAlign = ContentAlignment.MiddleCenter, // Центровка текста внутри Label
+                Height = 13,
                 ForeColor = Color.Gray,
-                Font = new Font("Segoe UI", 7.5f)
+                Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom,
+                Font = new Font("Segoe UI", 7.5f),
+                AutoSize = false, // Обязательно false, чтобы Dock работал на всю ширину
+                Location = new Point(0, groupWrapper.Height - 13)
             };
 
-            groupWrapper.Controls.Add(container);
             groupWrapper.Controls.Add(lblTitle);
             parent.Controls.Add(groupWrapper);
-
-            return container;
+           lblTitle.BringToFront();
+            return groupWrapper;
         }
     }
 }
