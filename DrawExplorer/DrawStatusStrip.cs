@@ -25,13 +25,15 @@
             {
                 ListViewItem selected = listView.SelectedItems[0];
                 string name = selected.Text;
+                string type = selected.SubItems.Count > 2 ? selected.SubItems[2].Text : "";
                 string sizeInfo = "";
                 if (selected.SubItems.Count > 3 && !string.IsNullOrEmpty(selected.SubItems[3]?.Text))
                     sizeInfo = $" | Размер: {selected.SubItems[3].Text}";
 
-                var selectedLabel = new ToolStripStatusLabel($"Выбран: {name}{sizeInfo}")
+                var selectedLabel = new ToolStripStatusLabel($"Выбран: {name} | Тип: {type}{sizeInfo}")
                 {
-                    ForeColor = Color.White
+                    ForeColor = Color.White,
+                    Spring = true  
                 };
                 statusStrip.Items.Add(selectedLabel);
             }
