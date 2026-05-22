@@ -2,81 +2,95 @@
 
 namespace rgz1_timp.DrawExplorer
 {
-    internal static class DrawTreeView
+    public class DrawTreeView
     {
-        
-        public static void DrawSystemTreeView(TreeView treeView)
-        {
-            _ = Dll.SetWindowTheme(treeView.Handle, "explorer", null);
-            treeView.ImageList = DrawIcons.SmallIcons;
-            LoadDrives(treeView);
-        }
-        public static void DrawMyComputer(TreeView treeView)
-        {
+        private readonly TreeView _treeView;
+        private readonly DrawIcons _icons;
 
-        }
-        private static void LoadDrives(TreeView treeView)
+        public DrawTreeView(TreeView treeView, DrawIcons icons)
         {
-            treeView.Nodes.Clear();
+            _treeView = treeView;
+            _icons = icons;
+            DrawSystemTreeView();
+        }
+
+        private void DrawSystemTreeView()
+        {
+            _ = Dll.SetWindowTheme(_treeView.Handle, "explorer", null);
+            _treeView.ImageList = _icons.SmallIcons;
+            LoadDrives();
+        }
+
+        private void LoadDrives()
+        {
+            _treeView.Nodes.Clear();
             TreeNode quickAccess = new TreeNode("Быстрый доступ");
-            quickAccess.Tag = "Быстрый доступ"; // Метка для отрисовки
+            quickAccess.Tag = "Быстрый доступ";
             quickAccess.Nodes.Add(new TreeNode("Рабочий стол") { Tag = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) });
             quickAccess.Nodes.Add(new TreeNode("Загрузки") { Tag = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads") });
             quickAccess.Nodes.Add(new TreeNode("Документы") { Tag = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) });
-            // 2. Этот компьютер
-            TreeNode thisPC = new TreeNode("Этот компьютер") ;
+
+            TreeNode thisPC = new TreeNode("Этот компьютер");
             thisPC.Tag = "Этот компьютер";
-            // Добавляем диски в "Этот компьютер"
             foreach (DriveInfo drive in DriveInfo.GetDrives().Where(d => d.IsReady))
             {
                 TreeNode driveNode = new TreeNode(drive.Name);
                 driveNode.Tag = drive.RootDirectory.FullName;
                 driveNode.ImageKey = driveNode.SelectedImageKey = "drive";
-                driveNode.Nodes.Add(""); // Пустышка для возможности раскрытия
+                driveNode.Nodes.Add("");
                 thisPC.Nodes.Add(driveNode);
             }
 
-            treeView.Nodes.Add(quickAccess);
-            treeView.Nodes.Add(thisPC);
+            _treeView.Nodes.Add(quickAccess);
+            _treeView.Nodes.Add(thisPC);
             quickAccess.ImageKey = quickAccess.SelectedImageKey = "quick";
             thisPC.ImageKey = thisPC.SelectedImageKey = "pc";
-            
         }
 
-        internal static void AddNodes(TreeViewCancelEventArgs e)
+        public void AddNodes(TreeViewCancelEventArgs e)
         {
-            if (e.Node is null) return;
-            if (e.Node.Text == "") return;         
+            if (e.Node?.Tag is not string path) return;
+            if (e.Node.Text == "") return;
             if (e.Node.Nodes.Count == 1 && e.Node.Nodes[0].Text == "")
             {
                 e.Node.Nodes.Clear();
-                string path = e.Node.Tag.ToString() ?? string.Empty;
-                if (string.IsNullOrEmpty(path)) return;
                 try
                 {
                     foreach (string dir in Directory.GetDirectories(path))
                     {
-
                         DirectoryInfo di = new(dir);
-
-                        // Пропускаем скрытые папки для чистоты вида
                         if ((di.Attributes & FileAttributes.Hidden) != 0) continue;
 
-                        TreeNode subNode = new(di.Name)
-                        {
-                            Tag = di.FullName
-                        };
+                        TreeNode subNode = new(di.Name) { Tag = di.FullName };
                         subNode.ImageKey = subNode.SelectedImageKey = "folder";
-
                         subNode.Nodes.Add("");
                         e.Node.Nodes.Add(subNode);
                     }
                 }
-                catch (UnauthorizedAccessException) 
-                {
-                    // Нет доступа, не трогаем
-                }
+                catch (UnauthorizedAccessException) { }
             }
+        }
+
+        public void RefreshDrives()
+        {
+            TreeNode? thisPC = null;
+            foreach (TreeNode node in _treeView.Nodes)
+                if (node.Text == "Этот компьютер") thisPC = node;
+            if (thisPC == null) return;
+
+            bool wasExpanded = thisPC.IsExpanded;
+            thisPC.Nodes.Clear();
+
+            foreach (DriveInfo drive in DriveInfo.GetDrives().Where(d => d.IsReady))
+            {
+                TreeNode driveNode = new TreeNode(drive.Name);
+                driveNode.Tag = drive.RootDirectory.FullName;
+                driveNode.ImageKey = driveNode.SelectedImageKey = "drive";
+                driveNode.Nodes.Add("");
+                thisPC.Nodes.Add(driveNode);
+            }
+
+            if (wasExpanded) thisPC.Expand();
         }
     }
 }

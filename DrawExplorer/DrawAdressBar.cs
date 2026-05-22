@@ -2,19 +2,22 @@
 
 namespace rgz1_timp.DrawExplorer
 {
-    internal static class DrawAdressBar
+    public class DrawAdressBar
     {
-        
-        public static void UpdateAddressBar(ComboBox addressBar, string path)
-        {
-            _ = Dll.SetWindowTheme(addressBar.Handle, "explorer", null);
-            addressBar.Text = path;
+        private readonly ComboBox _addressBar;
 
-            // Добавляем путь в историю выпадающего списка, если его там еще нет
-            if (!addressBar.Items.Contains(path))
-            {
-                addressBar.Items.Insert(0, path);
-            }
+        public DrawAdressBar(ComboBox addressBar)
+        {
+            _addressBar = addressBar;
+        }
+
+        public void UpdateAddressBar(string path)
+        {
+            _ = Dll.SetWindowTheme(_addressBar.Handle, "explorer", null);
+            _addressBar.Text = path;
+
+            if (!_addressBar.Items.Contains(path))
+                _addressBar.Items.Insert(0, path);
         }
     }
 }

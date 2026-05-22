@@ -1,15 +1,24 @@
 ﻿namespace rgz1_timp.DrawExplorer
 {
-    internal static class DrawDropDownList
+    public class DrawDropDownList
     {
-        internal static void DrawSystemDropDownList(ComboBox comboBox, TreeView treeView)
-        {
-            var nodes = GetAllNodes(treeView.Nodes);
+        private readonly ComboBox _comboBox;
+        private readonly TreeView _treeView;
 
+        public DrawDropDownList(ComboBox comboBox, TreeView treeView)
+        {
+            _comboBox = comboBox;
+            _treeView = treeView;
+            DrawSystemDropDownList();
+        }
+
+        private void DrawSystemDropDownList()
+        {
+            var nodes = GetAllNodes(_treeView.Nodes);
             foreach (var node in nodes)
             {
                 if (node.Text == "") continue;
-                comboBox.Items.Add(node.Text);
+                _comboBox.Items.Add(node.Text);
             }
         }
 
@@ -18,11 +27,10 @@
             List<TreeNode> allNodes = new List<TreeNode>();
             foreach (TreeNode node in nodes)
             {
-                allNodes.Add(node); // Добавляем текущий узел
-                allNodes.AddRange(GetAllNodes(node.Nodes)); // Рекурсивно добавляем детей
+                allNodes.Add(node);
+                allNodes.AddRange(GetAllNodes(node.Nodes));
             }
             return allNodes;
         }
-
     }
 }

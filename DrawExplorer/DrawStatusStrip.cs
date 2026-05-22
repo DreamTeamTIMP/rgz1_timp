@@ -1,22 +1,48 @@
-﻿
-namespace rgz1_timp.DrawExplorer
+﻿namespace rgz1_timp.DrawExplorer
 {
-    internal class DrawStatusStrip
+    public class DrawStatusStrip
     {
-        internal static void UpdateStatusStrip(StatusStrip statusStrip, ListView listView1)
+        private readonly StatusStrip _statusStrip;
+        private readonly ListView _listView;
+
+        public DrawStatusStrip(StatusStrip statusStrip, ListView listView)
         {
-            statusStrip.Items.Clear();
+            _statusStrip = statusStrip;
+            _listView = listView;
+        }
 
-            if (listView1 == null) return;
+        public void UpdateStatusStrip()
+        {
+            _statusStrip.Items.Clear();
 
-            ToolStripStatusLabel statusLabel = new ToolStripStatusLabel("Элементов: " + listView1.Items.Count.ToString() + " |") { ForeColor = Color.White} ;
-            statusStrip.Items.Add(statusLabel);
-            if (listView1.SelectedItems.Count > 0)
+            var countLabel = new ToolStripStatusLabel($"Элементов: {_listView.Items.Count}  |")
             {
-                ToolStripStatusLabel selectedItems = listView1.SelectedItems.Count == 1 ? new("Выбран 1 элемент |") : new($"Выбрано {listView1.SelectedItems.Count} элем. |");
-                statusStrip.Items.Add(selectedItems);
+                ForeColor = Color.White
+            };
+            _statusStrip.Items.Add(countLabel);
+
+            if (_listView.SelectedItems.Count == 1)
+            {
+                ListViewItem selected = _listView.SelectedItems[0];
+                string name = selected.Text;
+                string sizeInfo = "";
+                if (selected.SubItems.Count > 3 && !string.IsNullOrEmpty(selected.SubItems[3]?.Text))
+                    sizeInfo = $" | Размер: {selected.SubItems[3].Text}";
+
+                var selectedLabel = new ToolStripStatusLabel($"Выбран: {name}{sizeInfo}")
+                {
+                    ForeColor = Color.White
+                };
+                _statusStrip.Items.Add(selectedLabel);
             }
-            
+            else if (_listView.SelectedItems.Count > 1)
+            {
+                var selectedLabel = new ToolStripStatusLabel($"Выбрано: {_listView.SelectedItems.Count} элементов")
+                {
+                    ForeColor = Color.White
+                };
+                _statusStrip.Items.Add(selectedLabel);
+            }
         }
     }
 }

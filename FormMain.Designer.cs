@@ -73,7 +73,7 @@
             comboBoxAdressBar = new ComboBox();
             comboBoxLastWas = new ComboBox();
             labelFind = new Label();
-            button3 = new Button();
+            ButtonDesktop = new Button();
             buttonForward = new Button();
             buttonBack = new Button();
             textBoxFind = new TextBox();
@@ -175,7 +175,7 @@
             buttonVid.TabIndex = 3;
             buttonVid.Text = "Вид";
             buttonVid.UseVisualStyleBackColor = false;
-            buttonVid.Click += buttonVid_Click;
+            buttonVid.Click += ButtonVid_Click;
             // 
             // buttonShare
             // 
@@ -191,7 +191,7 @@
             buttonShare.TabIndex = 2;
             buttonShare.Text = "Поделиться";
             buttonShare.UseVisualStyleBackColor = false;
-            buttonShare.Click += buttonShare_Click;
+            buttonShare.Click += ButtonShare_Click;
             // 
             // buttonMain
             // 
@@ -207,7 +207,7 @@
             buttonMain.TabIndex = 1;
             buttonMain.Text = "Главная";
             buttonMain.UseVisualStyleBackColor = false;
-            buttonMain.Click += buttonMain_Click;
+            buttonMain.Click += ButtonMain_Click;
             // 
             // buttonFile
             // 
@@ -222,7 +222,7 @@
             buttonFile.TabIndex = 0;
             buttonFile.Text = "Файл";
             buttonFile.UseVisualStyleBackColor = false;
-            buttonFile.Click += buttonFile_Click;
+            buttonFile.Click += ButtonFile_Click;
             // 
             // tabControlShare
             // 
@@ -506,7 +506,7 @@
             treeViewFiles.ShowLines = false;
             treeViewFiles.Size = new Size(187, 100);
             treeViewFiles.TabIndex = 0;
-            treeViewFiles.BeforeExpand += treeView1_BeforeExpand;
+            treeViewFiles.BeforeExpand += TreeView1_BeforeExpand;
             treeViewFiles.AfterSelect += TreeView1_AfterSelect;
             // 
             // listViewFIles
@@ -523,9 +523,9 @@
             listViewFIles.TabIndex = 0;
             listViewFIles.UseCompatibleStateImageBehavior = false;
             listViewFIles.View = View.Details;
-            listViewFIles.ItemSelectionChanged += listView1_ItemSelectionChanged;
-            listViewFIles.MouseDoubleClick += listView1_MouseDoubleClick;
-            listViewFIles.MouseUp += listView1_MouseUp;
+            listViewFIles.ItemSelectionChanged += ListView1_ItemSelectionChanged;
+            listViewFIles.MouseDoubleClick += ListView1_MouseDoubleClick;
+            listViewFIles.MouseUp += ListView1_MouseUp;
             // 
             // columnHeaderName
             // 
@@ -552,7 +552,7 @@
             panel1.BackColor = Color.FromArgb(25, 25, 25);
             panel1.Controls.Add(panel3);
             panel1.Controls.Add(labelFind);
-            panel1.Controls.Add(button3);
+            panel1.Controls.Add(ButtonDesktop);
             panel1.Controls.Add(buttonForward);
             panel1.Controls.Add(buttonBack);
             panel1.Controls.Add(textBoxFind);
@@ -589,7 +589,7 @@
             buttonAdressBar.TabIndex = 9;
             buttonAdressBar.Text = "";
             buttonAdressBar.UseVisualStyleBackColor = true;
-            buttonAdressBar.Click += buttonAdressBar_Click;
+            buttonAdressBar.Click += ButtonAddressBar_Click;
             // 
             // labelUpdateDrivers
             // 
@@ -613,7 +613,7 @@
             comboBoxAdressBar.Name = "comboBoxAdressBar";
             comboBoxAdressBar.Size = new Size(394, 23);
             comboBoxAdressBar.TabIndex = 1;
-            comboBoxAdressBar.KeyDown += comboBox1_KeyDown;
+            comboBoxAdressBar.KeyDown += ComboBoxAddressBar_KeyDown;
             // 
             // comboBoxLastWas
             // 
@@ -640,17 +640,17 @@
             // 
             // button3
             // 
-            button3.BackColor = Color.FromArgb(25, 25, 25);
-            button3.FlatAppearance.BorderSize = 0;
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button3.Location = new Point(105, 2);
-            button3.Name = "button3";
-            button3.Size = new Size(33, 23);
-            button3.TabIndex = 5;
-            button3.Text = "";
-            button3.UseVisualStyleBackColor = false;
-            button3.Click += button3_Click;
+            ButtonDesktop.BackColor = Color.FromArgb(25, 25, 25);
+            ButtonDesktop.FlatAppearance.BorderSize = 0;
+            ButtonDesktop.FlatStyle = FlatStyle.Flat;
+            ButtonDesktop.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ButtonDesktop.Location = new Point(105, 2);
+            ButtonDesktop.Name = "button3";
+            ButtonDesktop.Size = new Size(33, 23);
+            ButtonDesktop.TabIndex = 5;
+            ButtonDesktop.Text = "";
+            ButtonDesktop.UseVisualStyleBackColor = false;
+            ButtonDesktop.Click += ButtonDesktop_Click;
             // 
             // buttonForward
             // 
@@ -664,7 +664,7 @@
             buttonForward.TabIndex = 3;
             buttonForward.Text = "";
             buttonForward.UseVisualStyleBackColor = false;
-            buttonForward.Click += buttonForward_Click;
+            buttonForward.Click += ButtonForward_Click;
             // 
             // buttonBack
             // 
@@ -678,7 +678,7 @@
             buttonBack.TabIndex = 2;
             buttonBack.Text = "";
             buttonBack.UseVisualStyleBackColor = false;
-            buttonBack.Click += buttonBack_Click;
+            buttonBack.Click += ButtonBack_Click;
             // 
             // textBoxFind
             // 
@@ -690,7 +690,7 @@
             textBoxFind.Name = "textBoxFind";
             textBoxFind.Size = new Size(185, 23);
             textBoxFind.TabIndex = 0;
-            textBoxFind.KeyDown += textBox1_KeyDown;
+            textBoxFind.KeyDown += TextBoxFind_KeyDown;
             // 
             // buttonDropDown
             // 
@@ -704,7 +704,7 @@
             buttonDropDown.TabIndex = 10;
             buttonDropDown.Text = "";
             buttonDropDown.UseVisualStyleBackColor = true;
-            buttonDropDown.Click += buttonDropDown_Click;
+            buttonDropDown.Click += ButtonDropDown_Click;
             // 
             // panel2
             // 
@@ -733,7 +733,7 @@
             buttonSmallElements.TabIndex = 2;
             buttonSmallElements.Text = "";
             buttonSmallElements.UseVisualStyleBackColor = false;
-            buttonSmallElements.Click += buttonSmallElements_Click;
+            buttonSmallElements.Click += ButtonSmallElements_Click;
             // 
             // buttonBigElements
             // 
@@ -748,7 +748,7 @@
             buttonBigElements.TabIndex = 1;
             buttonBigElements.Text = "";
             buttonBigElements.UseVisualStyleBackColor = true;
-            buttonBigElements.Click += buttonBigElements_Click;
+            buttonBigElements.Click += ButtonBigElements_Click;
             // 
             // panel5
             // 
@@ -790,7 +790,7 @@
             createFolderToolStripMenuItem.Name = "createFolderToolStripMenuItem";
             createFolderToolStripMenuItem.Size = new Size(180, 22);
             createFolderToolStripMenuItem.Text = "Папку";
-            createFolderToolStripMenuItem.Click += createFolderToolStripMenuItem_Click;
+            createFolderToolStripMenuItem.Click += CreateFolderToolStripMenuItem_Click;
             // 
             // InsertToolStripMenuItem
             // 
@@ -917,7 +917,7 @@
         private Button buttonVid;
         private TextBox textBoxFind;
         private ComboBox comboBoxAdressBar;
-        private Button button3;
+        private Button ButtonDesktop;
         private ComboBox comboBoxLastWas;
         private Button buttonForward;
         private Button buttonBack;
