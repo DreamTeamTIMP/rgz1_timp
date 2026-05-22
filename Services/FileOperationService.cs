@@ -1,5 +1,6 @@
 ﻿using rgz1_timp.Command;
-using rgz1_timp.Validators;
+using Microsoft.VisualBasic.FileIO;
+using System.IO;
 
 namespace rgz1_timp.Services
 {
@@ -17,11 +18,7 @@ namespace rgz1_timp.Services
         //  Буфер обмена 
         public void CopyItem(string? path)
         {
-            if (path != null)
-            {
-                copiedPath = path;
-                isCut = false;
-            }
+            if (path != null) copiedPath = path;
         }
 
         public void CutItem(string? path)
@@ -35,9 +32,18 @@ namespace rgz1_timp.Services
 
         public bool PasteItem()
         {
-            if (string.IsNullOrEmpty(copiedPath)) return false;
+            if (string.IsNullOrEmpty(copiedPath))
+            {
+                ShowError("Буфер обмена пуст.");
+                return false;
+            }
+
             string destDir = pathModel.Path!;
-            if (!Directory.Exists(destDir)) return false;
+            if (string.IsNullOrEmpty(destDir) || !Directory.Exists(destDir))
+            {
+                ShowError("Целевая папка не существует.");
+                return false;
+            }
 
             if (IsCyclicOperation(copiedPath, destDir))
             {
@@ -71,79 +77,140 @@ namespace rgz1_timp.Services
         public bool CreateNewFolder()
         {
             string currentDir = pathModel.Path!;
-            if (string.IsNullOrEmpty(currentDir) || !Directory.Exists(currentDir)) return false;
+            if (string.IsNullOrEmpty(currentDir) || !Directory.Exists(currentDir))
+            {
+                ShowError("Текущая папка недоступна.");
+                return false;
+            }
 
             string newFolderName = GetUniqueFolderName(currentDir);
-            if (!IsValidFileName(newFolderName))
+            if (!FileNameValidator.IsValidFileName(newFolderName))
             {
                 ShowError(FileNameValidator.GetErrorMessage(newFolderName) ?? "Недопустимое имя папки.");
                 return false;
             }
 
-            var command = new NewFolderCommand(currentDir, newFolderName);
-            CommandInvoker.ExecuteCommand(command);
-            return true;
+            try
+            {
+                var command = new NewFolderCommand(currentDir, newFolderName);
+                CommandInvoker.ExecuteCommand(command);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ShowError($"Не удалось создать папку: {ex.Message}");
+                return false;
+            }
         }
 
         //  Создание файла 
         public bool CreateNewFile()
         {
             string currentDir = pathModel.Path!;
-            if (!Directory.Exists(currentDir)) return false;
+            if (string.IsNullOrEmpty(currentDir) || !Directory.Exists(currentDir))
+            {
+                ShowError("Текущая папка недоступна.");
+                return false;
+            }
 
             string baseName = "Новый текстовый документ.txt";
             string fileName = baseName;
             int counter = 1;
-
             while (File.Exists(Path.Combine(currentDir, fileName)))
             {
                 fileName = $"Новый текстовый документ ({counter}).txt";
                 counter++;
             }
 
-            if (!IsValidFileName(fileName))
+            if (!FileNameValidator.IsValidFileName(fileName))
             {
                 ShowError(FileNameValidator.GetErrorMessage(fileName) ?? "Недопустимое имя файла.");
                 return false;
             }
 
-            var command = new CreateFileCommand(currentDir, fileName);
-            CommandInvoker.ExecuteCommand(command);
-            return true;
+            try
+            {
+                var command = new CreateFileCommand(currentDir, fileName);
+                CommandInvoker.ExecuteCommand(command);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ShowError($"Не удалось создать файл: {ex.Message}");
+                return false;
+            }
         }
 
         //  Удаление 
         public bool DeleteItem(string? path)
         {
-            if (path == null) return false;
-            var command = new DeleteCommand(path);
-            CommandInvoker.ExecuteCommand(command);
-            return true;
+            if (string.IsNullOrEmpty(path))
+            {
+                ShowError("Ничего не выбрано.");
+                return false;
+            }
+
+            try
+            {
+                var command = new DeleteCommand(path);
+                CommandInvoker.ExecuteCommand(command);
+                return true;
+            }
+            catch (OperationCanceledException)
+            {
+                // Пользователь отменил удаление в диалоге – не ошибка
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ShowError($"Не удалось удалить: {ex.Message}");
+                return false;
+            }
         }
 
         //  Переименование 
         public bool RenameItem(string? oldPath, string newName)
         {
-            if (oldPath == null) return false;
-            if (string.IsNullOrEmpty(newName) || newName == Path.GetFileName(oldPath)) return false;
+            if (string.IsNullOrEmpty(oldPath))
+            {
+                ShowError("Ничего не выбрано.");
+                return false;
+            }
+            if (string.IsNullOrEmpty(newName) || newName == Path.GetFileName(oldPath))
+                return false;
 
-            if (!IsValidFileName(newName))
+            if (!FileNameValidator.IsValidFileName(newName))
             {
                 ShowError(FileNameValidator.GetErrorMessage(newName) ?? "Недопустимое имя.");
                 return false;
             }
 
-            var command = new RenameCommand(oldPath, newName);
-            CommandInvoker.ExecuteCommand(command);
-            return true;
+            try
+            {
+                var command = new RenameCommand(oldPath, newName);
+                CommandInvoker.ExecuteCommand(command);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ShowError($"Не удалось переименовать: {ex.Message}");
+                return false;
+            }
         }
 
-        //  Переместить в (диалог) 
+        //  Переместить в диалог 
         public bool MoveToFolder(string? sourcePath, string destinationDir)
         {
-            if (sourcePath == null) return false;
-            if (!Directory.Exists(destinationDir)) return false;
-
+            if (string.IsNullOrEmpty(sourcePath))
+            {
+                ShowError("Ничего не выбрано.");
+                return false;
+            }
+            if (string.IsNullOrEmpty(destinationDir) || !Directory.Exists(destinationDir))
+            {
+                ShowError("Папка назначения не существует.");
+                return false;
+            }
             if (Directory.Exists(sourcePath) && IsCyclicOperation(sourcePath, destinationDir))
             {
                 ShowError("Нельзя переместить папку в саму себя.");
@@ -151,17 +218,32 @@ namespace rgz1_timp.Services
             }
 
             string destPath = Path.Combine(destinationDir, Path.GetFileName(sourcePath));
-            var command = new MoveCommand(sourcePath, destPath);
-            CommandInvoker.ExecuteCommand(command);
-            return true;
+            try
+            {
+                var command = new MoveCommand(sourcePath, destPath);
+                CommandInvoker.ExecuteCommand(command);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ShowError($"Ошибка перемещения: {ex.Message}");
+                return false;
+            }
         }
 
-        //  Копировать в (диалог) 
+        //  Копировать в диалог 
         public bool CopyToFolder(string? sourcePath, string destinationDir)
         {
-            if (sourcePath == null) return false;
-            if (!Directory.Exists(destinationDir)) return false;
-
+            if (string.IsNullOrEmpty(sourcePath))
+            {
+                ShowError("Ничего не выбрано.");
+                return false;
+            }
+            if (string.IsNullOrEmpty(destinationDir) || !Directory.Exists(destinationDir))
+            {
+                ShowError("Папка назначения не существует.");
+                return false;
+            }
             if (Directory.Exists(sourcePath) && IsCyclicOperation(sourcePath, destinationDir))
             {
                 ShowError("Нельзя скопировать папку в саму себя.");
@@ -169,29 +251,37 @@ namespace rgz1_timp.Services
             }
 
             string destPath = Path.Combine(destinationDir, Path.GetFileName(sourcePath));
-            var command = new CopyCommand(sourcePath, destPath);
-            CommandInvoker.ExecuteCommand(command);
-            return true;
+            try
+            {
+                var command = new CopyCommand(sourcePath, destPath);
+                CommandInvoker.ExecuteCommand(command);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ShowError($"Ошибка копирования: {ex.Message}");
+                return false;
+            }
         }
 
         //  Копировать путь в буфер 
         public void CopyPathToClipboard(string? path)
         {
-            if (path != null)
+            if (!string.IsNullOrEmpty(path))
                 Clipboard.SetText(path);
         }
 
-        //  Вспомогательные методы 
+        //  Приватные вспомогательные методы 
         private string GetUniqueFolderName(string parentPath)
         {
             string baseName = "Новая папка";
             string folderName = baseName;
             int counter = 1;
-
             while (Directory.Exists(Path.Combine(parentPath, folderName)))
             {
                 counter++;
                 folderName = $"{baseName} ({counter})";
+                if (counter > 1000) break; // защита от бесконечного цикла
             }
             return folderName;
         }
@@ -199,14 +289,10 @@ namespace rgz1_timp.Services
         private bool IsCyclicOperation(string sourcePath, string destinationDir)
         {
             if (!Directory.Exists(sourcePath)) return false;
-
             string sourceFull = Path.GetFullPath(sourcePath).TrimEnd(Path.DirectorySeparatorChar);
             string destFull = Path.GetFullPath(destinationDir).TrimEnd(Path.DirectorySeparatorChar);
-
             return destFull == sourceFull || destFull.StartsWith(sourceFull + Path.DirectorySeparatorChar);
         }
-
-        private bool IsValidFileName(string name) => FileNameValidator.IsValidFileName(name);
 
         private void ShowError(string message)
         {

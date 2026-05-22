@@ -20,6 +20,55 @@ namespace rgz1_timp.DrawExplorer
             _treeView.ImageList = _icons.SmallIcons;
             LoadDrives();
         }
+        public void RefreshNodeByPath(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return;
+            TreeNode? node = FindNodeByPath(_treeView.Nodes, path);
+            if (node != null)
+                RefreshNode(node, path);
+            else
+            {
+                // Попробуем обновить родительский узел (на случай, если папка переименована/перемещена)
+                string? parent = Path.GetDirectoryName(path);
+                if (!string.IsNullOrEmpty(parent))
+                {
+                    TreeNode? parentNode = FindNodeByPath(_treeView.Nodes, parent);
+                    if (parentNode != null)
+                        RefreshNode(parentNode, parent);
+                }
+            }
+        }
+
+        private TreeNode? FindNodeByPath(TreeNodeCollection nodes, string path)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (node.Tag is string tag && string.Equals(tag, path, StringComparison.OrdinalIgnoreCase))
+                    return node;
+                TreeNode? found = FindNodeByPath(node.Nodes, path);
+                if (found != null) return found;
+            }
+            return null;
+        }
+
+        private void RefreshNode(TreeNode node, string path)
+        {
+            bool wasExpanded = node.IsExpanded;
+            node.Nodes.Clear();
+            try
+            {
+                foreach (string dir in Directory.GetDirectories(path))
+                {
+                    if ((new DirectoryInfo(dir).Attributes & FileAttributes.Hidden) != 0) continue;
+                    TreeNode subNode = new(Path.GetFileName(dir)) { Tag = dir };
+                    subNode.ImageKey = subNode.SelectedImageKey = "folder";
+                    subNode.Nodes.Add("");
+                    node.Nodes.Add(subNode);
+                }
+            }
+            catch (UnauthorizedAccessException) { }
+            if (wasExpanded) node.Expand();
+        }
 
         private void LoadDrives()
         {

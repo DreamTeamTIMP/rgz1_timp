@@ -49,6 +49,7 @@ namespace rgz1_timp
             drawListView.LoadDirectory(path, drawDetails);
             drawAddressBar.UpdateAddressBar(path);
             drawStatusStrip.UpdateStatusStrip();
+            drawTreeView.RefreshNodeByPath(path);
         }
 
         private void UpdateNavigationButtons()
@@ -362,6 +363,55 @@ namespace rgz1_timp
             {
                 CommandInvoker.Redo();
                 RefreshUiAfterCommand();
+                return true;
+            }
+
+            // Справка
+            if (keyData == Keys.F1)
+            {
+                using (var help = new HelpForm()) help.ShowDialog(this);
+                return true;
+            }
+
+            // Удаление (Delete)
+            if (keyData == Keys.Delete)
+            {
+                DeleteSelectedItem();
+                return true;
+            }
+
+            // Переименование (F2)
+            if (keyData == Keys.F2)
+            {
+                RenameSelectedItem();
+                return true;
+            }
+
+            // Обновить (F5)
+            if (keyData == Keys.F5)
+            {
+                RefreshUiAfterCommand();
+                return true;
+            }
+
+            // Копировать (Ctrl+C)
+            if (keyData == (Keys.Control | Keys.C))
+            {
+                CopySelectedItem();
+                return true;
+            }
+
+            // Вырезать (Ctrl+X)
+            if (keyData == (Keys.Control | Keys.X))
+            {
+                CutSelectedItem();
+                return true;
+            }
+
+            // Вставить (Ctrl+V)
+            if (keyData == (Keys.Control | Keys.V))
+            {
+                PasteItem();
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
