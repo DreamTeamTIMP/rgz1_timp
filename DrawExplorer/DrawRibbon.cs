@@ -2,21 +2,21 @@
 {
     public class DrawRibbon
     {
-        private readonly TabControl _tabControl;
-        private readonly FormMain _form;
+        private readonly TabControl tabControl;
+        private readonly FormMain form;
 
         public DrawRibbon(TabControl tabControl, FormMain form)
         {
-            _tabControl = tabControl;
-            _form = form;
+            this.tabControl = tabControl;
+            this.form = form;
             SetupRibbon();
         }
 
         private void SetupRibbon()
         {
-            CreateHomePage(_tabControl.TabPages[0]);
-            CreateSharePage(_tabControl.TabPages[1]);
-            CreateViewPage(_tabControl.TabPages[2]);
+            CreateHomePage(tabControl.TabPages[0]);
+            CreateSharePage(tabControl.TabPages[1]);
+            CreateViewPage(tabControl.TabPages[2]);
         }
 
         private void CreateViewPage(TabPage page)
@@ -101,28 +101,28 @@
             Panel ribbonGroupCreate = CreateRibbonGroup(page, "Создать");
             FlowLayoutPanel smallButtonsPanelCreate = CreatePanelForButtons(ribbonGroupCreate, false);
             AddRibbonButton(smallButtonsPanelCreate, "Создать элемент", "\uE72D", false);
-            AddRibbonButton(smallButtonsPanelCreate, "Простой доступ", "\uE7C3", false, (s, e) => _form.SimpleAccess());
+            AddRibbonButton(smallButtonsPanelCreate, "Простой доступ", "\uE7C3", false, (s, e) => form.SimpleAccess());
             FlowLayoutPanel bigButtonsPanelCreate = CreatePanelForButtons(ribbonGroupCreate, true);
-            AddRibbonButton(bigButtonsPanelCreate, "Новая папка", "", true, (s, e) => _form.CreateNewFolder());
+            AddRibbonButton(bigButtonsPanelCreate, "Новая папка", "", true, (s, e) => form.CreateNewFolder());
             ResizeRibbonGroup(ribbonGroupCreate);
 
             Panel ribbonGroupSort = CreateRibbonGroup(page, "Упорядочить");
             FlowLayoutPanel bigButtonsPanelSort = CreatePanelForButtons(ribbonGroupSort, true);
-            AddRibbonButton(bigButtonsPanelSort, "Переместить в", "\uE8DE", true, (s, e) => _form.MoveToDialog());
-            AddRibbonButton(bigButtonsPanelSort, "Копировать в", "\uE8C8", true, (s, e) => _form.CopyToDialog());
-            AddRibbonButton(bigButtonsPanelSort, "Удалить", "\uE74D", true, (s, e) => _form.DeleteSelectedItem());
-            AddRibbonButton(bigButtonsPanelSort, "Переименовать", "\uE8AC", true, (s, e) => _form.RenameSelectedItem());
+            AddRibbonButton(bigButtonsPanelSort, "Переместить в", "\uE8DE", true, (s, e) => form.MoveToDialog());
+            AddRibbonButton(bigButtonsPanelSort, "Копировать в", "\uE8C8", true, (s, e) => form.CopyToDialog());
+            AddRibbonButton(bigButtonsPanelSort, "Удалить", "\uE74D", true, (s, e) => form.DeleteSelectedItem());
+            AddRibbonButton(bigButtonsPanelSort, "Переименовать", "\uE8AC", true, (s, e) => form.RenameSelectedItem());
             ResizeRibbonGroup(ribbonGroupSort);
 
             Panel ribbonGroupBuff = CreateRibbonGroup(page, "Буфер обмена");
             FlowLayoutPanel smallButtonsPanel = CreatePanelForButtons(ribbonGroupBuff, false);
             FlowLayoutPanel bigButtonsPanel = CreatePanelForButtons(ribbonGroupBuff, true);
-            AddRibbonButton(bigButtonsPanel, "Закрепить на панели быстрого доступа", "\uE840", true, (s, e) => _form.PinToQuickAccess());
-            AddRibbonButton(bigButtonsPanel, "Копировать", "\uE8C8", true, (s, e) => _form.CopySelectedItem());
-            AddRibbonButton(bigButtonsPanel, "Вставить", "\uE77F", true, (s, e) => _form.PasteItem());
-            AddRibbonButton(smallButtonsPanel, "Вырезать", "\uE8C6", false, (s, e) => _form.CutSelectedItem());
-            AddRibbonButton(smallButtonsPanel, "Скопировать путь", "\uE8C1", false, (s, e) => _form.CopyPath());
-            AddRibbonButton(smallButtonsPanel, "Вставить ярлык", "\uEED1", false, (s, e) => _form.PasteShortcut());
+            AddRibbonButton(bigButtonsPanel, "Закрепить на панели быстрого доступа", "\uE840", true, (s, e) => form.PinToQuickAccess());
+            AddRibbonButton(bigButtonsPanel, "Копировать", "\uE8C8", true, (s, e) => form.CopySelectedItem());
+            AddRibbonButton(bigButtonsPanel, "Вставить", "\uE77F", true, (s, e) => form.PasteItem());
+            AddRibbonButton(smallButtonsPanel, "Вырезать", "\uE8C6", false, (s, e) => form.CutSelectedItem());
+            AddRibbonButton(smallButtonsPanel, "Скопировать путь", "\uE8C1", false, (s, e) => form.CopyPath());
+            AddRibbonButton(smallButtonsPanel, "Вставить ярлык", "\uEED1", false, (s, e) => form.PasteShortcut());
             ResizeRibbonGroup(ribbonGroupBuff);
         }
 

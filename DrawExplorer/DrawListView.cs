@@ -4,22 +4,22 @@ namespace rgz1_timp.DrawExplorer
 {
     public class DrawListView
     {
-        private readonly ListView _listView;
-        private readonly DrawIcons _icons;
+        private readonly ListView listView;
+        private readonly DrawIcons icons;
         private bool _drawDetails = true;
 
         public DrawListView(ListView listView, DrawIcons icons)
         {
-            _listView = listView;
-            _icons = icons;
+            this.listView = listView;
+            this.icons = icons;
             DrawSystemListView();
         }
 
         private void DrawSystemListView()
         {
-            _ = Dll.SetWindowTheme(_listView.Handle, "explorer", null);
-            _listView.SmallImageList = _icons.SmallIcons;
-            _listView.LargeImageList = _icons.LargeIcons;
+            _ = Dll.SetWindowTheme(listView.Handle, "explorer", null);
+            listView.SmallImageList = icons.SmallIcons;
+            listView.LargeImageList = icons.LargeIcons;
         }
 
         public void LoadDirectory(string path, bool drawDetails)
@@ -27,8 +27,8 @@ namespace rgz1_timp.DrawExplorer
             _drawDetails = drawDetails;
             if (string.IsNullOrEmpty(path) || !Directory.Exists(path)) return;
 
-            _listView.Items.Clear();
-            _listView.BeginUpdate();
+            listView.Items.Clear();
+            listView.BeginUpdate();
 
             try
             {
@@ -38,24 +38,24 @@ namespace rgz1_timp.DrawExplorer
                 {
                     if ((dir.Attributes & FileAttributes.Hidden) != 0) continue;
                     ListViewItem item = new ListViewItem(dir.Name);
-                    item.ImageKey = _icons.GetIconKey(dir.FullName, true);
+                    item.ImageKey = icons.GetIconKey(dir.FullName, true);
                     item.SubItems.Add(dir.LastWriteTime.ToString("dd.MM.yyyy HH:mm"));
                     item.SubItems.Add("Папка с файлами");
                     item.SubItems.Add("");
                     item.Tag = dir.FullName;
-                    _listView.Items.Add(item);
+                    listView.Items.Add(item);
                 }
 
                 foreach (var file in di.GetFiles())
                 {
                     if ((file.Attributes & FileAttributes.Hidden) != 0) continue;
                     ListViewItem item = new ListViewItem(file.Name);
-                    item.ImageKey = _icons.GetIconKey(file.FullName, false);
+                    item.ImageKey = icons.GetIconKey(file.FullName, false);
                     item.SubItems.Add(file.LastWriteTime.ToString("dd.MM.yyyy HH:mm"));
                     item.SubItems.Add(file.Extension.ToUpper() + " File");
                     item.SubItems.Add(FormatFileSize(file.Length));
                     item.Tag = file.FullName;
-                    _listView.Items.Add(item);
+                    listView.Items.Add(item);
                 }
             }
             catch (UnauthorizedAccessException ex)
@@ -67,8 +67,8 @@ namespace rgz1_timp.DrawExplorer
                 MessageBox.Show($"Ошибка при загрузке папки {path}:\n{ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            _listView.View = _drawDetails ? View.Details : View.LargeIcon;
-            _listView.EndUpdate();
+            listView.View = _drawDetails ? View.Details : View.LargeIcon;
+            listView.EndUpdate();
         }
 
         private static string FormatFileSize(long bytes)

@@ -4,26 +4,26 @@ namespace rgz1_timp.DrawExplorer
 {
     public class DrawTreeView
     {
-        private readonly TreeView _treeView;
-        private readonly DrawIcons _icons;
+        private readonly TreeView treeView;
+        private readonly DrawIcons icons;
 
         public DrawTreeView(TreeView treeView, DrawIcons icons)
         {
-            _treeView = treeView;
-            _icons = icons;
+            this.treeView = treeView;
+            this.icons = icons;
             DrawSystemTreeView();
         }
 
         private void DrawSystemTreeView()
         {
-            _ = Dll.SetWindowTheme(_treeView.Handle, "explorer", null);
-            _treeView.ImageList = _icons.SmallIcons;
+            _ = Dll.SetWindowTheme(treeView.Handle, "explorer", null);
+            treeView.ImageList = icons.SmallIcons;
             LoadDrives();
         }
         public void RefreshNodeByPath(string path)
         {
             if (string.IsNullOrEmpty(path)) return;
-            TreeNode? node = FindNodeByPath(_treeView.Nodes, path);
+            TreeNode? node = FindNodeByPath(treeView.Nodes, path);
             if (node != null)
                 RefreshNode(node, path);
             else
@@ -32,7 +32,7 @@ namespace rgz1_timp.DrawExplorer
                 string? parent = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(parent))
                 {
-                    TreeNode? parentNode = FindNodeByPath(_treeView.Nodes, parent);
+                    TreeNode? parentNode = FindNodeByPath(treeView.Nodes, parent);
                     if (parentNode != null)
                         RefreshNode(parentNode, parent);
                 }
@@ -72,7 +72,7 @@ namespace rgz1_timp.DrawExplorer
 
         private void LoadDrives()
         {
-            _treeView.Nodes.Clear();
+            treeView.Nodes.Clear();
             TreeNode quickAccess = new TreeNode("Быстрый доступ");
             quickAccess.Tag = "Быстрый доступ";
             quickAccess.Nodes.Add(new TreeNode("Рабочий стол") { Tag = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) });
@@ -90,8 +90,8 @@ namespace rgz1_timp.DrawExplorer
                 thisPC.Nodes.Add(driveNode);
             }
 
-            _treeView.Nodes.Add(quickAccess);
-            _treeView.Nodes.Add(thisPC);
+            treeView.Nodes.Add(quickAccess);
+            treeView.Nodes.Add(thisPC);
             quickAccess.ImageKey = quickAccess.SelectedImageKey = "quick";
             thisPC.ImageKey = thisPC.SelectedImageKey = "pc";
         }
@@ -123,7 +123,7 @@ namespace rgz1_timp.DrawExplorer
         public void RefreshDrives()
         {
             TreeNode? thisPC = null;
-            foreach (TreeNode node in _treeView.Nodes)
+            foreach (TreeNode node in treeView.Nodes)
                 if (node.Text == "Этот компьютер") thisPC = node;
             if (thisPC == null) return;
 

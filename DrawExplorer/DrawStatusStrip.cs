@@ -2,28 +2,28 @@
 {
     public class DrawStatusStrip
     {
-        private readonly StatusStrip _statusStrip;
-        private readonly ListView _listView;
+        private readonly StatusStrip statusStrip;
+        private readonly ListView listView;
 
         public DrawStatusStrip(StatusStrip statusStrip, ListView listView)
         {
-            _statusStrip = statusStrip;
-            _listView = listView;
+            this.statusStrip = statusStrip;
+            this.listView = listView;
         }
 
         public void UpdateStatusStrip()
         {
-            _statusStrip.Items.Clear();
+            statusStrip.Items.Clear();
 
-            var countLabel = new ToolStripStatusLabel($"Элементов: {_listView.Items.Count}  |")
+            var countLabel = new ToolStripStatusLabel($"Элементов: {listView.Items.Count}  |")
             {
                 ForeColor = Color.White
             };
-            _statusStrip.Items.Add(countLabel);
+            statusStrip.Items.Add(countLabel);
 
-            if (_listView.SelectedItems.Count == 1)
+            if (listView.SelectedItems.Count == 1)
             {
-                ListViewItem selected = _listView.SelectedItems[0];
+                ListViewItem selected = listView.SelectedItems[0];
                 string name = selected.Text;
                 string sizeInfo = "";
                 if (selected.SubItems.Count > 3 && !string.IsNullOrEmpty(selected.SubItems[3]?.Text))
@@ -33,15 +33,15 @@
                 {
                     ForeColor = Color.White
                 };
-                _statusStrip.Items.Add(selectedLabel);
+                statusStrip.Items.Add(selectedLabel);
             }
-            else if (_listView.SelectedItems.Count > 1)
+            else if (listView.SelectedItems.Count > 1)
             {
-                var selectedLabel = new ToolStripStatusLabel($"Выбрано: {_listView.SelectedItems.Count} элементов")
+                var selectedLabel = new ToolStripStatusLabel($"Выбрано: {listView.SelectedItems.Count} элементов")
                 {
                     ForeColor = Color.White
                 };
-                _statusStrip.Items.Add(selectedLabel);
+                statusStrip.Items.Add(selectedLabel);
             }
         }
     }

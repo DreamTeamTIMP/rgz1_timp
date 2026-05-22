@@ -4,20 +4,20 @@ namespace rgz1_timp.DrawExplorer
 {
     public class DrawAdressBar
     {
-        private readonly ComboBox _addressBar;
+        private readonly ComboBox addressBar;
 
         public DrawAdressBar(ComboBox addressBar)
         {
-            _addressBar = addressBar;
+            this.addressBar = addressBar;
         }
 
         public void UpdateAddressBar(string path)
         {
-            _ = Dll.SetWindowTheme(_addressBar.Handle, "explorer", null);
-            _addressBar.Text = path;
+            _ = Dll.SetWindowTheme(addressBar.Handle, "explorer", null);
+            addressBar.Text = path;
 
-            if (!_addressBar.Items.Contains(path))
-                _addressBar.Items.Insert(0, path);
+            if (!addressBar.Items.Contains(path))
+                addressBar.Items.Insert(0, path);
         }
     }
 }

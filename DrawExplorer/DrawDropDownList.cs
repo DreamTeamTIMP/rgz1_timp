@@ -2,23 +2,23 @@
 {
     public class DrawDropDownList
     {
-        private readonly ComboBox _comboBox;
-        private readonly TreeView _treeView;
+        private readonly ComboBox comboBox;
+        private readonly TreeView treeView;
 
         public DrawDropDownList(ComboBox comboBox, TreeView treeView)
         {
-            _comboBox = comboBox;
-            _treeView = treeView;
+            this.comboBox = comboBox;
+            this.treeView = treeView;
             DrawSystemDropDownList();
         }
 
         private void DrawSystemDropDownList()
         {
-            var nodes = GetAllNodes(_treeView.Nodes);
+            var nodes = GetAllNodes(treeView.Nodes);
             foreach (var node in nodes)
             {
                 if (node.Text == "") continue;
-                _comboBox.Items.Add(node.Text);
+                comboBox.Items.Add(node.Text);
             }
         }
 

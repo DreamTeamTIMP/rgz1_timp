@@ -10,12 +10,12 @@ namespace rgz1_timp.Command
 
     public abstract class FileSystemCommand : ICommand
     {
-        protected string _sourcePath;
-        protected string? _backupPath; // для временного хранения при удалении/перемещении
+        protected string sourcePath;
+        protected string? backupPath; // для временного хранения при удалении/перемещении
 
         protected FileSystemCommand(string sourcePath)
         {
-            _sourcePath = sourcePath;
+            this.sourcePath = sourcePath;
         }
 
         public abstract void Undo();
@@ -23,177 +23,179 @@ namespace rgz1_timp.Command
     }
     public class NewFolderCommand : FileSystemCommand
     {
-        private readonly string _parentPath;
-        private string _folderName;
-        private string _fullPath;
+        private readonly string parentPath;
+        private string folderName;
+        private string fullPath;
 
         public NewFolderCommand(string parentPath, string folderName) : base(parentPath)
         {
-            _parentPath = parentPath;
-            _folderName = folderName;
-            _fullPath = Path.Combine(parentPath, folderName);
+            this.parentPath = parentPath;
+            this.folderName = folderName;
+            fullPath = Path.Combine(parentPath, folderName);
         }
 
         public override void Execute()
         {
-            if (!Directory.Exists(_fullPath))
-                Directory.CreateDirectory(_fullPath);
+            if (!Directory.Exists(fullPath))
+                Directory.CreateDirectory(fullPath);
         }
 
         public override void Undo()
         {
-            if (Directory.Exists(_fullPath))
-                Directory.Delete(_fullPath);
+            if (Directory.Exists(fullPath))
+                Directory.Delete(fullPath);
         }
 
     }
     public class RenameCommand : FileSystemCommand
     {
-        private readonly string _newName;
-        private string _oldName;
-        private string _parentDir;
-        private string _newPath;
+        private readonly string newName;
+        private string oldName;
+        private string parentDir;
+        private string newPath;
 
         public RenameCommand(string oldFullPath, string newName) : base(oldFullPath)
         {
-            _newName = newName;
-            _oldName = Path.GetFileName(oldFullPath);
-            _parentDir = Path.GetDirectoryName(oldFullPath)!;
-            _newPath = Path.Combine(_parentDir, newName);
+            this.newName = newName;
+            oldName = Path.GetFileName(oldFullPath);
+            parentDir = Path.GetDirectoryName(oldFullPath)!;
+            newPath = Path.Combine(parentDir, newName);
         }
 
         public override void Execute()
         {
-            if (Directory.Exists(_sourcePath))
-                Directory.Move(_sourcePath, _newPath);
-            else if (File.Exists(_sourcePath))
-                File.Move(_sourcePath, _newPath);
+            if (Directory.Exists(sourcePath))
+                Directory.Move(sourcePath, newPath);
+            else if (File.Exists(sourcePath))
+                File.Move(sourcePath, newPath);
         }
 
         public override void Undo()
         {
-            if (Directory.Exists(_newPath))
-                Directory.Move(_newPath, _sourcePath);
-            else if (File.Exists(_newPath))
-                File.Move(_newPath, _sourcePath);
+            if (Directory.Exists(newPath))
+                Directory.Move(newPath, sourcePath);
+            else if (File.Exists(newPath))
+                File.Move(newPath, sourcePath);
         }
     }
-        public class DeleteCommand : FileSystemCommand
+    public class DeleteCommand : ICommand
     {
-        private string _backupPath;
-        private bool _isDirectory;
+        private string sourcePath;
+        private bool isDirectory;
+        private string? parentToNavigate; // для возврата при Undo – не используется, но сохраним
 
-        public DeleteCommand(string source) : base(source)
+        public DeleteCommand(string source)
         {
-            string temp = Path.GetTempPath();
-            _backupPath = Path.Combine(temp, Guid.NewGuid().ToString());
+            sourcePath = source;
+            isDirectory = Directory.Exists(source);
+            parentToNavigate = Path.GetDirectoryName(source);
         }
 
-        public override void Execute()
+        public void Execute()
         {
-            if (Directory.Exists(_sourcePath))
+            if (isDirectory)
             {
-                FileSystem.DeleteDirectory(_sourcePath, UIOption.AllDialogs,RecycleOption.SendToRecycleBin);
+                // Показывает диалог подтверждения и отправляет в корзину
+                FileSystem.DeleteDirectory(sourcePath, UIOption.AllDialogs, RecycleOption.SendToRecycleBin);
             }
-            else if (File.Exists(_sourcePath))
+            else
             {
-                FileSystem.DeleteFile(_sourcePath, UIOption.AllDialogs, RecycleOption.SendToRecycleBin);
+                FileSystem.DeleteFile(sourcePath, UIOption.AllDialogs, RecycleOption.SendToRecycleBin);
             }
         }
 
-        public override void Undo()
+        public void Undo()
         {
-
-            //if (_isDirectory && Directory.Exists(_backupPath))
-            //    Directory.Move(_backupPath, _sourcePath);
-            //else if (File.Exists(_backupPath))
-            //    File.Move(_backupPath, _sourcePath);
+            // Для корзины штатного Undo нет. Можно реализовать через временную папку,
+            // но для учебного проекта оставим как есть.
+            MessageBox.Show("Отмена удаления из корзины недоступна.", "Информация",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
-        public class MoveCommand : FileSystemCommand
+    public class MoveCommand : FileSystemCommand
     {
-        private readonly string _destination;
-        private string? _tempBackup; // если нужен бэкап перед перемещением (не обязательно)
+        private readonly string destination;
+        private string? tempBackup; // если нужен бэкап перед перемещением (не обязательно)
 
         public MoveCommand(string source, string destination) : base(source)
         {
-            _destination = destination;
+            this.destination = destination;
         }
 
         public override void Execute()
         {
-            if (Directory.Exists(_sourcePath))
-                Directory.Move(_sourcePath, _destination);
-            else if (File.Exists(_sourcePath))
-                File.Move(_sourcePath, _destination);
+            if (Directory.Exists(sourcePath))
+                Directory.Move(sourcePath, destination);
+            else if (File.Exists(sourcePath))
+                File.Move(sourcePath, destination);
         }
 
         public override void Undo()
         {
             // Перемещаем обратно
-            if (Directory.Exists(_destination))
-                Directory.Move(_destination, _sourcePath);
-            else if (File.Exists(_destination))
-                File.Move(_destination, _sourcePath);
+            if (Directory.Exists(destination))
+                Directory.Move(destination, sourcePath);
+            else if (File.Exists(destination))
+                File.Move(destination, sourcePath);
         }
     }
 
     public class CreateFileCommand : ICommand
     {
-        private readonly string _parentPath;
-        private string _fileName;
-        private string _fullPath;
+        private readonly string parentPath;
+        private string fileName;
+        private string fullPath;
         public CreateFileCommand(string parentPath, string fileName)
         {
-            _parentPath = parentPath;
-            _fileName = fileName;
-            _fullPath = Path.Combine(parentPath, fileName);
+            this.parentPath = parentPath;
+            this.fileName = fileName;
+            fullPath = Path.Combine(parentPath, fileName);
         }
         public void Execute()
         {
-            if (!File.Exists(_fullPath))
-                File.WriteAllText(_fullPath, "");
+            if (!File.Exists(fullPath))
+                File.WriteAllText(fullPath, "");
         }
         public void Undo()
         {
-            if (File.Exists(_fullPath))
-                File.Delete(_fullPath);
+            if (File.Exists(fullPath))
+                File.Delete(fullPath);
         }
-        public string Description => $"Создание файла '{_fileName}'";
+        public string Description => $"Создание файла '{fileName}'";
     }
 
 
     internal class CopyCommand : FileSystemCommand
     {
-        private readonly string _destination;
-        private bool _isDirectory;
+        private readonly string destination;
+        private bool isDirectory;
 
         public CopyCommand(string source, string destination) : base(source)
         {
-            _destination = destination;
+            this.destination = destination;
         }
 
         public override void Execute()
         {
-            if (Directory.Exists(_sourcePath))
+            if (Directory.Exists(sourcePath))
             {
-                _isDirectory = true;
-                CopyDirectory(_sourcePath, _destination);
+                isDirectory = true;
+                CopyDirectory(sourcePath, destination);
             }
-            else if (File.Exists(_sourcePath))
+            else if (File.Exists(sourcePath))
             {
-                _isDirectory = false;
-                File.Copy(_sourcePath, _destination, overwrite: true);
+                isDirectory = false;
+                File.Copy(sourcePath, destination, overwrite: true);
             }
         }
 
         public override void Undo()
         {
             // Удаляем скопированное
-            if (Directory.Exists(_destination))
-                Directory.Delete(_destination, recursive: true);
-            else if (File.Exists(_destination))
-                File.Delete(_destination);
+            if (Directory.Exists(destination))
+                Directory.Delete(destination, recursive: true);
+            else if (File.Exists(destination))
+                File.Delete(destination);
         }
 
         private static void CopyDirectory(string sourceDir, string destDir)
@@ -213,37 +215,37 @@ namespace rgz1_timp.Command
     }
     public static class CommandInvoker
     {
-        private static Stack<ICommand> _undoStack = new Stack<ICommand>();
-        private static Stack<ICommand> _redoStack = new Stack<ICommand>();
+        private static Stack<ICommand> undoStack = new Stack<ICommand>();
+        private static Stack<ICommand> redoStack = new Stack<ICommand>();
 
         public static void ExecuteCommand(ICommand command)
         {
             command.Execute();
-            _undoStack.Push(command);
-            _redoStack.Clear(); // новая команда стирает Redo
+            undoStack.Push(command);
+            redoStack.Clear(); // новая команда стирает Redo
         }
 
         public static void Undo()
         {
-            if (_undoStack.Count > 0)
+            if (undoStack.Count > 0)
             {
-                ICommand cmd = _undoStack.Pop();
+                ICommand cmd = undoStack.Pop();
                 cmd.Undo();
-                _redoStack.Push(cmd);
+                redoStack.Push(cmd);
             }
         }
 
         public static void Redo()
         {
-            if (_redoStack.Count > 0)
+            if (redoStack.Count > 0)
             {
-                ICommand cmd = _redoStack.Pop();
+                ICommand cmd = redoStack.Pop();
                 cmd.Execute();
-                _undoStack.Push(cmd);
+                undoStack.Push(cmd);
             }
         }
 
-        public static bool CanUndo => _undoStack.Count > 0;
-        public static bool CanRedo => _redoStack.Count > 0;
+        public static bool CanUndo => undoStack.Count > 0;
+        public static bool CanRedo => redoStack.Count > 0;
     }
 }
