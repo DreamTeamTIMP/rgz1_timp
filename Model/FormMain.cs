@@ -237,7 +237,7 @@ namespace rgz1_timp
         {
             SetLargeIcons();
         }
-        
+
         public void SetLargeIcons() { drawListView.SetView(View.LargeIcon); RefreshUi(); }
         public void SetSmallIcons() { drawListView.SetView(View.SmallIcon); RefreshUi(); }
         public void SetList() { drawListView.SetView(View.List); RefreshUi(); }
@@ -249,7 +249,7 @@ namespace rgz1_timp
         private void CreateFolderToolStripMenuItem_Click(object sender, EventArgs e) => CreateNewFolder();
 
         //  ОБРАБОТЧИКИ ДРУГИХ ЭЛЕМЕНТОВ УПРАВЛЕНИЯ 
-        
+
         private void TreeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e) => drawTreeView.AddNodes(e);
 
         private void ListView1_MouseDoubleClick(object sender, MouseEventArgs e) => OpenFile();
@@ -495,5 +495,7 @@ namespace rgz1_timp
                 }
             listViewFiles.Focus();
         }
+
+        private void TxtToolStripMenuItem_Click(object sender, EventArgs e) => CreateNewFile();
     }
 }

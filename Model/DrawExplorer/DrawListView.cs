@@ -8,25 +8,7 @@ namespace rgz1_timp.DrawExplorer
         private readonly ListView listView;
         private readonly DrawIcons icons;
         private View viewList;
-        private class ListViewItemComparer : System.Collections.IComparer
-        {
-            private int column;
-            private bool ascending;
-
-            public ListViewItemComparer(int column, bool ascending)
-            {
-                this.column = column;
-                this.ascending = ascending;
-            }
-
-            public int Compare(object x, object y)
-            {
-                string xText = ((ListViewItem)x).SubItems[column].Text;
-                string yText = ((ListViewItem)y).SubItems[column].Text;
-                int result = string.Compare(xText, yText);
-                return ascending ? result : -result;
-            }
-        }
+        
         public DrawListView(ListView listView, DrawIcons icons, View viewList)
         {
             this.listView = listView;
@@ -225,6 +207,26 @@ namespace rgz1_timp.DrawExplorer
             if (bytes >= 1024)
                 return (bytes / 1024D).ToString("0") + " КБ";
             return bytes.ToString() + " Б";
+        }
+
+        private class ListViewItemComparer : System.Collections.IComparer
+        {
+            private int column;
+            private bool ascending;
+
+            public ListViewItemComparer(int column, bool ascending)
+            {
+                this.column = column;
+                this.ascending = ascending;
+            }
+
+            public int Compare(object x, object y)
+            {
+                string xText = ((ListViewItem)x).SubItems[column].Text;
+                string yText = ((ListViewItem)y).SubItems[column].Text;
+                int result = string.Compare(xText, yText);
+                return ascending ? result : -result;
+            }
         }
     }
 }

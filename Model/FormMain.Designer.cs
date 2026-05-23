@@ -33,6 +33,7 @@
             splitContainerMain = new SplitContainer();
             panelRibbon = new Panel();
             panelRibbonButtons = new Panel();
+            buttonVid = new Button();
             buttonMain = new Button();
             buttonFile = new Button();
             tabControlShare = new TabControl();
@@ -89,7 +90,7 @@
             ToolStripMenuItemCopy = new ToolStripMenuItem();
             ToolStripMenuItemRename = new ToolStripMenuItem();
             ToolStripMenuItemDelete = new ToolStripMenuItem();
-            buttonVid = new Button();
+            TxtToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
             splitContainerMain.Panel1.SuspendLayout();
             splitContainerMain.Panel2.SuspendLayout();
@@ -157,6 +158,22 @@
             panelRibbonButtons.Name = "panelRibbonButtons";
             panelRibbonButtons.Size = new Size(797, 22);
             panelRibbonButtons.TabIndex = 0;
+            // 
+            // buttonVid
+            // 
+            buttonVid.BackColor = Color.Black;
+            buttonVid.Dock = DockStyle.Left;
+            buttonVid.FlatAppearance.BorderSize = 0;
+            buttonVid.FlatStyle = FlatStyle.Flat;
+            buttonVid.Font = new Font("Segoe UI", 8.25F);
+            buttonVid.ForeColor = Color.White;
+            buttonVid.Location = new Point(127, 0);
+            buttonVid.Name = "buttonVid";
+            buttonVid.Size = new Size(53, 22);
+            buttonVid.TabIndex = 3;
+            buttonVid.Text = "Вид";
+            buttonVid.UseVisualStyleBackColor = false;
+            buttonVid.Click += ButtonView_Click;
             // 
             // buttonMain
             // 
@@ -737,27 +754,28 @@
             contextMenuStripListView.Items.AddRange(new ToolStripItem[] { createToolStripMenuItem, InsertToolStripMenuItem });
             contextMenuStripListView.Name = "contextMenuStrip1";
             contextMenuStripListView.RenderMode = ToolStripRenderMode.System;
-            contextMenuStripListView.Size = new Size(123, 48);
+            contextMenuStripListView.Size = new Size(181, 70);
             // 
             // createToolStripMenuItem
             // 
-            createToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { createFolderToolStripMenuItem });
+            createToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { createFolderToolStripMenuItem, TxtToolStripMenuItem });
             createToolStripMenuItem.ForeColor = Color.White;
             createToolStripMenuItem.Name = "createToolStripMenuItem";
-            createToolStripMenuItem.Size = new Size(122, 22);
+            createToolStripMenuItem.Size = new Size(180, 22);
             createToolStripMenuItem.Text = "Создать";
             // 
             // createFolderToolStripMenuItem
             // 
             createFolderToolStripMenuItem.Name = "createFolderToolStripMenuItem";
-            createFolderToolStripMenuItem.Size = new Size(108, 22);
+            createFolderToolStripMenuItem.Size = new Size(187, 22);
             createFolderToolStripMenuItem.Text = "Папку";
             createFolderToolStripMenuItem.Click += CreateFolderToolStripMenuItem_Click;
             // 
             // InsertToolStripMenuItem
             // 
+            InsertToolStripMenuItem.ForeColor = Color.White;
             InsertToolStripMenuItem.Name = "InsertToolStripMenuItem";
-            InsertToolStripMenuItem.Size = new Size(122, 22);
+            InsertToolStripMenuItem.Size = new Size(180, 22);
             InsertToolStripMenuItem.Text = "Вставить";
             InsertToolStripMenuItem.Click += ButtonPaste_Click;
             // 
@@ -801,21 +819,12 @@
             ToolStripMenuItemDelete.Text = "Удалить";
             ToolStripMenuItemDelete.Click += ButtonDelete_Click;
             // 
-            // buttonVid
+            // TxtToolStripMenuItem
             // 
-            buttonVid.BackColor = Color.Black;
-            buttonVid.Dock = DockStyle.Left;
-            buttonVid.FlatAppearance.BorderSize = 0;
-            buttonVid.FlatStyle = FlatStyle.Flat;
-            buttonVid.Font = new Font("Segoe UI", 8.25F);
-            buttonVid.ForeColor = Color.White;
-            buttonVid.Location = new Point(127, 0);
-            buttonVid.Name = "buttonVid";
-            buttonVid.Size = new Size(53, 22);
-            buttonVid.TabIndex = 3;
-            buttonVid.Text = "Вид";
-            buttonVid.UseVisualStyleBackColor = false;
-            buttonVid.Click += ButtonView_Click;
+            TxtToolStripMenuItem.Name = "TxtToolStripMenuItem";
+            TxtToolStripMenuItem.Size = new Size(187, 22);
+            TxtToolStripMenuItem.Text = "Текстовый документ";
+            TxtToolStripMenuItem.Click += TxtToolStripMenuItem_Click;
             // 
             // FormMain
             // 
@@ -919,5 +928,6 @@
         private Panel panel5;
         private StatusStrip statusStripMain;
         private Button buttonVid;
+        private ToolStripMenuItem TxtToolStripMenuItem;
     }
 }

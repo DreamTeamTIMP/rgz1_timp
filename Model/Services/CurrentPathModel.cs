@@ -1,4 +1,4 @@
-﻿namespace rgz1_timp
+﻿namespace rgz1_timp.Services
 {
     public class CurrentPathModel
     {
