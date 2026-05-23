@@ -18,8 +18,9 @@
             foreach (var node in nodes)
             {
                 if (node.Text == "") continue;
-                comboBox.Items.Add(node.Text);
+                comboBox.Items.Add(node);
             }
+            comboBox.DisplayMember = "Text";
         }
 
         private static List<TreeNode> GetAllNodes(TreeNodeCollection nodes)

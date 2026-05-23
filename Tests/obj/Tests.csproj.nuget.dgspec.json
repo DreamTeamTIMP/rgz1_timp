@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\1\\source\\repos\\DreamTeamTIMP\\rgz1_timp\\Tests\\Tests.csproj": {}
+    "C:\\Users\\Айдаш\\source\\repos\\rgz1_timp\\Tests\\Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\1\\source\\repos\\DreamTeamTIMP\\rgz1_timp\\Model\\rgz1_timp.csproj": {
+    "C:\\Users\\Айдаш\\source\\repos\\rgz1_timp\\Model\\rgz1_timp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\1\\source\\repos\\DreamTeamTIMP\\rgz1_timp\\Model\\rgz1_timp.csproj",
+        "projectUniqueName": "C:\\Users\\Айдаш\\source\\repos\\rgz1_timp\\Model\\rgz1_timp.csproj",
         "projectName": "rgz1_timp",
-        "projectPath": "C:\\Users\\1\\source\\repos\\DreamTeamTIMP\\rgz1_timp\\Model\\rgz1_timp.csproj",
-        "packagesPath": "C:\\Users\\1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\1\\source\\repos\\DreamTeamTIMP\\rgz1_timp\\Model\\obj\\",
+        "projectPath": "C:\\Users\\Айдаш\\source\\repos\\rgz1_timp\\Model\\rgz1_timp.csproj",
+        "packagesPath": "C:\\Users\\Айдаш\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Айдаш\\source\\repos\\rgz1_timp\\Model\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Айдаш\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -39,7 +44,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0-windows7.0": {
@@ -63,21 +69,25 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\1\\source\\repos\\DreamTeamTIMP\\rgz1_timp\\Tests\\Tests.csproj": {
+    "C:\\Users\\Айдаш\\source\\repos\\rgz1_timp\\Tests\\Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\1\\source\\repos\\DreamTeamTIMP\\rgz1_timp\\Tests\\Tests.csproj",
+        "projectUniqueName": "C:\\Users\\Айдаш\\source\\repos\\rgz1_timp\\Tests\\Tests.csproj",
         "projectName": "Tests",
-        "projectPath": "C:\\Users\\1\\source\\repos\\DreamTeamTIMP\\rgz1_timp\\Tests\\Tests.csproj",
-        "packagesPath": "C:\\Users\\1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\1\\source\\repos\\DreamTeamTIMP\\rgz1_timp\\Tests\\obj\\",
+        "projectPath": "C:\\Users\\Айдаш\\source\\repos\\rgz1_timp\\Tests\\Tests.csproj",
+        "packagesPath": "C:\\Users\\Айдаш\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Айдаш\\source\\repos\\rgz1_timp\\Tests\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Айдаш\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -85,14 +95,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0-windows7.0": {
             "targetAlias": "net8.0-windows",
             "projectReferences": {
-              "C:\\Users\\1\\source\\repos\\DreamTeamTIMP\\rgz1_timp\\Model\\rgz1_timp.csproj": {
-                "projectPath": "C:\\Users\\1\\source\\repos\\DreamTeamTIMP\\rgz1_timp\\Model\\rgz1_timp.csproj"
+              "C:\\Users\\Айдаш\\source\\repos\\rgz1_timp\\Model\\rgz1_timp.csproj": {
+                "projectPath": "C:\\Users\\Айдаш\\source\\repos\\rgz1_timp\\Model\\rgz1_timp.csproj"
               }
             }
           }
@@ -106,7 +117,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0-windows7.0": {
@@ -145,7 +157,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

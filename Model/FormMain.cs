@@ -37,7 +37,7 @@ namespace rgz1_timp
             drawAddressBar = new DrawAddressBar(comboBoxAddressBar);
             drawDropDownList = new DrawDropDownList(comboBoxLastWas, treeViewFiles);
             drawStatusStrip = new DrawStatusStrip(statusStripMain, listViewFiles);
-            drawRibbon = new DrawRibbon(panelRibbonMain, this); 
+            drawRibbon = new DrawRibbon(panelRibbonMain, this);
             // Подписка на события модели
             currentPathModel.PathChanged += OnPathChanged;
             currentPathModel.NavigationStateChanged += UpdateNavigationButtons;
@@ -337,9 +337,20 @@ namespace rgz1_timp
 
         private void ButtonFile_Click(object sender, EventArgs e)
         {
-            // Можно реализовать меню "Файл" или оставить пустым
-        }
+            // Получаем путь к исполняемому файлу текущего приложения
+            string exePath = Application.ExecutablePath;
 
+            try
+            {
+                // Запускаем новый процесс
+                System.Diagnostics.Process.Start(exePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Не удалось открыть новое окно: {ex.Message}",
+                                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         //  ПЕРЕОПРЕДЕЛЁННЫЕ МЕТОДЫ ДЛЯ РЕСАЙЗА И ГОРЯЧИХ КЛАВИШ 
         protected override void WndProc(ref Message m)
@@ -508,5 +519,15 @@ namespace rgz1_timp
         }
 
         private void TxtToolStripMenuItem_Click(object sender, EventArgs e) => CreateNewFile();
+
+        private void comboBoxLastWas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxLastWas.SelectedItem is TreeNode)
+            {
+                var path = (TreeNode)comboBoxLastWas.SelectedItem;
+                if (path == null) return;
+                currentPathModel.Path = (string)path.Tag;
+            }
+        }
     }
 }
