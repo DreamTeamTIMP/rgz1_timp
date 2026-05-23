@@ -1,4 +1,5 @@
 using Microsoft.VisualBasic.FileIO;
+using rgz1_timp.Services.rgz1_timp.Services;
 
 namespace rgz1_timp.Command
 {
@@ -82,13 +83,13 @@ namespace rgz1_timp.Command
     {
         private string sourcePath;
         private bool isDirectory;
-        private string? parentToNavigate; // для возврата при Undo – не используется, но сохраним
+        private IDialogService dialog;
 
-        public DeleteCommand(string source)
+        public DeleteCommand(string source, IDialogService dialog)
         {
             sourcePath = source;
             isDirectory = Directory.Exists(source);
-            parentToNavigate = Path.GetDirectoryName(source);
+            this.dialog = dialog;
         }
 
         public void Execute()
@@ -106,16 +107,12 @@ namespace rgz1_timp.Command
 
         public void Undo()
         {
-            // Для корзины штатного Undo нет. Можно реализовать через временную папку,
-            // но для учебного проекта оставим как есть.
-            MessageBox.Show("Отмена удаления из корзины недоступна.", "Информация",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            dialog.ShowInfo("Отмена удаления из корзины недоступна.");
         }
     }
     public class MoveCommand : FileSystemCommand
     {
         private readonly string destination;
-        private string? tempBackup; // если нужен бэкап перед перемещением (не обязательно)
 
         public MoveCommand(string source, string destination) : base(source)
         {
@@ -161,28 +158,18 @@ namespace rgz1_timp.Command
             if (File.Exists(fullPath))
                 File.Delete(fullPath);
         }
-        public string Description => $"Создание файла '{fileName}'";
-    }
-
-    public static class FileOperationDialog
-    {
-        public static bool ConfirmOverwrite(string source, string destination)
-        {
-            string message = $"Файл или папка уже существует:\n{destination}\n\nЗаменить его?";
-            DialogResult result = MessageBox.Show(message, "Подтверждение перезаписи",
-                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            return result == DialogResult.Yes;
-        }
     }
 
     internal class CopyCommand : FileSystemCommand
     {
         private readonly string destination;
         private bool isDirectory;
+        private IDialogService dialog;
 
-        public CopyCommand(string source, string destination) : base(source)
+        public CopyCommand(string source, string destination, IDialogService dialog) : base(source)
         {
             this.destination = destination;
+            this.dialog = dialog;
         }
 
         public override void Execute()
@@ -191,7 +178,7 @@ namespace rgz1_timp.Command
             {
                 if (Directory.Exists(destination))
                 {
-                    bool overwrite = FileOperationDialog.ConfirmOverwrite(sourcePath, destination);
+                    bool overwrite = dialog.ConfirmOverwrite(sourcePath, destination);
                     if (!overwrite) return;
                     Directory.Delete(destination, recursive: true);
                 }
@@ -203,7 +190,7 @@ namespace rgz1_timp.Command
                 isDirectory = false;
                 if (File.Exists(destination))
                 {
-                    bool overwrite = FileOperationDialog.ConfirmOverwrite(sourcePath, destination);
+                    bool overwrite = dialog.ConfirmOverwrite(sourcePath, destination);
                     if (!overwrite) return;
                 }
                 File.Copy(sourcePath, destination, overwrite: true);
@@ -265,6 +252,11 @@ namespace rgz1_timp.Command
             }
         }
 
+        public static void Clear()
+        {
+            undoStack.Clear();
+            redoStack.Clear();
+        }
         public static bool CanUndo => undoStack.Count > 0;
         public static bool CanRedo => redoStack.Count > 0;
     }

@@ -1,5 +1,6 @@
-﻿using rgz1_timp.Command;
-using Microsoft.VisualBasic.FileIO;
+﻿using Microsoft.VisualBasic.FileIO;
+using rgz1_timp.Command;
+using rgz1_timp.Services.rgz1_timp.Services;
 using System.IO;
 
 namespace rgz1_timp.Services
@@ -7,12 +8,14 @@ namespace rgz1_timp.Services
     public class FileOperationService
     {
         private readonly CurrentPathModel pathModel;
+        private readonly IDialogService dialog;
         private string? copiedPath;
         private bool isCut;
 
-        public FileOperationService(CurrentPathModel pathModel)
+        public FileOperationService(CurrentPathModel pathModel, IDialogService dialog)
         {
             this.pathModel = pathModel;
+            this.dialog = dialog;
         }
 
         //  Буфер обмена 
@@ -34,27 +37,27 @@ namespace rgz1_timp.Services
         {
             if (string.IsNullOrEmpty(copiedPath))
             {
-                ShowError("Буфер обмена пуст.");
+                dialog.ShowError("Буфер обмена пуст.");
                 return false;
             }
 
             string destDir = pathModel.Path!;
             if (string.IsNullOrEmpty(destDir) || !Directory.Exists(destDir))
             {
-                ShowError("Целевая папка не существует.");
+                dialog.ShowError("Целевая папка не существует.");
                 return false;
             }
 
             if (IsCyclicOperation(copiedPath, destDir))
             {
-                ShowError("Нельзя вставить папку в саму себя или в её подпапку.");
+                dialog.ShowError("Нельзя вставить папку в саму себя или в её подпапку.");
                 return false;
             }
 
             string destPath = Path.Combine(destDir, Path.GetFileName(copiedPath));
             ICommand command = isCut
                 ? new MoveCommand(copiedPath, destPath)
-                : new CopyCommand(copiedPath, destPath);
+                : new CopyCommand(copiedPath, destPath, dialog);
 
             try
             {
@@ -68,7 +71,7 @@ namespace rgz1_timp.Services
             }
             catch (Exception ex)
             {
-                ShowError($"Ошибка при вставке: {ex.Message}");
+                dialog.ShowError($"Ошибка при вставке: {ex.Message}");
                 return false;
             }
         }
@@ -79,14 +82,14 @@ namespace rgz1_timp.Services
             string currentDir = pathModel.Path!;
             if (string.IsNullOrEmpty(currentDir) || !Directory.Exists(currentDir))
             {
-                ShowError("Текущая папка недоступна.");
+                dialog.ShowError("Текущая папка недоступна.");
                 return false;
             }
 
             string newFolderName = GetUniqueFolderName(currentDir);
             if (!FileNameValidator.IsValidFileName(newFolderName))
             {
-                ShowError(FileNameValidator.GetErrorMessage(newFolderName) ?? "Недопустимое имя папки.");
+                dialog.ShowError(FileNameValidator.GetErrorMessage(newFolderName) ?? "Недопустимое имя папки.");
                 return false;
             }
 
@@ -98,7 +101,7 @@ namespace rgz1_timp.Services
             }
             catch (Exception ex)
             {
-                ShowError($"Не удалось создать папку: {ex.Message}");
+                dialog.ShowError($"Не удалось создать папку: {ex.Message}");
                 return false;
             }
         }
@@ -109,7 +112,7 @@ namespace rgz1_timp.Services
             string currentDir = pathModel.Path!;
             if (string.IsNullOrEmpty(currentDir) || !Directory.Exists(currentDir))
             {
-                ShowError("Текущая папка недоступна.");
+                dialog.ShowError("Текущая папка недоступна.");
                 return false;
             }
 
@@ -124,7 +127,7 @@ namespace rgz1_timp.Services
 
             if (!FileNameValidator.IsValidFileName(fileName))
             {
-                ShowError(FileNameValidator.GetErrorMessage(fileName) ?? "Недопустимое имя файла.");
+                dialog.ShowError(FileNameValidator.GetErrorMessage(fileName) ?? "Недопустимое имя файла.");
                 return false;
             }
 
@@ -136,7 +139,7 @@ namespace rgz1_timp.Services
             }
             catch (Exception ex)
             {
-                ShowError($"Не удалось создать файл: {ex.Message}");
+                dialog.ShowError($"Не удалось создать файл: {ex.Message}");
                 return false;
             }
         }
@@ -146,13 +149,13 @@ namespace rgz1_timp.Services
         {
             if (string.IsNullOrEmpty(path))
             {
-                ShowError("Ничего не выбрано.");
+                dialog.ShowError("Ничего не выбрано.");
                 return false;
             }
 
             try
             {
-                var command = new DeleteCommand(path);
+                var command = new DeleteCommand(path, dialog);
                 CommandInvoker.ExecuteCommand(command);
                 return true;
             }
@@ -163,7 +166,7 @@ namespace rgz1_timp.Services
             }
             catch (Exception ex)
             {
-                ShowError($"Не удалось удалить: {ex.Message}");
+                dialog.ShowError($"Не удалось удалить: {ex.Message}");
                 return false;
             }
         }
@@ -173,7 +176,7 @@ namespace rgz1_timp.Services
         {
             if (string.IsNullOrEmpty(oldPath))
             {
-                ShowError("Ничего не выбрано.");
+                dialog.ShowError("Ничего не выбрано.");
                 return false;
             }
             if (string.IsNullOrEmpty(newName) || newName == Path.GetFileName(oldPath))
@@ -181,7 +184,7 @@ namespace rgz1_timp.Services
 
             if (!FileNameValidator.IsValidFileName(newName))
             {
-                ShowError(FileNameValidator.GetErrorMessage(newName) ?? "Недопустимое имя.");
+                dialog.ShowError(FileNameValidator.GetErrorMessage(newName) ?? "Недопустимое имя.");
                 return false;
             }
 
@@ -193,7 +196,7 @@ namespace rgz1_timp.Services
             }
             catch (Exception ex)
             {
-                ShowError($"Не удалось переименовать: {ex.Message}");
+                dialog.ShowError($"Не удалось переименовать: {ex.Message}");
                 return false;
             }
         }
@@ -203,17 +206,17 @@ namespace rgz1_timp.Services
         {
             if (string.IsNullOrEmpty(sourcePath))
             {
-                ShowError("Ничего не выбрано.");
+                dialog.ShowError("Ничего не выбрано.");
                 return false;
             }
             if (string.IsNullOrEmpty(destinationDir) || !Directory.Exists(destinationDir))
             {
-                ShowError("Папка назначения не существует.");
+                dialog.ShowError("Папка назначения не существует.");
                 return false;
             }
             if (Directory.Exists(sourcePath) && IsCyclicOperation(sourcePath, destinationDir))
             {
-                ShowError("Нельзя переместить папку в саму себя.");
+                dialog.ShowError("Нельзя переместить папку в саму себя.");
                 return false;
             }
 
@@ -226,7 +229,7 @@ namespace rgz1_timp.Services
             }
             catch (Exception ex)
             {
-                ShowError($"Ошибка перемещения: {ex.Message}");
+                dialog.ShowError($"Ошибка перемещения: {ex.Message}");
                 return false;
             }
         }
@@ -236,30 +239,30 @@ namespace rgz1_timp.Services
         {
             if (string.IsNullOrEmpty(sourcePath))
             {
-                ShowError("Ничего не выбрано.");
+                dialog.ShowError("Ничего не выбрано.");
                 return false;
             }
             if (string.IsNullOrEmpty(destinationDir) || !Directory.Exists(destinationDir))
             {
-                ShowError("Папка назначения не существует.");
+                dialog.ShowError("Папка назначения не существует.");
                 return false;
             }
             if (Directory.Exists(sourcePath) && IsCyclicOperation(sourcePath, destinationDir))
             {
-                ShowError("Нельзя скопировать папку в саму себя.");
+                dialog.ShowError("Нельзя скопировать папку в саму себя.");
                 return false;
             }
 
             string destPath = Path.Combine(destinationDir, Path.GetFileName(sourcePath));
             try
             {
-                var command = new CopyCommand(sourcePath, destPath);
+                var command = new CopyCommand(sourcePath, destPath, dialog);
                 CommandInvoker.ExecuteCommand(command);
                 return true;
             }
             catch (Exception ex)
             {
-                ShowError($"Ошибка копирования: {ex.Message}");
+                dialog.ShowError($"Ошибка копирования: {ex.Message}");
                 return false;
             }
         }
@@ -292,11 +295,6 @@ namespace rgz1_timp.Services
             string sourceFull = Path.GetFullPath(sourcePath).TrimEnd(Path.DirectorySeparatorChar);
             string destFull = Path.GetFullPath(destinationDir).TrimEnd(Path.DirectorySeparatorChar);
             return destFull == sourceFull || destFull.StartsWith(sourceFull + Path.DirectorySeparatorChar);
-        }
-
-        private void ShowError(string message)
-        {
-            MessageBox.Show(message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

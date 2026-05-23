@@ -2,6 +2,7 @@
 using rgz1_timp.Command;
 using rgz1_timp.DrawExplorer;
 using rgz1_timp.Services;
+using rgz1_timp.Services.rgz1_timp.Services;
 using System.Diagnostics;
 using System.IO;
 
@@ -27,7 +28,8 @@ namespace rgz1_timp
             InitializeComponent();
 
             // Инициализация сервисов
-            fileService = new FileOperationService(currentPathModel);
+            IDialogService dialog = new DialogService();
+            fileService = new FileOperationService(currentPathModel, dialog);
             icons = new DrawIcons();
 
             drawTreeView = new DrawTreeView(treeViewFiles, icons);

@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {
+    "net8.0-windows7.0": {
       "Microsoft.ApplicationInsights/2.22.0": {
         "type": "package",
         "dependencies": {
@@ -1141,13 +1141,16 @@
       },
       "rgz1_timp/1.0.0": {
         "type": "project",
-        "framework": "Unsupported,Version=v0.0",
+        "framework": ".NETCoreApp,Version=v8.0",
         "compile": {
           "bin/placeholder/rgz1_timp.dll": {}
         },
         "runtime": {
           "bin/placeholder/rgz1_timp.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WindowsForms"
+        ]
       }
     }
   },
@@ -2545,7 +2548,7 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net8.0": [
+    "net8.0-windows7.0": [
       "MSTest >= 3.6.4",
       "Microsoft.NET.Test.Sdk >= 17.12.0",
       "Microsoft.Testing.Extensions.CodeCoverage >= 17.12.6",
@@ -2575,7 +2578,7 @@
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net8.0"
+        "net8.0-windows"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -2583,8 +2586,8 @@
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net8.0": {
-          "targetAlias": "net8.0",
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
           "projectReferences": {
             "C:\\Users\\Айдаш\\source\\repos\\rgz1_timp\\Model\\rgz1_timp.csproj": {
               "projectPath": "C:\\Users\\Айдаш\\source\\repos\\rgz1_timp\\Model\\rgz1_timp.csproj"
@@ -2605,8 +2608,8 @@
       "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
-      "net8.0": {
-        "targetAlias": "net8.0",
+      "net8.0-windows7.0": {
+        "targetAlias": "net8.0-windows",
         "dependencies": {
           "MSTest": {
             "target": "Package",
@@ -2644,16 +2647,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1201",
-      "level": "Error",
-      "message": "Проект rgz1_timp несовместим с net8.0 (.NETCoreApp,Version=v8.0). Проект rgz1_timp поддерживает: net8.0-windows7.0 (.NETCoreApp,Version=v8.0)",
-      "libraryId": "rgz1_timp",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  }
 }

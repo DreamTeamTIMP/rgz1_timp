@@ -1,0 +1,16 @@
+2026-05-23T10:59:13.1494937+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 1.4.3+c252b64ad913ea9411fc5d17bfd5580d2d061497
+2026-05-23T10:59:13.1706297+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-05-23T10:59:13.1731940+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-05-23T10:59:13.1732078+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 10:59:13.090
+2026-05-23T10:59:13.1757080+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 15024
+2026-05-23T10:59:13.1759884+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 8.0.21
+2026-05-23T10:59:13.1760070+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.21\System.Private.CoreLib.dll
+2026-05-23T10:59:13.1760258+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-05-23T10:59:13.1760287+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\Айдаш\source\repos\rgz1_timp\Tests\bin\Debug\net8.0-windows\Tests.dll
+2026-05-23T10:59:13.1762851+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\Айдаш\source\repos\rgz1_timp\Tests\bin\Debug\net8.0-windows\Log --results-directory C:\Users\Айдаш\source\repos\rgz1_timp\Model\TestResults --client-port 64740'
+2026-05-23T10:59:13.1782737+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-05-23T10:59:13.2260893+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-05-23T10:59:13.2347152+00:00 Microsoft.Testing.Platform.Configurations.JsonConfigurationSource+JsonConfigurationProvider INFORMATION Config file 'C:\Users\Айдаш\source\repos\rgz1_timp\Tests\bin\Debug\net8.0-windows\Tests.testconfig.json' not found.
+2026-05-23T10:59:13.2365565+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable:  VSTest mode: False
+2026-05-23T10:59:13.5198328+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: 'MSTestExtension' Version: '3.6.4' DisplayName: 'MSTest' Description: 'MSTest Framework for Microsoft Testing Platform'
+2026-05-23T10:59:13.7008729+00:00 Microsoft.Testing.Extensions.VSTestBridge.ObjectModel.MessageLoggerAdapter INFORMATION Включена параллелизация тестов для C:\Users\Айдаш\source\repos\rgz1_timp\Tests\bin\Debug\net8.0-windows\Tests.dll (рабочие роли: 4, область: MethodLevel)

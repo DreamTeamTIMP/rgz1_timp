@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "cDSqxwmvQsE=",
-  "success": false,
+  "dgSpecHash": "IcEFQDnRFfA=",
+  "success": true,
   "projectFilePath": "C:\\Users\\Айдаш\\source\\repos\\rgz1_timp\\Tests\\Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Айдаш\\.nuget\\packages\\microsoft.applicationinsights\\2.22.0\\microsoft.applicationinsights.2.22.0.nupkg.sha512",
@@ -32,17 +32,5 @@
     "C:\\Users\\Айдаш\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
     "C:\\Users\\Айдаш\\.nuget\\packages\\system.text.json\\6.0.10\\system.text.json.6.0.10.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1201",
-      "level": "Error",
-      "message": "Проект rgz1_timp несовместим с net8.0 (.NETCoreApp,Version=v8.0). Проект rgz1_timp поддерживает: net8.0-windows7.0 (.NETCoreApp,Version=v8.0)",
-      "projectPath": "C:\\Users\\Айдаш\\source\\repos\\rgz1_timp\\Tests\\Tests.csproj",
-      "filePath": "C:\\Users\\Айдаш\\source\\repos\\rgz1_timp\\Tests\\Tests.csproj",
-      "libraryId": "rgz1_timp",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  "logs": []
 }
