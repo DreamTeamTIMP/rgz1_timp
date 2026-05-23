@@ -164,6 +164,16 @@ namespace rgz1_timp.Command
         public string Description => $"Создание файла '{fileName}'";
     }
 
+    public static class FileOperationDialog
+    {
+        public static bool ConfirmOverwrite(string source, string destination)
+        {
+            string message = $"Файл или папка уже существует:\n{destination}\n\nЗаменить его?";
+            DialogResult result = MessageBox.Show(message, "Подтверждение перезаписи",
+                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            return result == DialogResult.Yes;
+        }
+    }
 
     internal class CopyCommand : FileSystemCommand
     {
@@ -179,16 +189,26 @@ namespace rgz1_timp.Command
         {
             if (Directory.Exists(sourcePath))
             {
+                if (Directory.Exists(destination))
+                {
+                    bool overwrite = FileOperationDialog.ConfirmOverwrite(sourcePath, destination);
+                    if (!overwrite) return;
+                    Directory.Delete(destination, recursive: true);
+                }
                 isDirectory = true;
                 CopyDirectory(sourcePath, destination);
             }
             else if (File.Exists(sourcePath))
             {
                 isDirectory = false;
+                if (File.Exists(destination))
+                {
+                    bool overwrite = FileOperationDialog.ConfirmOverwrite(sourcePath, destination);
+                    if (!overwrite) return;
+                }
                 File.Copy(sourcePath, destination, overwrite: true);
             }
         }
-
         public override void Undo()
         {
             // Удаляем скопированное

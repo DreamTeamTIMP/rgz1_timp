@@ -3,6 +3,7 @@ using rgz1_timp.Command;
 using rgz1_timp.DrawExplorer;
 using rgz1_timp.Services;
 using System.Diagnostics;
+using System.IO;
 
 namespace rgz1_timp
 {
@@ -41,6 +42,7 @@ namespace rgz1_timp
 
             // Дополнительная настройка событий
             listViewFIles.KeyDown += ListViewFiles_KeyDown;
+
         }
 
         private void OnPathChanged(string? path)
@@ -65,8 +67,6 @@ namespace rgz1_timp
                 ? listViewFIles.SelectedItems[0].Tag?.ToString()
                 : null;
         }
-
-        private string GetCurrentDirectory() => comboBoxAdressBar.Text;
 
         private void OpenFile()
         {
@@ -244,10 +244,7 @@ namespace rgz1_timp
             if (e.Node?.Tag is not string tag) return;
 
             // Обработка специальных узлов (можно расширить)
-            if (tag == "Этот компьютер" || tag == "Быстрый доступ")
-                return;
-
-            if (Directory.Exists(tag))
+            if (Directory.Exists(tag) || tag == "Этот компьютер" || tag == "Быстрый доступ")
                 currentPathModel.Path = tag;
         }
 
@@ -287,10 +284,11 @@ namespace rgz1_timp
 
         private void ComboBoxAddressBar_KeyDown(object sender, KeyEventArgs e)
         {
+
             if (e.KeyCode == Keys.Enter)
             {
                 string targetPath = comboBoxAdressBar.Text;
-                if (Directory.Exists(targetPath))
+                if (Directory.Exists(targetPath) || targetPath == "Этот компьютер" || targetPath == "Быстрый доступ")
                     currentPathModel.Path = targetPath;
                 else
                     MessageBox.Show("Путь не найден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -332,8 +330,17 @@ namespace rgz1_timp
             const int HTBOTTOM = 15;
             const int HTBOTTOMLEFT = 16;
             const int HTBOTTOMRIGHT = 17;
+            const int WM_DEVICECHANGE = 0x0219;
 
             base.WndProc(ref m);
+
+
+            if (m.Msg == WM_DEVICECHANGE)
+            {
+                drawTreeView.RefreshDrives();
+                if (comboBoxAdressBar.Text == "Этот компьютер")
+                    currentPathModel.Path = comboBoxAdressBar.Text;
+            }
 
             if (m.Msg == WM_NCHITTEST)
             {
@@ -350,7 +357,6 @@ namespace rgz1_timp
                 else if (pos.Y >= ClientSize.Height - resizeArea) m.Result = (IntPtr)HTBOTTOM;
             }
         }
-
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == (Keys.Control | Keys.Z))
@@ -415,6 +421,24 @@ namespace rgz1_timp
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void ShowHelp_Click(object sender, EventArgs e)
+        {
+            using var help = new HelpForm();
+            help.ShowDialog(this);
+        }
+
+        private void toolStripButtonForward_Click(object sender, EventArgs e)
+        {
+            CommandInvoker.Redo();
+            RefreshUiAfterCommand();
+        }
+
+        private void toolStripButtonUndo_Click(object sender, EventArgs e)
+        {
+            CommandInvoker.Undo();
+            RefreshUiAfterCommand();
         }
     }
 }

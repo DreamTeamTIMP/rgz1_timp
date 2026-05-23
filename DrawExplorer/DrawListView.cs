@@ -1,4 +1,5 @@
 ﻿using rgz1_timp.ImportedDll;
+using System.Drawing;
 
 namespace rgz1_timp.DrawExplorer
 {
@@ -25,7 +26,19 @@ namespace rgz1_timp.DrawExplorer
         public void LoadDirectory(string path, bool drawDetails)
         {
             _drawDetails = drawDetails;
-            if (string.IsNullOrEmpty(path) || !Directory.Exists(path)) return;
+            if (string.IsNullOrEmpty(path)) return;
+
+            if (path == "Этот компьютер")
+            {
+                LoadDriveList();
+                return;
+            }
+            if (path == "Быстрый доступ")
+            {
+                LoadQuickAccessFolders();
+                return;
+            }
+            if (!Directory.Exists(path)) return;
 
             listView.Items.Clear();
             listView.BeginUpdate();
@@ -65,6 +78,59 @@ namespace rgz1_timp.DrawExplorer
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при загрузке папки {path}:\n{ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            listView.View = _drawDetails ? View.Details : View.LargeIcon;
+            listView.EndUpdate();
+        }
+
+        // В классе DrawListView
+        public void LoadDriveList()
+        {
+            listView.BeginUpdate();
+            listView.Items.Clear();
+
+            foreach (DriveInfo drive in DriveInfo.GetDrives().Where(d => d.IsReady))
+            {
+                ListViewItem item = new ListViewItem(drive.Name);
+                item.ImageKey = icons.GetIconKey(drive.RootDirectory.FullName, false);
+                item.SubItems.Add(""); // дата изменения
+                item.SubItems.Add("Локальный диск");
+                item.SubItems.Add(FormatFileSize(drive.TotalFreeSpace)); // свободное место
+                item.Tag = drive.RootDirectory.FullName;
+                listView.Items.Add(item);
+            }
+
+            listView.View = _drawDetails ? View.Details : View.LargeIcon;
+            listView.EndUpdate();
+        }
+
+        public void LoadQuickAccessFolders()
+        {
+            listView.BeginUpdate();
+            listView.Items.Clear();
+
+            string[] quickFolders = {
+        Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"),
+        Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+        Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
+        Environment.GetFolderPath(Environment.SpecialFolder.MyMusic),
+        Environment.GetFolderPath(Environment.SpecialFolder.MyVideos)
+    };
+
+            foreach (string folder in quickFolders)
+            {
+                if (Directory.Exists(folder))
+                {
+                    ListViewItem item = new ListViewItem(Path.GetFileName(folder));
+                    item.ImageKey = icons.GetIconKey(folder, true);
+                    item.SubItems.Add(new DirectoryInfo(folder).LastWriteTime.ToString("dd.MM.yyyy HH:mm"));
+                    item.SubItems.Add("Папка с файлами");
+                    item.SubItems.Add("");
+                    item.Tag = folder;
+                    listView.Items.Add(item);
+                }
             }
 
             listView.View = _drawDetails ? View.Details : View.LargeIcon;

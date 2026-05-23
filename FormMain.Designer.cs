@@ -50,10 +50,9 @@
             toolStripSeparator1 = new ToolStripSeparator();
             toolStripButtonCreateFolder = new ToolStripButton();
             toolStripButtonDelete = new ToolStripButton();
-            toolStripButton4 = new ToolStripButton();
-            toolStripButton5 = new ToolStripButton();
-            toolStripButton6 = new ToolStripButton();
-            toolStripButton7 = new ToolStripButton();
+            toolStripButtonForward = new ToolStripButton();
+            toolStripButtonCopy = new ToolStripButton();
+            toolStripButtonUndo = new ToolStripButton();
             toolStripDropDownButton1 = new ToolStripDropDownButton();
             ToolStripMenuss = new ToolStripMenuItem();
             toolStripSeparator2 = new ToolStripSeparator();
@@ -336,7 +335,7 @@
             toolStripMain.GripMargin = new Padding(0);
             toolStripMain.GripStyle = ToolStripGripStyle.Hidden;
             toolStripMain.ImageScalingSize = new Size(20, 20);
-            toolStripMain.Items.AddRange(new ToolStripItem[] { toolStripButtonIcon, toolStripSeparator1, toolStripButtonCreateFolder, toolStripButtonDelete, toolStripButton4, toolStripButton5, toolStripButton6, toolStripButton7, toolStripDropDownButton1, toolStripSeparator2, toolStripLabel1 });
+            toolStripMain.Items.AddRange(new ToolStripItem[] { toolStripButtonIcon, toolStripSeparator1, toolStripButtonCreateFolder, toolStripButtonDelete, toolStripButtonForward, toolStripButtonCopy, toolStripButtonUndo, toolStripDropDownButton1, toolStripSeparator2, toolStripLabel1 });
             toolStripMain.Location = new Point(0, 0);
             toolStripMain.Name = "toolStripMain";
             toolStripMain.Padding = new Padding(0);
@@ -373,6 +372,7 @@
             toolStripButtonCreateFolder.Size = new Size(24, 22);
             toolStripButtonCreateFolder.Text = "";
             toolStripButtonCreateFolder.ToolTipText = "Создать папку\r\nСоздание папки";
+            toolStripButtonCreateFolder.Click += CreateFolderToolStripMenuItem_Click;
             // 
             // toolStripButtonDelete
             // 
@@ -385,50 +385,43 @@
             toolStripButtonDelete.Size = new Size(24, 22);
             toolStripButtonDelete.Text = "";
             toolStripButtonDelete.ToolTipText = "Удалить";
+            toolStripButtonDelete.Click += ButtonDelete_Click;
             // 
-            // toolStripButton4
+            // toolStripButtonForward
             // 
-            toolStripButton4.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripButton4.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold);
-            toolStripButton4.ForeColor = Color.Gray;
-            toolStripButton4.Image = (Image)resources.GetObject("toolStripButton4.Image");
-            toolStripButton4.ImageTransparentColor = Color.Magenta;
-            toolStripButton4.Name = "toolStripButton4";
-            toolStripButton4.Size = new Size(23, 22);
-            toolStripButton4.Text = "";
+            toolStripButtonForward.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripButtonForward.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold);
+            toolStripButtonForward.ForeColor = Color.Gray;
+            toolStripButtonForward.Image = (Image)resources.GetObject("toolStripButtonForward.Image");
+            toolStripButtonForward.ImageTransparentColor = Color.Magenta;
+            toolStripButtonForward.Name = "toolStripButtonForward";
+            toolStripButtonForward.Size = new Size(23, 22);
+            toolStripButtonForward.Text = "";
+            toolStripButtonForward.Click += toolStripButtonForward_Click;
             // 
-            // toolStripButton5
+            // toolStripButtonCopy
             // 
-            toolStripButton5.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripButton5.Font = new Font("Segoe MDL2 Assets", 10F);
-            toolStripButton5.ForeColor = Color.Gray;
-            toolStripButton5.Image = (Image)resources.GetObject("toolStripButton5.Image");
-            toolStripButton5.ImageTransparentColor = Color.Magenta;
-            toolStripButton5.Name = "toolStripButton5";
-            toolStripButton5.Size = new Size(25, 22);
-            toolStripButton5.Text = "";
+            toolStripButtonCopy.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripButtonCopy.Font = new Font("Segoe MDL2 Assets", 10F);
+            toolStripButtonCopy.ForeColor = Color.Gray;
+            toolStripButtonCopy.Image = (Image)resources.GetObject("toolStripButtonCopy.Image");
+            toolStripButtonCopy.ImageTransparentColor = Color.Magenta;
+            toolStripButtonCopy.Name = "toolStripButtonCopy";
+            toolStripButtonCopy.Size = new Size(25, 22);
+            toolStripButtonCopy.Text = "";
+            toolStripButtonCopy.Click += ButtonCopy_Click;
             // 
-            // toolStripButton6
+            // toolStripButtonUndo
             // 
-            toolStripButton6.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripButton6.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            toolStripButton6.ForeColor = Color.Gray;
-            toolStripButton6.Image = (Image)resources.GetObject("toolStripButton6.Image");
-            toolStripButton6.ImageTransparentColor = Color.Magenta;
-            toolStripButton6.Name = "toolStripButton6";
-            toolStripButton6.Size = new Size(23, 22);
-            toolStripButton6.Text = "";
-            // 
-            // toolStripButton7
-            // 
-            toolStripButton7.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripButton7.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            toolStripButton7.Image = (Image)resources.GetObject("toolStripButton7.Image");
-            toolStripButton7.ImageAlign = ContentAlignment.BottomRight;
-            toolStripButton7.ImageTransparentColor = Color.Magenta;
-            toolStripButton7.Name = "toolStripButton7";
-            toolStripButton7.Size = new Size(23, 22);
-            toolStripButton7.Text = "";
+            toolStripButtonUndo.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripButtonUndo.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            toolStripButtonUndo.ForeColor = Color.Gray;
+            toolStripButtonUndo.Image = (Image)resources.GetObject("toolStripButtonUndo.Image");
+            toolStripButtonUndo.ImageTransparentColor = Color.Magenta;
+            toolStripButtonUndo.Name = "toolStripButtonUndo";
+            toolStripButtonUndo.Size = new Size(23, 22);
+            toolStripButtonUndo.Text = "";
+            toolStripButtonUndo.Click += toolStripButtonUndo_Click;
             // 
             // toolStripDropDownButton1
             // 
@@ -447,8 +440,9 @@
             // ToolStripMenuss
             // 
             ToolStripMenuss.Name = "ToolStripMenuss";
-            ToolStripMenuss.Size = new Size(229, 22);
-            ToolStripMenuss.Text = "Настройка панели быстрого доступа";
+            ToolStripMenuss.Size = new Size(180, 22);
+            ToolStripMenuss.Text = "Справка";
+            ToolStripMenuss.Click += ShowHelp_Click;
             // 
             // toolStripSeparator2
             // 
@@ -638,14 +632,14 @@
             labelFind.TabIndex = 6;
             labelFind.Text = "";
             // 
-            // button3
+            // ButtonDesktop
             // 
             ButtonDesktop.BackColor = Color.FromArgb(25, 25, 25);
             ButtonDesktop.FlatAppearance.BorderSize = 0;
             ButtonDesktop.FlatStyle = FlatStyle.Flat;
             ButtonDesktop.Font = new Font("Segoe MDL2 Assets", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             ButtonDesktop.Location = new Point(105, 2);
-            ButtonDesktop.Name = "button3";
+            ButtonDesktop.Name = "ButtonDesktop";
             ButtonDesktop.Size = new Size(33, 23);
             ButtonDesktop.TabIndex = 5;
             ButtonDesktop.Text = "";
@@ -788,7 +782,7 @@
             // createFolderToolStripMenuItem
             // 
             createFolderToolStripMenuItem.Name = "createFolderToolStripMenuItem";
-            createFolderToolStripMenuItem.Size = new Size(180, 22);
+            createFolderToolStripMenuItem.Size = new Size(108, 22);
             createFolderToolStripMenuItem.Text = "Папку";
             createFolderToolStripMenuItem.Click += CreateFolderToolStripMenuItem_Click;
             // 
@@ -901,10 +895,9 @@
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripLabel toolStripLabel1;
         private ToolStripButton toolStripButtonDelete;
-        private ToolStripButton toolStripButton4;
-        private ToolStripButton toolStripButton5;
-        private ToolStripButton toolStripButton6;
-        private ToolStripButton toolStripButton7;
+        private ToolStripButton toolStripButtonForward;
+        private ToolStripButton toolStripButtonCopy;
+        private ToolStripButton toolStripButtonUndo;
         private ColumnHeader columnHeaderName;
         private ColumnHeader columnHeaderEditDate;
         private ColumnHeader columnHeaderType;

@@ -22,7 +22,7 @@ namespace rgz1_timp.DrawExplorer
         }
         public void RefreshNodeByPath(string path)
         {
-            if (string.IsNullOrEmpty(path)) return;
+            if (string.IsNullOrEmpty(path) || path == "Этот компьютер" || path == "Быстрый доступ") return;
             TreeNode? node = FindNodeByPath(treeView.Nodes, path);
             if (node != null)
                 RefreshNode(node, path);
@@ -53,6 +53,7 @@ namespace rgz1_timp.DrawExplorer
 
         private void RefreshNode(TreeNode node, string path)
         {
+            
             bool wasExpanded = node.IsExpanded;
             node.Nodes.Clear();
             try
@@ -78,7 +79,10 @@ namespace rgz1_timp.DrawExplorer
             quickAccess.Nodes.Add(new TreeNode("Рабочий стол") { Tag = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) });
             quickAccess.Nodes.Add(new TreeNode("Загрузки") { Tag = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads") });
             quickAccess.Nodes.Add(new TreeNode("Документы") { Tag = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) });
-
+            quickAccess.Nodes.Add(new TreeNode("Фото") { Tag = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) });
+            quickAccess.Nodes.Add(new TreeNode("Музыка") { Tag = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic) });
+            quickAccess.Nodes.Add(new TreeNode("Видео") { Tag = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos) });
+        
             TreeNode thisPC = new TreeNode("Этот компьютер");
             thisPC.Tag = "Этот компьютер";
             foreach (DriveInfo drive in DriveInfo.GetDrives().Where(d => d.IsReady))
