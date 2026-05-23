@@ -37,8 +37,7 @@ namespace rgz1_timp
             drawAddressBar = new DrawAddressBar(comboBoxAddressBar);
             drawDropDownList = new DrawDropDownList(comboBoxLastWas, treeViewFiles);
             drawStatusStrip = new DrawStatusStrip(statusStripMain, listViewFiles);
-            drawRibbon = new DrawRibbon(tabControlShare, this);
-
+            drawRibbon = new DrawRibbon(tabControlShare, this); 
             // Подписка на события модели
             currentPathModel.PathChanged += OnPathChanged;
             currentPathModel.NavigationStateChanged += UpdateNavigationButtons;
