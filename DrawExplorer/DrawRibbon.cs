@@ -15,93 +15,37 @@
         private void SetupRibbon()
         {
             CreateHomePage(tabControl.TabPages[0]);
-            CreateSharePage(tabControl.TabPages[1]);
-            CreateViewPage(tabControl.TabPages[2]);
+            CreateViewPage(tabControl.TabPages[1]);
         }
 
         private void CreateViewPage(TabPage page)
         {
-            // Группа "Области"
-            Panel ribbonGroupPanes = CreateRibbonGroup(page, "Области");
-            FlowLayoutPanel smallButtonsPanes = CreatePanelForButtons(ribbonGroupPanes, false);
-            FlowLayoutPanel bigButtonsPanes = CreatePanelForButtons(ribbonGroupPanes, true);
-            AddRibbonButton(bigButtonsPanes, "Область навигации", "\uE8D5", true);
-            AddRibbonButton(smallButtonsPanes, "Область просмотра", "\uE8A4", false);
-            AddRibbonButton(smallButtonsPanes, "Область сведений", "\uE946", false);
-            ResizeRibbonGroup(ribbonGroupPanes);
-
+            
             // Группа "Структура"
             Panel ribbonGroupLayout = CreateRibbonGroup(page, "Структура");
             FlowLayoutPanel smallButtonsLayoutGrid = CreatePanelForButtons(ribbonGroupLayout, false);
             FlowLayoutPanel smallButtonsLayoutTypes = CreatePanelForButtons(ribbonGroupLayout, false);
             FlowLayoutPanel smallButtonsLayoutSome = CreatePanelForButtons(ribbonGroupLayout, false);
-            AddRibbonButton(smallButtonsLayoutGrid, "Огромные значки", "\uE80A", false);
-            AddRibbonButton(smallButtonsLayoutGrid, "Крупные значки", "\uE80A", false);
-            AddRibbonButton(smallButtonsLayoutGrid, "Обычные значки", "\uE80A", false);
-            AddRibbonButton(smallButtonsLayoutTypes, "Мелкие значки", "\uE80A", false);
-            AddRibbonButton(smallButtonsLayoutTypes, "Список", "\uE8B0", false);
-            AddRibbonButton(smallButtonsLayoutTypes, "Таблица", "\uE8EF", false);
-            AddRibbonButton(smallButtonsLayoutSome, "Плитка", "\uE895", false);
-            AddRibbonButton(smallButtonsLayoutSome, "Содержимое", "\uE8D2", false);
+            AddRibbonButton(smallButtonsLayoutGrid, "Огромные значки", "\uE80A", false, (s, e) => form.SetLargeIcons());
+            AddRibbonButton(smallButtonsLayoutGrid, "Обычные значки", "\uE80A", false, (s, e) => form.SetSmallIcons());
+            AddRibbonButton(smallButtonsLayoutTypes, "Мелкие значки", "\uE80A", false, (s, e) => form.SetDetails());
+            AddRibbonButton(smallButtonsLayoutTypes, "Список", "\uE8B0", false, (s, e) => form.SetList());
+            AddRibbonButton(smallButtonsLayoutTypes, "Таблица", "\uE8EF", false, (s, e) => form.SetTiles());
             ResizeRibbonGroup(ribbonGroupLayout);
 
             // Группа "Текущее представление"
             Panel ribbonGroupCurrent = CreateRibbonGroup(page, "Текущее представление");
-            FlowLayoutPanel smallButtonsCurrent = CreatePanelForButtons(ribbonGroupCurrent, false);
             FlowLayoutPanel bigButtonsCurrent = CreatePanelForButtons(ribbonGroupCurrent, true);
-            AddRibbonButton(bigButtonsCurrent, "Сортировать", "\uE8CB", true);
-            AddRibbonButton(smallButtonsCurrent, "Группировать", "\uF012", false);
-            AddRibbonButton(smallButtonsCurrent, "Добавить столбцы", "\uE8A6", false);
-            AddRibbonButton(smallButtonsCurrent, "Размер всех столбцов", "\uE8B3", false);
+            AddRibbonButton(bigButtonsCurrent, "Сортировать", "\uE8CB", true, (s,e) => form.SortFiles());
+            AddRibbonButton(bigButtonsCurrent, "Размер всех столбцов", "\uE8B3", true, (s, e) => form.AutoResizeColumns());
             ResizeRibbonGroup(ribbonGroupCurrent);
 
-            // Группа "Показать или скрыть"
-            Panel ribbonGroupShowHide = CreateRibbonGroup(page, "Показать или скрыть");
-            FlowLayoutPanel smallButtonsShow = CreatePanelForButtons(ribbonGroupShowHide, false);
-            FlowLayoutPanel bigButtonsShow = CreatePanelForButtons(ribbonGroupShowHide, true);
-            AddRibbonButton(smallButtonsShow, "Флажки элементов", "\uE739", false);
-            AddRibbonButton(smallButtonsShow, "Расширения имен", "\uE8A5", false);
-            AddRibbonButton(smallButtonsShow, "Скрытые элементы", "\uE7B3", false);
-            AddRibbonButton(bigButtonsShow, "Скрыть выбранные", "\uED1A", true);
-            ResizeRibbonGroup(ribbonGroupShowHide);
-
-            // Группа "Параметры"
-            Panel ribbonGroupOptions = CreateRibbonGroup(page, "Параметры");
-            FlowLayoutPanel bigButtonsOptions = CreatePanelForButtons(ribbonGroupOptions, true);
-            AddRibbonButton(bigButtonsOptions, "Параметры", "\uE713", true);
-            ResizeRibbonGroup(ribbonGroupOptions);
         }
 
-        private void CreateSharePage(TabPage page)
-        {
-            Panel ribbonGroupShare = CreateRibbonGroup(page, "Поделиться");
-            FlowLayoutPanel bigButtonsShare = CreatePanelForButtons(ribbonGroupShare, true);
-            AddRibbonButton(bigButtonsShare, "Сделать недоступными", "\uE72E", true);
-            ResizeRibbonGroup(ribbonGroupShare);
-
-            Panel ribbonGroupSecurity = CreateRibbonGroup(page, "Безопасность");
-            FlowLayoutPanel bigButtonsSecurity = CreatePanelForButtons(ribbonGroupSecurity, true);
-            AddRibbonButton(bigButtonsSecurity, "Доп. параметры безопасности", "\uE8D7", true);
-            ResizeRibbonGroup(ribbonGroupSecurity);
-
-            Panel ribbonGroupSend = CreateRibbonGroup(page, "Отправить");
-            FlowLayoutPanel smallButtonsSend = CreatePanelForButtons(ribbonGroupSend, false);
-            FlowLayoutPanel bigButtonsSend = CreatePanelForButtons(ribbonGroupSend, true);
-            AddRibbonButton(smallButtonsSend, "Запись на компакт-диск", "\uE958", false);
-            AddRibbonButton(smallButtonsSend, "Печать", "\uE749", false);
-            AddRibbonButton(smallButtonsSend, "Факс", "\uE7C8", false);
-            AddRibbonButton(bigButtonsSend, "Отправить", "\uE72D", true);
-            AddRibbonButton(bigButtonsSend, "Электронная почта", "\uE715", true);
-            AddRibbonButton(bigButtonsSend, "Сжать", "\uF012", true);
-            ResizeRibbonGroup(ribbonGroupSend);
-        }
 
         private void CreateHomePage(TabPage page)
         {
             Panel ribbonGroupCreate = CreateRibbonGroup(page, "Создать");
-            FlowLayoutPanel smallButtonsPanelCreate = CreatePanelForButtons(ribbonGroupCreate, false);
-            AddRibbonButton(smallButtonsPanelCreate, "Создать элемент", "\uE72D", false);
-            AddRibbonButton(smallButtonsPanelCreate, "Простой доступ", "\uE7C3", false, (s, e) => form.SimpleAccess());
             FlowLayoutPanel bigButtonsPanelCreate = CreatePanelForButtons(ribbonGroupCreate, true);
             AddRibbonButton(bigButtonsPanelCreate, "Новая папка", "", true, (s, e) => form.CreateNewFolder());
             ResizeRibbonGroup(ribbonGroupCreate);
@@ -117,12 +61,10 @@
             Panel ribbonGroupBuff = CreateRibbonGroup(page, "Буфер обмена");
             FlowLayoutPanel smallButtonsPanel = CreatePanelForButtons(ribbonGroupBuff, false);
             FlowLayoutPanel bigButtonsPanel = CreatePanelForButtons(ribbonGroupBuff, true);
-            AddRibbonButton(bigButtonsPanel, "Закрепить на панели быстрого доступа", "\uE840", true, (s, e) => form.PinToQuickAccess());
             AddRibbonButton(bigButtonsPanel, "Копировать", "\uE8C8", true, (s, e) => form.CopySelectedItem());
             AddRibbonButton(bigButtonsPanel, "Вставить", "\uE77F", true, (s, e) => form.PasteItem());
             AddRibbonButton(smallButtonsPanel, "Вырезать", "\uE8C6", false, (s, e) => form.CutSelectedItem());
             AddRibbonButton(smallButtonsPanel, "Скопировать путь", "\uE8C1", false, (s, e) => form.CopyPath());
-            AddRibbonButton(smallButtonsPanel, "Вставить ярлык", "\uEED1", false, (s, e) => form.PasteShortcut());
             ResizeRibbonGroup(ribbonGroupBuff);
         }
 

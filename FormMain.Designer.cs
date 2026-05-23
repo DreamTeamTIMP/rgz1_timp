@@ -33,8 +33,6 @@
             splitContainerMain = new SplitContainer();
             panelRibbon = new Panel();
             panelRibbonButtons = new Panel();
-            buttonVid = new Button();
-            buttonShare = new Button();
             buttonMain = new Button();
             buttonFile = new Button();
             tabControlShare = new TabControl();
@@ -91,6 +89,7 @@
             ToolStripMenuItemCopy = new ToolStripMenuItem();
             ToolStripMenuItemRename = new ToolStripMenuItem();
             ToolStripMenuItemDelete = new ToolStripMenuItem();
+            buttonVid = new Button();
             ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
             splitContainerMain.Panel1.SuspendLayout();
             splitContainerMain.Panel2.SuspendLayout();
@@ -151,7 +150,6 @@
             // panelRibbonButtons
             // 
             panelRibbonButtons.Controls.Add(buttonVid);
-            panelRibbonButtons.Controls.Add(buttonShare);
             panelRibbonButtons.Controls.Add(buttonMain);
             panelRibbonButtons.Controls.Add(buttonFile);
             panelRibbonButtons.Dock = DockStyle.Top;
@@ -159,38 +157,6 @@
             panelRibbonButtons.Name = "panelRibbonButtons";
             panelRibbonButtons.Size = new Size(797, 22);
             panelRibbonButtons.TabIndex = 0;
-            // 
-            // buttonVid
-            // 
-            buttonVid.BackColor = Color.Black;
-            buttonVid.Dock = DockStyle.Left;
-            buttonVid.FlatAppearance.BorderSize = 0;
-            buttonVid.FlatStyle = FlatStyle.Flat;
-            buttonVid.Font = new Font("Segoe UI", 8.25F);
-            buttonVid.ForeColor = Color.White;
-            buttonVid.Location = new Point(212, 0);
-            buttonVid.Name = "buttonVid";
-            buttonVid.Size = new Size(53, 22);
-            buttonVid.TabIndex = 3;
-            buttonVid.Text = "Вид";
-            buttonVid.UseVisualStyleBackColor = false;
-            buttonVid.Click += ButtonVid_Click;
-            // 
-            // buttonShare
-            // 
-            buttonShare.BackColor = Color.Black;
-            buttonShare.Dock = DockStyle.Left;
-            buttonShare.FlatAppearance.BorderSize = 0;
-            buttonShare.FlatStyle = FlatStyle.Flat;
-            buttonShare.Font = new Font("Segoe UI", 8.25F);
-            buttonShare.ForeColor = Color.White;
-            buttonShare.Location = new Point(127, 0);
-            buttonShare.Name = "buttonShare";
-            buttonShare.Size = new Size(85, 22);
-            buttonShare.TabIndex = 2;
-            buttonShare.Text = "Поделиться";
-            buttonShare.UseVisualStyleBackColor = false;
-            buttonShare.Click += ButtonShare_Click;
             // 
             // buttonMain
             // 
@@ -835,6 +801,22 @@
             ToolStripMenuItemDelete.Text = "Удалить";
             ToolStripMenuItemDelete.Click += ButtonDelete_Click;
             // 
+            // buttonVid
+            // 
+            buttonVid.BackColor = Color.Black;
+            buttonVid.Dock = DockStyle.Left;
+            buttonVid.FlatAppearance.BorderSize = 0;
+            buttonVid.FlatStyle = FlatStyle.Flat;
+            buttonVid.Font = new Font("Segoe UI", 8.25F);
+            buttonVid.ForeColor = Color.White;
+            buttonVid.Location = new Point(127, 0);
+            buttonVid.Name = "buttonVid";
+            buttonVid.Size = new Size(53, 22);
+            buttonVid.TabIndex = 3;
+            buttonVid.Text = "Вид";
+            buttonVid.UseVisualStyleBackColor = false;
+            buttonVid.Click += ButtonView_Click;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -908,8 +890,6 @@
         private Panel panelRibbonButtons;
         private Button buttonMain;
         private Button buttonFile;
-        private Button buttonShare;
-        private Button buttonVid;
         private TextBox textBoxFind;
         private ComboBox comboBoxAddressBar;
         private Button ButtonDesktop;
@@ -938,5 +918,6 @@
         private Button buttonBigElements;
         private Panel panel5;
         private StatusStrip statusStripMain;
+        private Button buttonVid;
     }
 }

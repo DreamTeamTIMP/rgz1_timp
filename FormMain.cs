@@ -19,7 +19,7 @@ namespace rgz1_timp
         private readonly DrawStatusStrip drawStatusStrip;
         private readonly DrawRibbon drawRibbon;
 
-        private bool drawDetails = true;
+        private View viewList = View.Details;
         private string currentSearchQuery = string.Empty;
 
         public FormMain()
@@ -31,7 +31,7 @@ namespace rgz1_timp
             icons = new DrawIcons();
 
             drawTreeView = new DrawTreeView(treeViewFiles, icons);
-            drawListView = new DrawListView(listViewFiles, icons);
+            drawListView = new DrawListView(listViewFiles, icons, viewList);
             drawAddressBar = new DrawAddressBar(comboBoxAddressBar);
             drawDropDownList = new DrawDropDownList(comboBoxLastWas, treeViewFiles);
             drawStatusStrip = new DrawStatusStrip(statusStripMain, listViewFiles);
@@ -58,7 +58,7 @@ namespace rgz1_timp
             drawAddressBar.UpdateAddressBar(path);
             drawStatusStrip.UpdateStatusStrip();
             drawTreeView.RefreshNodeByPath(path);
-            drawListView.LoadDirectory(path, drawDetails);
+            drawListView.LoadDirectory(path);
             drawTreeView.SelectNodeByPath(path);
         }
 
@@ -98,7 +98,7 @@ namespace rgz1_timp
             }
         }
 
-        private void RefreshUiAfterCommand()
+        private void RefreshUi()
         {
             currentPathModel.Refresh();
         }
@@ -107,13 +107,13 @@ namespace rgz1_timp
         public void CreateNewFolder()
         {
             if (fileService.CreateNewFolder())
-                RefreshUiAfterCommand();
+                RefreshUi();
         }
 
         public void CreateNewFile()
         {
             if (fileService.CreateNewFile())
-                RefreshUiAfterCommand();
+                RefreshUi();
         }
 
         public void CopySelectedItem()
@@ -129,13 +129,13 @@ namespace rgz1_timp
         public void PasteItem()
         {
             if (fileService.PasteItem())
-                RefreshUiAfterCommand();
+                RefreshUi();
         }
 
         public void DeleteSelectedItem()
         {
             if (fileService.DeleteItem(GetSelectedItemPath()))
-                RefreshUiAfterCommand();
+                RefreshUi();
         }
 
         public void RenameSelectedItem()
@@ -145,7 +145,7 @@ namespace rgz1_timp
 
             string newName = Interaction.InputBox("Новое имя:", "Переименование", Path.GetFileName(oldPath));
             if (fileService.RenameItem(oldPath, newName))
-                RefreshUiAfterCommand();
+                RefreshUi();
         }
 
         public void MoveToDialog()
@@ -158,7 +158,7 @@ namespace rgz1_timp
                 if (fbd.ShowDialog() == DialogResult.OK)
                 {
                     if (fileService.MoveToFolder(path, fbd.SelectedPath))
-                        RefreshUiAfterCommand();
+                        RefreshUi();
                 }
             }
         }
@@ -173,7 +173,7 @@ namespace rgz1_timp
                 if (fbd.ShowDialog() == DialogResult.OK)
                 {
                     if (fileService.CopyToFolder(path, fbd.SelectedPath))
-                        RefreshUiAfterCommand();
+                        RefreshUi();
                 }
             }
         }
@@ -183,10 +183,17 @@ namespace rgz1_timp
             fileService.CopyPathToClipboard(GetSelectedItemPath());
         }
 
-        // Заглушки для нереализованных функций 
-        public void SimpleAccess() { /* TODO */ }
-        public void PinToQuickAccess() { /* TODO */ }
-        public void PasteShortcut() { /* TODO */ }
+        public void SortFiles()
+        {
+            drawListView.SortByColumn(0, true);
+        }
+
+        // Автоматический размер колонок
+        public void AutoResizeColumns()
+        {
+            drawListView.AutoResizeColumns();
+        }
+
 
         //  ОБРАБОТЧИКИ КНОПОК ФОРМЫ 
         private void ButtonClose_Click(object sender, EventArgs e) => Close();
@@ -208,22 +215,12 @@ namespace rgz1_timp
         {
             tabControlShare.SelectedIndex = 0;
             buttonVid.BackColor = Color.Black;
-            buttonShare.BackColor = Color.Black;
             buttonMain.BackColor = Color.FromArgb(32, 32, 32);
         }
 
-        private void ButtonShare_Click(object sender, EventArgs e)
+        private void ButtonView_Click(object sender, EventArgs e)
         {
             tabControlShare.SelectedIndex = 1;
-            buttonShare.BackColor = Color.FromArgb(32, 32, 32);
-            buttonMain.BackColor = Color.Black;
-            buttonVid.BackColor = Color.Black;
-        }
-
-        private void ButtonVid_Click(object sender, EventArgs e)
-        {
-            tabControlShare.SelectedIndex = 2;
-            buttonShare.BackColor = Color.Black;
             buttonMain.BackColor = Color.Black;
             buttonVid.BackColor = Color.FromArgb(32, 32, 32);
         }
@@ -231,17 +228,19 @@ namespace rgz1_timp
         // Переключение режимов отображения
         private void ButtonSmallElements_Click(object sender, EventArgs e)
         {
-            drawDetails = true;
-            if (comboBoxAddressBar.Items.Count > 0)
-                currentPathModel.Path = comboBoxAddressBar.Text;
+            SetDetails();
         }
 
         private void ButtonBigElements_Click(object sender, EventArgs e)
         {
-            drawDetails = false;
-            if (comboBoxAddressBar.Items.Count > 0)
-                currentPathModel.Path = comboBoxAddressBar.Text;
+            SetLargeIcons();
         }
+        
+        public void SetLargeIcons() { drawListView.SetView(View.LargeIcon); RefreshUi(); }
+        public void SetSmallIcons() { drawListView.SetView(View.SmallIcon); RefreshUi(); }
+        public void SetList() { drawListView.SetView(View.List); RefreshUi(); }
+        public void SetDetails() { drawListView.SetView(View.Details); RefreshUi(); }
+        public void SetTiles() { drawListView.SetView(View.Tile); RefreshUi(); }
 
         //  ОБРАБОТЧИКИ КОНТЕКСТНОГО МЕНЮ 
         private void ToolStripMenuItemOpen_Click(object sender, EventArgs e) => OpenFile();
@@ -320,14 +319,14 @@ namespace rgz1_timp
             {
                 currentSearchQuery = string.Empty;
                 if (!string.IsNullOrEmpty(currentPathModel.Path))
-                    drawListView.LoadDirectory(currentPathModel.Path, drawDetails);
+                    drawListView.LoadDirectory(currentPathModel.Path);
                 labelFind.Text = "";
 
             }
             else
             {
                 currentSearchQuery = query;
-                drawListView.LoadDirectoryWithFilter(currentPathModel.Path, drawDetails, query);
+                drawListView.LoadDirectoryWithFilter(currentPathModel.Path, query);
                 labelFind.Text = "X";
             }
             drawStatusStrip.UpdateStatusStrip();
@@ -384,13 +383,13 @@ namespace rgz1_timp
             if (keyData == (Keys.Control | Keys.Z))
             {
                 CommandInvoker.Undo();
-                RefreshUiAfterCommand();
+                RefreshUi();
                 return true;
             }
             if (keyData == (Keys.Control | Keys.Y))
             {
                 CommandInvoker.Redo();
-                RefreshUiAfterCommand();
+                RefreshUi();
                 return true;
             }
 
@@ -418,7 +417,7 @@ namespace rgz1_timp
             // Обновить (F5)
             if (keyData == Keys.F5)
             {
-                RefreshUiAfterCommand();
+                RefreshUi();
                 return true;
             }
 
@@ -454,13 +453,13 @@ namespace rgz1_timp
         private void toolStripButtonForward_Click(object sender, EventArgs e)
         {
             CommandInvoker.Redo();
-            RefreshUiAfterCommand();
+            RefreshUi();
         }
 
         private void toolStripButtonUndo_Click(object sender, EventArgs e)
         {
             CommandInvoker.Undo();
-            RefreshUiAfterCommand();
+            RefreshUi();
         }
 
         private void labelFind_Click(object sender, EventArgs e)

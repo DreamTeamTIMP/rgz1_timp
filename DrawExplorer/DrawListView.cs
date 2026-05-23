@@ -7,12 +7,31 @@ namespace rgz1_timp.DrawExplorer
     {
         private readonly ListView listView;
         private readonly DrawIcons icons;
-        private bool _drawDetails = true;
+        private View viewList;
+        private class ListViewItemComparer : System.Collections.IComparer
+        {
+            private int column;
+            private bool ascending;
 
-        public DrawListView(ListView listView, DrawIcons icons)
+            public ListViewItemComparer(int column, bool ascending)
+            {
+                this.column = column;
+                this.ascending = ascending;
+            }
+
+            public int Compare(object x, object y)
+            {
+                string xText = ((ListViewItem)x).SubItems[column].Text;
+                string yText = ((ListViewItem)y).SubItems[column].Text;
+                int result = string.Compare(xText, yText);
+                return ascending ? result : -result;
+            }
+        }
+        public DrawListView(ListView listView, DrawIcons icons, View viewList)
         {
             this.listView = listView;
             this.icons = icons;
+            this.viewList = viewList;
             DrawSystemListView();
         }
 
@@ -23,9 +42,8 @@ namespace rgz1_timp.DrawExplorer
             listView.LargeImageList = icons.LargeIcons;
         }
 
-        public void LoadDirectory(string path, bool drawDetails)
+        public void LoadDirectory(string path)
         {
-            _drawDetails = drawDetails;
             if (string.IsNullOrEmpty(path)) return;
 
             if (path == "Этот компьютер")
@@ -80,7 +98,6 @@ namespace rgz1_timp.DrawExplorer
                 MessageBox.Show($"Ошибка при загрузке папки {path}:\n{ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            listView.View = _drawDetails ? View.Details : View.LargeIcon;
             listView.EndUpdate();
         }
 
@@ -100,8 +117,20 @@ namespace rgz1_timp.DrawExplorer
                 listView.Items.Add(item);
             }
 
-            listView.View = _drawDetails ? View.Details : View.LargeIcon;
             listView.EndUpdate();
+        }
+
+        public void SetView(View view)
+        {
+            listView.View = view;
+        }
+        public void SortByColumn(int columnIndex = 0, bool ascending = true)
+        {
+            listView.ListViewItemSorter = new ListViewItemComparer(columnIndex, ascending);
+        }
+        public void AutoResizeColumns()
+        {
+            listView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         public void LoadQuickAccessFolders()
@@ -131,11 +160,9 @@ namespace rgz1_timp.DrawExplorer
                     listView.Items.Add(item);
                 }
             }
-
-            listView.View = _drawDetails ? View.Details : View.LargeIcon;
             listView.EndUpdate();
         }
-        public void LoadDirectoryWithFilter(string path, bool drawDetails, string filter)
+        public void LoadDirectoryWithFilter(string path, string filter)
         {
             if (string.IsNullOrEmpty(path) || !Directory.Exists(path)) return;
             
@@ -186,7 +213,7 @@ namespace rgz1_timp.DrawExplorer
                 MessageBox.Show($"Ошибка при поиске: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            listView.View = drawDetails ? View.Details : View.LargeIcon;
+            SetView(viewList);
             listView.EndUpdate();
         }
         private static string FormatFileSize(long bytes)
