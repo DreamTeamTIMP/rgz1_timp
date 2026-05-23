@@ -1,0 +1,348 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|c:\\users\\\u0430\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\drawexplorer\\drawribbon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:drawexplorer\\drawribbon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|c:\\users\\\u0430\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\drawexplorer\\drawlistview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:drawexplorer\\drawlistview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|c:\\users\\\u0430\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|c:\\users\\\u0430\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\drawexplorer\\drawtreeview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:drawexplorer\\drawtreeview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|c:\\users\\\u0430\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\drawexplorer\\drawaddressbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:drawexplorer\\drawaddressbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|c:\\users\\\u0430\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\command\\filesystemcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:command\\filesystemcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|c:\\users\\\u0430\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\services\\fileoperationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:services\\fileoperationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|c:\\users\\\u0430\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\drawexplorer\\drawicons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:drawexplorer\\drawicons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|c:\\users\\\u0430\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\drawexplorer\\drawstatusstrip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:drawexplorer\\drawstatusstrip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|c:\\users\\\u0430\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\helpform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:helpform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|c:\\users\\\u0430\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\currentpathmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:currentpathmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|c:\\users\\\u0430\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\validators\\filenamevalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:validators\\filenamevalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|c:\\users\\\u0430\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\importeddll\\dll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:importeddll\\dll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|c:\\users\\\u0430\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\drawexplorer\\drawdropdownlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:drawexplorer\\drawdropdownlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\helpform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:helpform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|c:\\users\\\u0430\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\helpform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:helpform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|c:\\users\\\u0430\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\formmain.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:formmain.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|c:\\users\\\u0430\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8045F56F-407B-4690-9F09-6D162CB20E52}|rgz1_timp.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FormMain.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\FormMain.cs",
+              "RelativeDocumentMoniker": "FormMain.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\FormMain.cs",
+              "RelativeToolTip": "FormMain.cs",
+              "ViewState": "AgIAALAAAAAAmpmZmZkiwMMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T05:21:04.622Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FormMain.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\FormMain.cs",
+              "RelativeDocumentMoniker": "FormMain.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\FormMain.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "RelativeToolTip": "FormMain.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-14T17:33:57.197Z",
+              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DrawTreeView.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\DrawExplorer\\DrawTreeView.cs",
+              "RelativeDocumentMoniker": "DrawExplorer\\DrawTreeView.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\DrawExplorer\\DrawTreeView.cs",
+              "RelativeToolTip": "DrawExplorer\\DrawTreeView.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T05:02:10.363Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DrawRibbon.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\DrawExplorer\\DrawRibbon.cs",
+              "RelativeDocumentMoniker": "DrawExplorer\\DrawRibbon.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\DrawExplorer\\DrawRibbon.cs*",
+              "RelativeToolTip": "DrawExplorer\\DrawRibbon.cs*",
+              "ViewState": "AgIAACAAAAAAbmZmZmYEwDAAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T05:03:30.953Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DrawListView.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\DrawExplorer\\DrawListView.cs",
+              "RelativeDocumentMoniker": "DrawExplorer\\DrawListView.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\DrawExplorer\\DrawListView.cs",
+              "RelativeToolTip": "DrawExplorer\\DrawListView.cs",
+              "ViewState": "AgIAAF0AAADAZGZmZiYwwKwAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T05:03:33.155Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DrawAddressBar.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\DrawExplorer\\DrawAddressBar.cs",
+              "RelativeDocumentMoniker": "DrawExplorer\\DrawAddressBar.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\DrawExplorer\\DrawAddressBar.cs",
+              "RelativeToolTip": "DrawExplorer\\DrawAddressBar.cs",
+              "ViewState": "AgIAAAcAAAAAZ2ZmZuYswB4AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T05:23:04.839Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FileSystemCommand.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\Command\\FileSystemCommand.cs",
+              "RelativeDocumentMoniker": "Command\\FileSystemCommand.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\Command\\FileSystemCommand.cs",
+              "RelativeToolTip": "Command\\FileSystemCommand.cs",
+              "ViewState": "AgIAAJkAAAA4wczMzIwswK4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-12T04:30:53.548Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FileOperationService.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\Services\\FileOperationService.cs",
+              "RelativeDocumentMoniker": "Services\\FileOperationService.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\Services\\FileOperationService.cs",
+              "RelativeToolTip": "Services\\FileOperationService.cs",
+              "ViewState": "AgIAAKoAAACAlJmZmdkhwMMAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-22T15:55:32.195Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DrawIcons.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\DrawExplorer\\DrawIcons.cs",
+              "RelativeDocumentMoniker": "DrawExplorer\\DrawIcons.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\DrawExplorer\\DrawIcons.cs",
+              "RelativeToolTip": "DrawExplorer\\DrawIcons.cs",
+              "ViewState": "AgIAABQAAAAAX2ZmZmYkwC0AAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T05:22:52.191Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "DrawStatusStrip.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\DrawExplorer\\DrawStatusStrip.cs",
+              "RelativeDocumentMoniker": "DrawExplorer\\DrawStatusStrip.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\DrawExplorer\\DrawStatusStrip.cs",
+              "RelativeToolTip": "DrawExplorer\\DrawStatusStrip.cs",
+              "ViewState": "AgIAAAgAAAAAk5mZmRkXwBsAAABVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T05:22:31.325Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "HelpForm.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\HelpForm.cs",
+              "RelativeDocumentMoniker": "HelpForm.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\HelpForm.cs",
+              "RelativeToolTip": "HelpForm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-22T18:03:05.365Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "CurrentPathModel.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\CurrentPathModel.cs",
+              "RelativeDocumentMoniker": "CurrentPathModel.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\CurrentPathModel.cs",
+              "RelativeToolTip": "CurrentPathModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-14T16:51:12.328Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "FileNameValidator.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\Validators\\FileNameValidator.cs",
+              "RelativeDocumentMoniker": "Validators\\FileNameValidator.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\Validators\\FileNameValidator.cs",
+              "RelativeToolTip": "Validators\\FileNameValidator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-22T15:47:09.004Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Dll.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\ImportedDll\\Dll.cs",
+              "RelativeDocumentMoniker": "ImportedDll\\Dll.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\ImportedDll\\Dll.cs",
+              "RelativeToolTip": "ImportedDll\\Dll.cs",
+              "ViewState": "AgIAAAcAAAAAYmZmZmYEwCMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T05:20:21.687Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "DrawDropDownList.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\DrawExplorer\\DrawDropDownList.cs",
+              "RelativeDocumentMoniker": "DrawExplorer\\DrawDropDownList.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\DrawExplorer\\DrawDropDownList.cs",
+              "RelativeToolTip": "DrawExplorer\\DrawDropDownList.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T05:22:58.526Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "HelpForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\HelpForm.cs",
+              "RelativeDocumentMoniker": "HelpForm.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\HelpForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "RelativeToolTip": "HelpForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-22T17:08:34.889Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "HelpForm.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\HelpForm.Designer.cs",
+              "RelativeDocumentMoniker": "HelpForm.Designer.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\HelpForm.Designer.cs",
+              "RelativeToolTip": "HelpForm.Designer.cs",
+              "ViewState": "AgIAABcAAACgvszMzIwjwDEAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-22T16:59:32.324Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "FormMain.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\FormMain.Designer.cs",
+              "RelativeDocumentMoniker": "FormMain.Designer.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\FormMain.Designer.cs",
+              "RelativeToolTip": "FormMain.Designer.cs",
+              "ViewState": "AgIAABYAAACgzMzMzEwawBYAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T16:40:49.826Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\\u0410\u0439\u0434\u0430\u0448\\source\\repos\\rgz1_timp\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-12T04:16:28.647Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
