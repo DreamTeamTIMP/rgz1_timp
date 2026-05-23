@@ -60,7 +60,7 @@
             panel4 = new Panel();
             splitContainerForFiles = new SplitContainer();
             treeViewFiles = new TreeView();
-            listViewFIles = new ListView();
+            listViewFiles = new ListView();
             columnHeaderName = new ColumnHeader();
             columnHeaderEditDate = new ColumnHeader();
             columnHeaderType = new ColumnHeader();
@@ -69,7 +69,7 @@
             panel3 = new Panel();
             buttonAdressBar = new Button();
             labelUpdateDrivers = new Label();
-            comboBoxAdressBar = new ComboBox();
+            comboBoxAddressBar = new ComboBox();
             comboBoxLastWas = new ComboBox();
             labelFind = new Label();
             ButtonDesktop = new Button();
@@ -440,7 +440,7 @@
             // ToolStripMenuss
             // 
             ToolStripMenuss.Name = "ToolStripMenuss";
-            ToolStripMenuss.Size = new Size(180, 22);
+            ToolStripMenuss.Size = new Size(107, 22);
             ToolStripMenuss.Text = "Справка";
             ToolStripMenuss.Click += ShowHelp_Click;
             // 
@@ -480,7 +480,7 @@
             // 
             // splitContainerForFiles.Panel2
             // 
-            splitContainerForFiles.Panel2.Controls.Add(listViewFIles);
+            splitContainerForFiles.Panel2.Controls.Add(listViewFiles);
             splitContainerForFiles.Size = new Size(797, 100);
             splitContainerForFiles.SplitterDistance = 187;
             splitContainerForFiles.TabIndex = 0;
@@ -501,25 +501,25 @@
             treeViewFiles.Size = new Size(187, 100);
             treeViewFiles.TabIndex = 0;
             treeViewFiles.BeforeExpand += TreeView1_BeforeExpand;
-            treeViewFiles.AfterSelect += TreeView1_AfterSelect;
+            treeViewFiles.NodeMouseClick += treeViewFiles_NodeMouseClick;
             // 
-            // listViewFIles
+            // listViewFiles
             // 
-            listViewFIles.BackColor = Color.FromArgb(32, 32, 32);
-            listViewFIles.BorderStyle = BorderStyle.None;
-            listViewFIles.Columns.AddRange(new ColumnHeader[] { columnHeaderName, columnHeaderEditDate, columnHeaderType, columnHeaderSize });
-            listViewFIles.Dock = DockStyle.Fill;
-            listViewFIles.ForeColor = Color.White;
-            listViewFIles.FullRowSelect = true;
-            listViewFIles.Location = new Point(0, 0);
-            listViewFIles.Name = "listViewFIles";
-            listViewFIles.Size = new Size(606, 100);
-            listViewFIles.TabIndex = 0;
-            listViewFIles.UseCompatibleStateImageBehavior = false;
-            listViewFIles.View = View.Details;
-            listViewFIles.ItemSelectionChanged += ListView1_ItemSelectionChanged;
-            listViewFIles.MouseDoubleClick += ListView1_MouseDoubleClick;
-            listViewFIles.MouseUp += ListView1_MouseUp;
+            listViewFiles.BackColor = Color.FromArgb(32, 32, 32);
+            listViewFiles.BorderStyle = BorderStyle.None;
+            listViewFiles.Columns.AddRange(new ColumnHeader[] { columnHeaderName, columnHeaderEditDate, columnHeaderType, columnHeaderSize });
+            listViewFiles.Dock = DockStyle.Fill;
+            listViewFiles.ForeColor = Color.White;
+            listViewFiles.FullRowSelect = true;
+            listViewFiles.Location = new Point(0, 0);
+            listViewFiles.Name = "listViewFiles";
+            listViewFiles.Size = new Size(606, 100);
+            listViewFiles.TabIndex = 0;
+            listViewFiles.UseCompatibleStateImageBehavior = false;
+            listViewFiles.View = View.Details;
+            listViewFiles.ItemSelectionChanged += ListView1_ItemSelectionChanged;
+            listViewFiles.MouseDoubleClick += ListView1_MouseDoubleClick;
+            listViewFiles.MouseUp += ListView1_MouseUp;
             // 
             // columnHeaderName
             // 
@@ -563,7 +563,7 @@
             panel3.BorderStyle = BorderStyle.FixedSingle;
             panel3.Controls.Add(buttonAdressBar);
             panel3.Controls.Add(labelUpdateDrivers);
-            panel3.Controls.Add(comboBoxAdressBar);
+            panel3.Controls.Add(comboBoxAddressBar);
             panel3.Controls.Add(comboBoxLastWas);
             panel3.Location = new Point(153, 4);
             panel3.Name = "panel3";
@@ -595,19 +595,20 @@
             labelUpdateDrivers.Size = new Size(18, 12);
             labelUpdateDrivers.TabIndex = 7;
             labelUpdateDrivers.Text = "";
+            labelUpdateDrivers.Click += labelUpdateDrivers_Click;
             // 
-            // comboBoxAdressBar
+            // comboBoxAddressBar
             // 
-            comboBoxAdressBar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            comboBoxAdressBar.BackColor = Color.FromArgb(25, 25, 25);
-            comboBoxAdressBar.ForeColor = Color.White;
-            comboBoxAdressBar.FormattingEnabled = true;
-            comboBoxAdressBar.ItemHeight = 15;
-            comboBoxAdressBar.Location = new Point(-3, -3);
-            comboBoxAdressBar.Name = "comboBoxAdressBar";
-            comboBoxAdressBar.Size = new Size(394, 23);
-            comboBoxAdressBar.TabIndex = 1;
-            comboBoxAdressBar.KeyDown += ComboBoxAddressBar_KeyDown;
+            comboBoxAddressBar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            comboBoxAddressBar.BackColor = Color.FromArgb(25, 25, 25);
+            comboBoxAddressBar.ForeColor = Color.White;
+            comboBoxAddressBar.FormattingEnabled = true;
+            comboBoxAddressBar.ItemHeight = 15;
+            comboBoxAddressBar.Location = new Point(-3, -3);
+            comboBoxAddressBar.Name = "comboBoxAddressBar";
+            comboBoxAddressBar.Size = new Size(394, 23);
+            comboBoxAddressBar.TabIndex = 1;
+            comboBoxAddressBar.KeyDown += ComboBoxAddressBar_KeyDown;
             // 
             // comboBoxLastWas
             // 
@@ -631,6 +632,7 @@
             labelFind.Size = new Size(18, 12);
             labelFind.TabIndex = 6;
             labelFind.Text = "";
+            labelFind.Click += labelFind_Click;
             // 
             // ButtonDesktop
             // 
@@ -878,7 +880,7 @@
         private SplitContainer splitContainerMain;
         private SplitContainer splitContainerForFiles;
         private TreeView treeViewFiles;
-        private ListView listViewFIles;
+        private ListView listViewFiles;
         private Panel panel2;
         private Panel panel1;
         private Panel panel4;
@@ -909,7 +911,7 @@
         private Button buttonShare;
         private Button buttonVid;
         private TextBox textBoxFind;
-        private ComboBox comboBoxAdressBar;
+        private ComboBox comboBoxAddressBar;
         private Button ButtonDesktop;
         private ComboBox comboBoxLastWas;
         private Button buttonForward;

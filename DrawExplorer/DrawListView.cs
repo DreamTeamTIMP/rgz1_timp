@@ -84,7 +84,6 @@ namespace rgz1_timp.DrawExplorer
             listView.EndUpdate();
         }
 
-        // В классе DrawListView
         public void LoadDriveList()
         {
             listView.BeginUpdate();
@@ -111,13 +110,13 @@ namespace rgz1_timp.DrawExplorer
             listView.Items.Clear();
 
             string[] quickFolders = {
-        Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"),
-        Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-        Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
-        Environment.GetFolderPath(Environment.SpecialFolder.MyMusic),
-        Environment.GetFolderPath(Environment.SpecialFolder.MyVideos)
-    };
+            Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"),
+            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+            Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
+            Environment.GetFolderPath(Environment.SpecialFolder.MyMusic),
+            Environment.GetFolderPath(Environment.SpecialFolder.MyVideos)
+             };
 
             foreach (string folder in quickFolders)
             {
@@ -136,7 +135,60 @@ namespace rgz1_timp.DrawExplorer
             listView.View = _drawDetails ? View.Details : View.LargeIcon;
             listView.EndUpdate();
         }
+        public void LoadDirectoryWithFilter(string path, bool drawDetails, string filter)
+        {
+            if (string.IsNullOrEmpty(path) || !Directory.Exists(path)) return;
+            
+            listView.BeginUpdate();
+            listView.Items.Clear();
 
+            try
+            {
+                DirectoryInfo di = new DirectoryInfo(path);
+                // Папки
+                var dirs = di.GetDirectories()
+                    .Where(d => (d.Attributes & FileAttributes.Hidden) == 0 &&
+                                d.Name.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0);
+                foreach (var dir in dirs)
+                {
+                    ListViewItem item = new ListViewItem(dir.Name);
+                    item.ImageKey = icons.GetIconKey(dir.FullName, true);
+                    item.SubItems.Add(dir.LastWriteTime.ToString("dd.MM.yyyy HH:mm"));
+                    item.SubItems.Add("Папка с файлами");
+                    item.SubItems.Add("");
+                    item.Tag = dir.FullName;
+                    listView.Items.Add(item);
+                }
+
+                // Файлы
+                var files = di.GetFiles()
+                    .Where(f => (f.Attributes & FileAttributes.Hidden) == 0 &&
+                                f.Name.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0);
+                foreach (var file in files)
+                {
+                    ListViewItem item = new ListViewItem(file.Name);
+                    item.ImageKey = icons.GetIconKey(file.FullName, false);
+                    item.SubItems.Add(file.LastWriteTime.ToString("dd.MM.yyyy HH:mm"));
+                    item.SubItems.Add(file.Extension.ToUpper() + " File");
+                    item.SubItems.Add(FormatFileSize(file.Length));
+                    item.Tag = file.FullName;
+                    listView.Items.Add(item);
+                }
+
+                if (listView.Items.Count == 0)
+                {
+                    MessageBox.Show($"Ничего не найдено по запросу \"{filter}\"", "Поиск",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при поиске: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            listView.View = drawDetails ? View.Details : View.LargeIcon;
+            listView.EndUpdate();
+        }
         private static string FormatFileSize(long bytes)
         {
             if (bytes >= 1024 * 1024 * 1024)

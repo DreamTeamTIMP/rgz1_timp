@@ -14,12 +14,13 @@ namespace rgz1_timp
         private readonly DrawIcons icons;
         private readonly DrawTreeView drawTreeView;
         private readonly DrawListView drawListView;
-        private readonly DrawAdressBar drawAddressBar;
+        private readonly DrawAddressBar drawAddressBar;
         private readonly DrawDropDownList drawDropDownList;
         private readonly DrawStatusStrip drawStatusStrip;
         private readonly DrawRibbon drawRibbon;
 
         private bool drawDetails = true;
+        private string currentSearchQuery = string.Empty;
 
         public FormMain()
         {
@@ -30,10 +31,10 @@ namespace rgz1_timp
             icons = new DrawIcons();
 
             drawTreeView = new DrawTreeView(treeViewFiles, icons);
-            drawListView = new DrawListView(listViewFIles, icons);
-            drawAddressBar = new DrawAdressBar(comboBoxAdressBar);
+            drawListView = new DrawListView(listViewFiles, icons);
+            drawAddressBar = new DrawAddressBar(comboBoxAddressBar);
             drawDropDownList = new DrawDropDownList(comboBoxLastWas, treeViewFiles);
-            drawStatusStrip = new DrawStatusStrip(statusStripMain, listViewFIles);
+            drawStatusStrip = new DrawStatusStrip(statusStripMain, listViewFiles);
             drawRibbon = new DrawRibbon(tabControlShare, this);
 
             // Подписка на события модели
@@ -41,17 +42,24 @@ namespace rgz1_timp
             currentPathModel.NavigationStateChanged += UpdateNavigationButtons;
 
             // Дополнительная настройка событий
-            listViewFIles.KeyDown += ListViewFiles_KeyDown;
+            listViewFiles.KeyDown += ListViewFiles_KeyDown;
+            this.Shown += (s, e) => drawAddressBar.ResetAddressBarSelection();
+            currentPathModel.Path = "Этот компьютер";
 
         }
 
         private void OnPathChanged(string? path)
         {
             if (string.IsNullOrEmpty(path)) return;
-            drawListView.LoadDirectory(path, drawDetails);
+
+            // Сбрасываем строку поиска и фильтр
+            textBoxFind.Text = string.Empty;
+            currentSearchQuery = string.Empty;
             drawAddressBar.UpdateAddressBar(path);
             drawStatusStrip.UpdateStatusStrip();
             drawTreeView.RefreshNodeByPath(path);
+            drawListView.LoadDirectory(path, drawDetails);
+            drawTreeView.SelectNodeByPath(path);
         }
 
         private void UpdateNavigationButtons()
@@ -63,8 +71,8 @@ namespace rgz1_timp
         //  ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ UI 
         private string? GetSelectedItemPath()
         {
-            return listViewFIles.SelectedItems.Count > 0
-                ? listViewFIles.SelectedItems[0].Tag?.ToString()
+            return listViewFiles.SelectedItems.Count > 0
+                ? listViewFiles.SelectedItems[0].Tag?.ToString()
                 : null;
         }
 
@@ -187,6 +195,7 @@ namespace rgz1_timp
             WindowState = WindowState == FormWindowState.Normal
                 ? FormWindowState.Maximized
                 : FormWindowState.Normal;
+            drawAddressBar.ResetAddressBarSelection();
         }
         private void ButtonMinimize_Click(object sender, EventArgs e) => WindowState = FormWindowState.Minimized;
 
@@ -223,15 +232,15 @@ namespace rgz1_timp
         private void ButtonSmallElements_Click(object sender, EventArgs e)
         {
             drawDetails = true;
-            if (comboBoxAdressBar.Items.Count > 0)
-                currentPathModel.Path = comboBoxAdressBar.Text;
+            if (comboBoxAddressBar.Items.Count > 0)
+                currentPathModel.Path = comboBoxAddressBar.Text;
         }
 
         private void ButtonBigElements_Click(object sender, EventArgs e)
         {
             drawDetails = false;
-            if (comboBoxAdressBar.Items.Count > 0)
-                currentPathModel.Path = comboBoxAdressBar.Text;
+            if (comboBoxAddressBar.Items.Count > 0)
+                currentPathModel.Path = comboBoxAddressBar.Text;
         }
 
         //  ОБРАБОТЧИКИ КОНТЕКСТНОГО МЕНЮ 
@@ -239,15 +248,7 @@ namespace rgz1_timp
         private void CreateFolderToolStripMenuItem_Click(object sender, EventArgs e) => CreateNewFolder();
 
         //  ОБРАБОТЧИКИ ДРУГИХ ЭЛЕМЕНТОВ УПРАВЛЕНИЯ 
-        private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            if (e.Node?.Tag is not string tag) return;
-
-            // Обработка специальных узлов (можно расширить)
-            if (Directory.Exists(tag) || tag == "Этот компьютер" || tag == "Быстрый доступ")
-                currentPathModel.Path = tag;
-        }
-
+        
         private void TreeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e) => drawTreeView.AddNodes(e);
 
         private void ListView1_MouseDoubleClick(object sender, MouseEventArgs e) => OpenFile();
@@ -261,15 +262,15 @@ namespace rgz1_timp
         {
             if (e.Button != MouseButtons.Right) return;
 
-            var hitTest = listViewFIles.HitTest(e.Location);
+            var hitTest = listViewFiles.HitTest(e.Location);
             if (hitTest.Item != null)
             {
                 hitTest.Item.Selected = true;
-                contextMenuStripMain.Show(listViewFIles, e.Location);
+                contextMenuStripMain.Show(listViewFiles, e.Location);
             }
             else
             {
-                contextMenuStripListView.Show(listViewFIles, e.Location);
+                contextMenuStripListView.Show(listViewFiles, e.Location);
             }
         }
 
@@ -287,7 +288,7 @@ namespace rgz1_timp
 
             if (e.KeyCode == Keys.Enter)
             {
-                string targetPath = comboBoxAdressBar.Text;
+                string targetPath = comboBoxAddressBar.Text;
                 if (Directory.Exists(targetPath) || targetPath == "Этот компьютер" || targetPath == "Быстрый доступ")
                     currentPathModel.Path = targetPath;
                 else
@@ -297,7 +298,7 @@ namespace rgz1_timp
             }
         }
 
-        private void ButtonAddressBar_Click(object sender, EventArgs e) => comboBoxAdressBar.DroppedDown = true;
+        private void ButtonAddressBar_Click(object sender, EventArgs e) => comboBoxAddressBar.DroppedDown = true;
         private void ButtonDropDown_Click(object sender, EventArgs e) => comboBoxLastWas.DroppedDown = true;
         private void ButtonCopy_Click(object sender, EventArgs e) => CopySelectedItem();
         private void ButtonRename_Click(object sender, EventArgs e) => RenameSelectedItem();
@@ -307,9 +308,29 @@ namespace rgz1_timp
         {
             if (e.KeyCode == Keys.Enter)
             {
-                MessageBox.Show("В разработке");
-                textBoxFind.Text = "";
+                PerformSearch();
+                e.SuppressKeyPress = true;
             }
+        }
+
+        private void PerformSearch()
+        {
+            string query = textBoxFind.Text.Trim();
+            if (string.IsNullOrEmpty(query))
+            {
+                currentSearchQuery = string.Empty;
+                if (!string.IsNullOrEmpty(currentPathModel.Path))
+                    drawListView.LoadDirectory(currentPathModel.Path, drawDetails);
+                labelFind.Text = "";
+
+            }
+            else
+            {
+                currentSearchQuery = query;
+                drawListView.LoadDirectoryWithFilter(currentPathModel.Path, drawDetails, query);
+                labelFind.Text = "X";
+            }
+            drawStatusStrip.UpdateStatusStrip();
         }
 
         private void ButtonFile_Click(object sender, EventArgs e)
@@ -338,8 +359,8 @@ namespace rgz1_timp
             if (m.Msg == WM_DEVICECHANGE)
             {
                 drawTreeView.RefreshDrives();
-                if (comboBoxAdressBar.Text == "Этот компьютер")
-                    currentPathModel.Path = comboBoxAdressBar.Text;
+                if (comboBoxAddressBar.Text == "Этот компьютер")
+                    currentPathModel.Path = comboBoxAddressBar.Text;
             }
 
             if (m.Msg == WM_NCHITTEST)
@@ -356,6 +377,7 @@ namespace rgz1_timp
                 else if (pos.Y <= resizeArea) m.Result = (IntPtr)HTTOP;
                 else if (pos.Y >= ClientSize.Height - resizeArea) m.Result = (IntPtr)HTBOTTOM;
             }
+            drawAddressBar.ResetAddressBarSelection();
         }
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
@@ -439,6 +461,38 @@ namespace rgz1_timp
         {
             CommandInvoker.Undo();
             RefreshUiAfterCommand();
+        }
+
+        private void labelFind_Click(object sender, EventArgs e)
+        {
+            if (labelFind.Text == "X")
+            {
+                textBoxFind.Text = "";
+                labelFind.Text = "";
+            }
+            PerformSearch();
+        }
+
+        private void labelUpdateDrivers_Click(object sender, EventArgs e)
+        {
+            currentPathModel.Refresh();
+        }
+
+        private void treeViewFiles_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node?.Tag is not string tag) return;
+
+            // Обработка специальных узлов (можно расширить)
+            if (Directory.Exists(tag) || tag == "Этот компьютер" || tag == "Быстрый доступ")
+                if (currentPathModel.Path == tag)
+                {
+                    currentPathModel.Refresh();
+                }
+                else
+                {
+                    currentPathModel.Path = tag;
+                }
+            listViewFiles.Focus();
         }
     }
 }

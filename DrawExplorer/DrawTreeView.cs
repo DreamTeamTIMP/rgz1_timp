@@ -14,6 +14,8 @@ namespace rgz1_timp.DrawExplorer
             DrawSystemTreeView();
         }
 
+
+
         private void DrawSystemTreeView()
         {
             _ = Dll.SetWindowTheme(treeView.Handle, "explorer", null);
@@ -50,7 +52,15 @@ namespace rgz1_timp.DrawExplorer
             }
             return null;
         }
-
+        public void SelectNodeByPath(string path)
+        {
+            TreeNode? node = FindNodeByPath(treeView.Nodes, path);
+            if (node != null && treeView.SelectedNode != node)
+            {
+                treeView.SelectedNode = node;
+                node.EnsureVisible();
+            }
+        }
         private void RefreshNode(TreeNode node, string path)
         {
             
