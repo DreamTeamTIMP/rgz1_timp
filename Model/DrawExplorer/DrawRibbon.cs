@@ -2,23 +2,26 @@
 {
     public class DrawRibbon
     {
-        private readonly TabControl tabControl;
+        private readonly Panel ribbonContainer;
         private readonly FormMain form;
+        private readonly Panel panelHome;
+        private readonly Panel panelView;
 
-        public DrawRibbon(TabControl tabControl, FormMain form)
+        public DrawRibbon(Panel container, FormMain form)
         {
-            this.tabControl = tabControl;
+            this.ribbonContainer = container;
             this.form = form;
+
             SetupRibbon();
         }
 
         private void SetupRibbon()
         {
-            CreateHomePage(tabControl.TabPages[0]);
-            CreateViewPage(tabControl.TabPages[1]);
+            CreateHomePage((Panel)ribbonContainer.Controls[0]);
+            CreateViewPage((Panel)ribbonContainer.Controls[1]);
         }
 
-        private void CreateViewPage(TabPage page)
+        private void CreateViewPage(Panel page)
         {
             
             // Группа "Структура"
@@ -43,7 +46,7 @@
         }
 
 
-        private void CreateHomePage(TabPage page)
+        private void CreateHomePage(Panel page)
         {
             Panel ribbonGroupCreate = CreateRibbonGroup(page, "Создать");
             FlowLayoutPanel bigButtonsPanelCreate = CreatePanelForButtons(ribbonGroupCreate, true);
@@ -149,7 +152,7 @@
             parent.Controls.Add(btn);
         }
 
-        private Panel CreateRibbonGroup(TabPage parent, string title)
+        private Panel CreateRibbonGroup(Panel parent, string title)
         {
             Panel groupWrapper = new Panel
             {

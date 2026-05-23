@@ -5,6 +5,7 @@ using rgz1_timp.Services;
 using rgz1_timp.Services.rgz1_timp.Services;
 using System.Diagnostics;
 using System.IO;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace rgz1_timp
 {
@@ -27,7 +28,6 @@ namespace rgz1_timp
         {
             InitializeComponent();
 
-            // Инициализация сервисов
             IDialogService dialog = new DialogService();
             fileService = new FileOperationService(currentPathModel, dialog);
             icons = new DrawIcons();
@@ -37,7 +37,7 @@ namespace rgz1_timp
             drawAddressBar = new DrawAddressBar(comboBoxAddressBar);
             drawDropDownList = new DrawDropDownList(comboBoxLastWas, treeViewFiles);
             drawStatusStrip = new DrawStatusStrip(statusStripMain, listViewFiles);
-            drawRibbon = new DrawRibbon(tabControlShare, this); 
+            drawRibbon = new DrawRibbon(panelRibbonMain, this); 
             // Подписка на события модели
             currentPathModel.PathChanged += OnPathChanged;
             currentPathModel.NavigationStateChanged += UpdateNavigationButtons;
@@ -214,14 +214,16 @@ namespace rgz1_timp
         // Переключение вкладок ленты
         private void ButtonMain_Click(object sender, EventArgs e)
         {
-            tabControlShare.SelectedIndex = 0;
+            panelHome.Visible = true;
+            panelView.Visible = false;
             buttonVid.BackColor = Color.Black;
             buttonMain.BackColor = Color.FromArgb(32, 32, 32);
         }
 
         private void ButtonView_Click(object sender, EventArgs e)
         {
-            tabControlShare.SelectedIndex = 1;
+            panelHome.Visible = false;
+            panelView.Visible = true;
             buttonMain.BackColor = Color.Black;
             buttonVid.BackColor = Color.FromArgb(32, 32, 32);
         }
@@ -343,6 +345,7 @@ namespace rgz1_timp
         protected override void WndProc(ref Message m)
         {
             const int WM_NCHITTEST = 0x84;
+            const int HTCAPTION = 2;
             const int HTLEFT = 10;
             const int HTRIGHT = 11;
             const int HTTOP = 12;
@@ -376,6 +379,15 @@ namespace rgz1_timp
                 else if (pos.X >= ClientSize.Width - resizeArea) m.Result = (IntPtr)HTRIGHT;
                 else if (pos.Y <= resizeArea) m.Result = (IntPtr)HTTOP;
                 else if (pos.Y >= ClientSize.Height - resizeArea) m.Result = (IntPtr)HTBOTTOM;
+                if (pos.Y <= panelHeader.Height && pos.Y > 0)
+                {
+                    // Проверяем, что мышь не на кнопках управления (примерно их области)
+                    if (!(pos.X > buttonMinimize.Left && pos.X < buttonClose.Right))
+                    {
+                        m.Result = (IntPtr)HTCAPTION;
+                        return;
+                    }
+                }
             }
             drawAddressBar.ResetAddressBarSelection();
         }
