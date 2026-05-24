@@ -9,6 +9,7 @@ namespace rgz1_timp.DrawExplorer
         private readonly DrawIcons icons;
         private View viewList;
         
+        
         public DrawListView(ListView listView, DrawIcons icons, View viewList)
         {
             this.listView = listView;

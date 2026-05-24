@@ -1,4 +1,4 @@
-﻿using rgz1_timp;
+﻿using rgz1_timp.Services;
 namespace Tests
 {
     [TestClass]
