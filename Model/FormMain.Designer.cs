@@ -375,7 +375,7 @@
             toolStripButtonForward.Name = "toolStripButtonForward";
             toolStripButtonForward.Size = new Size(23, 16);
             toolStripButtonForward.Text = "";
-            toolStripButtonForward.ToolTipText = "Переформирование";
+            toolStripButtonForward.ToolTipText = "Повторить";
             toolStripButtonForward.Click += toolStripButtonRedo_Click;
             // 
             // toolStripButtonCopy
@@ -401,7 +401,7 @@
             toolStripButtonUndo.Name = "toolStripButtonUndo";
             toolStripButtonUndo.Size = new Size(23, 16);
             toolStripButtonUndo.Text = "";
-            toolStripButtonUndo.ToolTipText = "Отмена";
+            toolStripButtonUndo.ToolTipText = "Отменить";
             toolStripButtonUndo.Click += toolStripButtonUndo_Click;
             // 
             // toolStripDropDownButton1
