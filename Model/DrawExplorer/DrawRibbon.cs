@@ -138,13 +138,13 @@
                 FlatStyle = FlatStyle.Flat,
                 BackColor = Color.FromArgb(32, 32, 32),
                 Margin = new Padding(2),
-                Size = isLarge ? new Size(70, 80) : new Size(130, 22),
+                Size = isLarge ? new Size(70, 100) : new Size(130, 25),
                 UseVisualStyleBackColor = false
             };
 
             // Увеличиваем ширину для длинных надписей.
             if (text.Length > 20)
-                btn.Size = isLarge ? new Size(100, 80) : new Size(170, 22);
+                btn.Size = isLarge ? new Size(100, 80) : new Size(170, 25);
 
             btn.FlatAppearance.BorderSize = 0;
             btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(229, 243, 255);
@@ -213,19 +213,19 @@
             groupWrapper.Paint += (s, e) =>
             {
                 e.Graphics.DrawLine(new Pen(Color.FromArgb(220, 220, 220)),
-                    groupWrapper.Width - 1, 10, groupWrapper.Width - 1, groupWrapper.Height - 25);
+                    groupWrapper.Width - 1, 10, groupWrapper.Width - 1, groupWrapper.Height - 30);
             };
 
             Label lblTitle = new Label
             {
                 Text = title,
                 TextAlign = ContentAlignment.MiddleCenter,
-                Height = 13,
+                Height = 18,
                 ForeColor = Color.Gray,
                 Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom,
                 Font = new Font("Segoe UI", 7.5f),
                 AutoSize = false,
-                Location = new Point(0, groupWrapper.Height - 13)
+                Location = new Point(0, groupWrapper.Height - 20)
             };
 
             groupWrapper.Controls.Add(lblTitle);
