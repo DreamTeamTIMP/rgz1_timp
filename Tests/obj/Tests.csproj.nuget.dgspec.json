@@ -22,7 +22,7 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net8.0-windows7.0"
+          "net8.0-windows8.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -30,8 +30,8 @@
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net8.0-windows7.0": {
-            "targetAlias": "net8.0-windows7.0",
+          "net8.0-windows8.0": {
+            "targetAlias": "net8.0-windows8.0",
             "projectReferences": {}
           }
         },
@@ -48,8 +48,8 @@
         "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
-        "net8.0-windows7.0": {
-          "targetAlias": "net8.0-windows7.0",
+        "net8.0-windows8.0": {
+          "targetAlias": "net8.0-windows8.0",
           "imports": [
             "net461",
             "net462",
@@ -123,24 +123,6 @@
       "frameworks": {
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
-          "dependencies": {
-            "MSTest": {
-              "target": "Package",
-              "version": "[3.6.4, )"
-            },
-            "Microsoft.NET.Test.Sdk": {
-              "target": "Package",
-              "version": "[17.12.0, )"
-            },
-            "Microsoft.Testing.Extensions.CodeCoverage": {
-              "target": "Package",
-              "version": "[17.12.6, )"
-            },
-            "Microsoft.Testing.Extensions.TrxReport": {
-              "target": "Package",
-              "version": "[1.4.3, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -152,11 +134,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
