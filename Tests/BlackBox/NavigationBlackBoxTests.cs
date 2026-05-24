@@ -1,7 +1,11 @@
 ﻿using rgz1_timp;
 using rgz1_timp.Services;
+
 namespace Tests
 {
+    /// <summary>
+    /// Тестирование навигации (установка пути, кнопки "Назад"/"Вперёд").
+    /// </summary>
     [TestClass]
     public class NavigationBlackBoxTests
     {
@@ -14,7 +18,7 @@ namespace Tests
             testRoot = Path.Combine(Path.GetTempPath(), "NavTest_" + Guid.NewGuid().ToString());
             Directory.CreateDirectory(testRoot);
             model = new CurrentPathModel();
-            model.Path = testRoot; // стартовая папка
+            model.Path = testRoot;
         }
 
         [TestCleanup]
@@ -24,14 +28,15 @@ namespace Tests
                 Directory.Delete(testRoot, true);
         }
 
-        // Вспомогательный метод для установки пути через модель (имитация адресной строки)
+        // Вспомогательный метод для установки пути через модель (имитация адресной строки).
         private void SetPath(string path) => model.Path = path;
 
-        // ----- Допустимые классы -----
+        // Допустимые классы эквивалентности.
+
         [TestMethod]
         public void Navigate_ToRootDirectory_Success()
         {
-            string root = Path.GetPathRoot(testRoot); // например, C:\
+            string root = Path.GetPathRoot(testRoot);
             SetPath(root);
             Assert.AreEqual(root, model.Path);
         }
@@ -59,21 +64,23 @@ namespace Tests
             Assert.AreEqual("Быстрый доступ", model.Path);
         }
 
-        // ----- Недопустимые классы -----
+        // Недопустимые классы эквивалентности.
+
         [TestMethod]
         public void Navigate_ToNonExistentPath_ShowsErrorAndPathNotChanged()
         {
-            string invalidPath = Path.Combine(testRoot, "");
+            string invalidPath = Path.Combine(testRoot, "NonExistentFolder");
             string originalPath = model.Path;
             SetPath(invalidPath);
             Assert.AreEqual(originalPath, model.Path);
         }
 
-        // Граничные значения (длина)
+        // Граничные значения (длина пути).
+
         [TestMethod]
         public void Navigate_ToVeryLongPath_IfSupportedOrError()
         {
-            // Создадим глубокую структуру, чтобы путь был длинным (около 250 символов)
+            // Создаём глубокую структуру, чтобы путь был длинным (около 250 символов).
             string longPath = testRoot;
             while (longPath.Length < 250)
             {
@@ -82,9 +89,7 @@ namespace Tests
                 longPath = next;
             }
             SetPath(longPath);
-            // Если система поддерживает длинные пути, то переход успешен, иначе путь не меняется.
-            // Тест должен быть адаптирован под реальное поведение.
-            // Для стабильности проверяем, что исключения нет, и путь либо равен longPath, либо исходному.
+            // Если система поддерживает длинные пути, переход успешен, иначе путь не меняется.
             bool changed = model.Path == longPath;
             Assert.IsTrue(changed || model.Path == testRoot);
         }

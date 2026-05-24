@@ -5,25 +5,45 @@ using System.IO;
 
 namespace rgz1_timp.Services
 {
+    /// <summary>
+    /// Сервис, предоставляющий методы для выполнения операций с файловой системой (копирование, вставка, создание, удаление и т.д.).
+    /// Инкапсулирует логику работы с буфером обмена и командами.
+    /// </summary>
     public class FileOperationService
     {
+        // Модель текущего пути.
         private readonly CurrentPathModel pathModel;
+        // Сервис диалогов.
         private readonly IDialogService dialog;
+        // Путь скопированного/вырезанного объекта.
         private string? copiedPath;
-        private bool isCut;
+        // True – операция вырезания, false – копирования.
+        private bool isCut;                           
 
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
+        /// <param name="pathModel">Модель текущего пути.</param>
+        /// <param name="dialog">Сервис диалогов.</param>
         public FileOperationService(CurrentPathModel pathModel, IDialogService dialog)
         {
             this.pathModel = pathModel;
             this.dialog = dialog;
         }
 
-        //  Буфер обмена 
+        /// <summary>
+        /// Копирует указанный путь во внутренний буфер.
+        /// </summary>
+        /// <param name="path">Путь к объекту.</param>
         public void CopyItem(string? path)
         {
             if (path != null) copiedPath = path;
         }
 
+        /// <summary>
+        /// Вырезает указанный объект (помещает в буфер с флагом перемещения).
+        /// </summary>
+        /// <param name="path">Путь к объекту.</param>
         public void CutItem(string? path)
         {
             if (path != null)
@@ -33,8 +53,13 @@ namespace rgz1_timp.Services
             }
         }
 
+        /// <summary>
+        /// Вставляет объект из буфера в текущую папку.
+        /// </summary>
+        /// <returns>True, если операция выполнена успешно.</returns>
         public bool PasteItem()
         {
+            // Проверка, что буфер не пуст.
             if (string.IsNullOrEmpty(copiedPath))
             {
                 dialog.ShowError("Буфер обмена пуст.");
@@ -42,12 +67,14 @@ namespace rgz1_timp.Services
             }
 
             string destDir = pathModel.Path!;
+            // Проверка существования целевой папки.
             if (string.IsNullOrEmpty(destDir) || !Directory.Exists(destDir))
             {
                 dialog.ShowError("Целевая папка не существует.");
                 return false;
             }
 
+            // Защита от циклического перемещения/копирования папки в саму себя.
             if (IsCyclicOperation(copiedPath, destDir))
             {
                 dialog.ShowError("Нельзя вставить папку в саму себя или в её подпапку.");
@@ -76,7 +103,10 @@ namespace rgz1_timp.Services
             }
         }
 
-        //  Создание папки 
+        /// <summary>
+        /// Создаёт новую папку в текущем каталоге с автоматическим именем (Новая папка, Новая папка (2) и т.д.).
+        /// </summary>
+        /// <returns>True, если операция выполнена успешно.</returns>
         public bool CreateNewFolder()
         {
             string currentDir = pathModel.Path!;
@@ -106,7 +136,10 @@ namespace rgz1_timp.Services
             }
         }
 
-        //  Создание файла 
+        /// <summary>
+        /// Создаёт новый текстовый файл в текущем каталоге с автоматическим именем.
+        /// </summary>
+        /// <returns>True, если операция выполнена успешно.</returns>
         public bool CreateNewFile()
         {
             string currentDir = pathModel.Path!;
@@ -144,7 +177,11 @@ namespace rgz1_timp.Services
             }
         }
 
-        //  Удаление 
+        /// <summary>
+        /// Удаляет указанный объект (с отправкой в Корзину).
+        /// </summary>
+        /// <param name="path">Путь к объекту.</param>
+        /// <returns>True, если операция выполнена успешно.</returns>
         public bool DeleteItem(string? path)
         {
             if (string.IsNullOrEmpty(path))
@@ -161,7 +198,7 @@ namespace rgz1_timp.Services
             }
             catch (OperationCanceledException)
             {
-                // Пользователь отменил удаление в диалоге – не ошибка
+                // Пользователь отменил удаление в диалоге – не ошибка.
                 return false;
             }
             catch (Exception ex)
@@ -171,7 +208,12 @@ namespace rgz1_timp.Services
             }
         }
 
-        //  Переименование 
+        /// <summary>
+        /// Переименовывает файл или папку.
+        /// </summary>
+        /// <param name="oldPath">Текущий полный путь объекта.</param>
+        /// <param name="newName">Новое имя (без пути).</param>
+        /// <returns>True, если операция выполнена успешно.</returns>
         public bool RenameItem(string? oldPath, string newName)
         {
             if (string.IsNullOrEmpty(oldPath))
@@ -201,7 +243,12 @@ namespace rgz1_timp.Services
             }
         }
 
-        //  Переместить в диалог 
+        /// <summary>
+        /// Перемещает объект в указанную папку.
+        /// </summary>
+        /// <param name="sourcePath">Исходный путь объекта.</param>
+        /// <param name="destinationDir">Целевая папка.</param>
+        /// <returns>True, если операция выполнена успешно.</returns>
         public bool MoveToFolder(string? sourcePath, string destinationDir)
         {
             if (string.IsNullOrEmpty(sourcePath))
@@ -234,7 +281,12 @@ namespace rgz1_timp.Services
             }
         }
 
-        //  Копировать в диалог 
+        /// <summary>
+        /// Копирует объект в указанную папку.
+        /// </summary>
+        /// <param name="sourcePath">Исходный путь объекта.</param>
+        /// <param name="destinationDir">Целевая папка.</param>
+        /// <returns>True, если операция выполнена успешно.</returns>
         public bool CopyToFolder(string? sourcePath, string destinationDir)
         {
             if (string.IsNullOrEmpty(sourcePath))
@@ -267,14 +319,21 @@ namespace rgz1_timp.Services
             }
         }
 
-        //  Копировать путь в буфер 
+        /// <summary>
+        /// Копирует полный путь указанного объекта в Clipboard.
+        /// </summary>
+        /// <param name="path">Путь к объекту.</param>
         public void CopyPathToClipboard(string? path)
         {
             if (!string.IsNullOrEmpty(path))
                 Clipboard.SetText(path);
         }
 
-        //  Приватные вспомогательные методы 
+        /// <summary>
+        /// Генерирует уникальное имя папки, добавляя числовой суффикс при конфликте.
+        /// </summary>
+        /// <param name="parentPath">Родительская папка.</param>
+        /// <returns>Уникальное имя папки.</returns>
         private string GetUniqueFolderName(string parentPath)
         {
             string baseName = "Новая папка";
@@ -284,11 +343,17 @@ namespace rgz1_timp.Services
             {
                 counter++;
                 folderName = $"{baseName} ({counter})";
-                if (counter > 1000) break; // защита от бесконечного цикла
+                if (counter > 1000) break; // Защита от бесконечного цикла.
             }
             return folderName;
         }
 
+        /// <summary>
+        /// Проверяет, не является ли операция копирования/перемещения циклической (папка в саму себя или подпапку).
+        /// </summary>
+        /// <param name="sourcePath">Исходный путь.</param>
+        /// <param name="destinationDir">Целевая папка.</param>
+        /// <returns>True, если операция циклическая.</returns>
         private bool IsCyclicOperation(string sourcePath, string destinationDir)
         {
             if (!Directory.Exists(sourcePath)) return false;

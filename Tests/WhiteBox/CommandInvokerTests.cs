@@ -2,9 +2,13 @@
 
 namespace Tests
 {
+    /// <summary>
+    /// Модульные тесты для класса CommandInvoker (система Undo/Redo).
+    /// </summary>
     [TestClass]
     public class CommandInvokerTests
     {
+        // Вспомогательная тестовая команда.
         private class TestCommand : ICommand
         {
             public bool Executed { get; private set; }
@@ -44,7 +48,7 @@ namespace Tests
             CommandInvoker.ExecuteCommand(cmd);
             CommandInvoker.Undo();
             CommandInvoker.Redo();
-            Assert.IsTrue(cmd.Executed); // Execute вызван повторно
+            Assert.IsTrue(cmd.Executed);  
             Assert.IsTrue(CommandInvoker.CanUndo);
             Assert.IsFalse(CommandInvoker.CanRedo);
         }
@@ -55,10 +59,10 @@ namespace Tests
             var cmd1 = new TestCommand();
             var cmd2 = new TestCommand();
             CommandInvoker.ExecuteCommand(cmd1);
-            CommandInvoker.Undo(); // теперь в redoStack cmd1
+            CommandInvoker.Undo();
             CommandInvoker.ExecuteCommand(cmd2);
             Assert.IsTrue(CommandInvoker.CanUndo);
-            Assert.IsFalse(CommandInvoker.CanRedo); // redo должен быть очищен
+            Assert.IsFalse(CommandInvoker.CanRedo); 
         }
 
         [TestMethod]

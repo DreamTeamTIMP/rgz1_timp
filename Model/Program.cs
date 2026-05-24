@@ -3,14 +3,14 @@ namespace rgz1_timp
     internal static class Program
     {
         /// <summary>
-        ///  The main entry point for the application.
+        /// Главная точка входа для приложения.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            // Инициализирует конфигурацию приложения
             ApplicationConfiguration.Initialize();
+            // Запускает главную форму файлового менеджера.
             Application.Run(new FormMain());
         }
     }

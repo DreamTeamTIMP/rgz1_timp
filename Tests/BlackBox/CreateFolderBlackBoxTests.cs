@@ -1,8 +1,12 @@
 ﻿using rgz1_timp;
 using rgz1_timp.Command;
 using rgz1_timp.Services;
+
 namespace Tests
 {
+    /// <summary>
+    /// Тестирование создания папок.
+    /// </summary>
     [TestClass]
     public class CreateFolderBlackBoxTests
     {
@@ -42,6 +46,7 @@ namespace Tests
         [TestMethod]
         public void CreateFolder_WhenNameConflict_AddsNumber()
         {
+            // Создаём папку с именем по умолчанию.
             Directory.CreateDirectory(Path.Combine(testRoot, "Новая папка"));
             bool result = service.CreateNewFolder();
             Assert.IsTrue(result);
@@ -52,6 +57,7 @@ namespace Tests
         [TestMethod]
         public void CreateFolder_WhenCurrentPathIsSpecialObject_Fails()
         {
+            // Пытаемся создать папку внутри виртуального узла "Этот компьютер".
             pathModel.Path = "Этот компьютер";
             bool result = service.CreateNewFolder();
             Assert.IsFalse(result);
