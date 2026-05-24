@@ -254,6 +254,7 @@
             panelHeader.Name = "panelHeader";
             panelHeader.Size = new Size(799, 22);
             panelHeader.TabIndex = 10;
+            panelHeader.MouseDown += PanelHeader_MouseDown;
             // 
             // buttonMinimize
             // 
@@ -319,6 +320,7 @@
             toolStripMain.Size = new Size(799, 22);
             toolStripMain.TabIndex = 9;
             toolStripMain.Text = "toolStrip1";
+            toolStripMain.MouseDown += PanelHeader_MouseDown;
             // 
             // toolStripButtonIcon
             // 
@@ -373,7 +375,8 @@
             toolStripButtonForward.Name = "toolStripButtonForward";
             toolStripButtonForward.Size = new Size(23, 16);
             toolStripButtonForward.Text = "";
-            toolStripButtonForward.Click += toolStripButtonForward_Click;
+            toolStripButtonForward.ToolTipText = "Переформирование";
+            toolStripButtonForward.Click += toolStripButtonRedo_Click;
             // 
             // toolStripButtonCopy
             // 
@@ -385,6 +388,7 @@
             toolStripButtonCopy.Name = "toolStripButtonCopy";
             toolStripButtonCopy.Size = new Size(25, 18);
             toolStripButtonCopy.Text = "";
+            toolStripButtonCopy.ToolTipText = "Копировать";
             toolStripButtonCopy.Click += ButtonCopy_Click;
             // 
             // toolStripButtonUndo
@@ -397,6 +401,7 @@
             toolStripButtonUndo.Name = "toolStripButtonUndo";
             toolStripButtonUndo.Size = new Size(23, 16);
             toolStripButtonUndo.Text = "";
+            toolStripButtonUndo.ToolTipText = "Отмена";
             toolStripButtonUndo.Click += toolStripButtonUndo_Click;
             // 
             // toolStripDropDownButton1
@@ -412,6 +417,7 @@
             toolStripDropDownButton1.ShowDropDownArrow = false;
             toolStripDropDownButton1.Size = new Size(21, 16);
             toolStripDropDownButton1.Text = "";
+            toolStripDropDownButton1.ToolTipText = "Справка";
             // 
             // ToolStripMenuss
             // 

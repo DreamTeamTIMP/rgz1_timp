@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 using rgz1_timp.Command;
 using rgz1_timp.DrawExplorer;
+using rgz1_timp.ImportedDll;
 using rgz1_timp.Services;
 using rgz1_timp.Services.rgz1_timp.Services;
 using System.Diagnostics;
@@ -494,6 +495,18 @@ namespace rgz1_timp
                                 "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        /// <summary>
+        /// Перетаскивание окна с помощью мыши.
+        /// </summary>
+        private void PanelHeader_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                // Освобождаем захват мыши и посылаем сообщение о перемещении заголовка
+                Dll.ReleaseCapture();                     
+                Dll.SendMessage(this.Handle, 0xA1, 2, 0);
+            }
+        }
 
         #endregion
 
@@ -622,7 +635,7 @@ namespace rgz1_timp
             help.ShowDialog(this);
         }
 
-        private void toolStripButtonForward_Click(object sender, EventArgs e)
+        private void toolStripButtonRedo_Click(object sender, EventArgs e)
         {
             CommandInvoker.Redo();
             RefreshUi();
